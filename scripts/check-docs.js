@@ -119,7 +119,7 @@ const checks = [
     pattern: /(<!-- example-viable: (\S+) (\d{4}-\d{2}-\d{2}) -->\n```\n)([\s\S]*?)(\n```)/,
     want: (m) => {
       const out = example(m[2], m[3], { CLAIMABLE_CASSETTE_DIR: "test/showcase/fixtures" });
-      if (!/^\$ claimable \S+\nVIABLE /.test(out)) throw new Error(`the VIABLE example ${m[2]} no longer replays as VIABLE`);
+      if (!/^\$ claimable \S+\n+VIABLE /.test(out)) throw new Error(`the VIABLE example ${m[2]} no longer replays as VIABLE`);
       return `${m[1]}${out}${m[5]}`;
     },
   },
