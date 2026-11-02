@@ -1,0 +1,23 @@
+{
+  "path": "/repos/dogukanturhal/hexx-pep-core/contents/CONTRIBUTING.md",
+  "recordedFor": "/repos/dogukanturhal/hexx-pep-core/contents/CONTRIBUTING.md",
+  "status": 200,
+  "body": {
+    "name": "CONTRIBUTING.md",
+    "path": "CONTRIBUTING.md",
+    "sha": "91cfc3a2f89b6586121cd4ff144463d1171569c9",
+    "size": 1838,
+    "url": "https://api.github.com/repos/dogukanturhal/hexx-pep-core/contents/CONTRIBUTING.md?ref=main",
+    "html_url": "https://github.com/dogukanturhal/hexx-pep-core/blob/main/CONTRIBUTING.md",
+    "git_url": "https://api.github.com/repos/dogukanturhal/hexx-pep-core/git/blobs/91cfc3a2f89b6586121cd4ff144463d1171569c9",
+    "download_url": "https://raw.githubusercontent.com/dogukanturhal/hexx-pep-core/main/CONTRIBUTING.md",
+    "type": "file",
+    "content": "IyBDb250cmlidXRpbmcgdG8gaGV4eC1wZXAtY29yZQoKVGhhbmtzIGZvciB0\nYWtpbmcgdGhlIHRpbWUuIFNtYWxsIGZpeGVzIChhIGJ1ZywgYSB0eXBvLCBh\nIHRlc3QpIGNhbiBnbyBzdHJhaWdodAp0byBhIHB1bGwgcmVxdWVzdC4gRm9y\nIGFueXRoaW5nIGxhcmdlciwgc3VjaCBhcyBhIG5ldyBwYWNrYWdlLCBhbiBl\neHBvcnRlZCBBUEkKY2hhbmdlIG9yIGEgYmVoYXZpb3VyIGNoYW5nZSwgb3Bl\nbiBhbiBpc3N1ZSBmaXJzdCBzbyB3ZSBjYW4gYWdyZWUgb24gdGhlIHNoYXBl\nCmJlZm9yZSB5b3Ugd3JpdGUgdGhlIGNvZGUuCgojIyBEZXZlbG9wZXIgQ2Vy\ndGlmaWNhdGUgb2YgT3JpZ2luCgpFdmVyeSBjb21taXQgbXVzdCBjYXJyeSBh\nIGBTaWduZWQtb2ZmLWJ5YCB0cmFpbGVyLiBJdCBjZXJ0aWZpZXMgdGhhdCB5\nb3Ugd3JvdGUKdGhlIGNoYW5nZSBvciBoYXZlIHRoZSByaWdodCB0byBzdWJt\naXQgaXQgdW5kZXIgdGhlIHByb2plY3QncyBsaWNlbmNlLCBhcwpkZXNjcmli\nZWQgYXQgaHR0cHM6Ly9kZXZlbG9wZXJjZXJ0aWZpY2F0ZS5vcmcvLgoKYGBg\nc2gKZ2l0IGNvbW1pdCAtcyAtbSAiZml4OiBkZXNjcmliZSB0aGUgY2hhbmdl\nIgpgYGAKClRoZSB0cmFpbGVyIGlzIGFkZGVkIGZyb20geW91ciBgdXNlci5u\nYW1lYCBhbmQgYHVzZXIuZW1haWxgLiBJZiB5b3UgZm9yZ290IGl0LApydW4g\nYGdpdCBjb21taXQgLS1hbWVuZCAtLXNpZ25vZmYgLS1uby1lZGl0YCBhbmQg\nZm9yY2UtcHVzaCB5b3VyIGJyYW5jaC4KTWFpbnRhaW5lcnMgd2lsbCBub3Qg\nbWVyZ2UgdW5zaWduZWQgY29tbWl0cy4KCiMjIERldmVsb3BtZW50CgpZb3Ug\nbmVlZCBhIEdvIHRvb2xjaGFpbiBtYXRjaGluZyB0aGUgdmVyc2lvbiBpbiBg\nZ28ubW9kYC4KCmBgYHNoCmdvIHZldCAuLy4uLgpnbyB0ZXN0IC1yYWNlIC4v\nLi4uCmdvbGFuZ2NpLWxpbnQgcnVuIC4vLi4uICAgICAgIyB1c2VzIC5nb2xh\nbmdjaS55bWwgd2hlbiBwcmVzZW50CmBgYAoKUnVuIHRoZXNlIGluIGVhY2gg\nR28gbW9kdWxlIG9mIHRoZSByZXBvc2l0b3J5IChzb21lIHJlcG9zaXRvcmll\ncyBjb250YWluIG1vcmUKdGhhbiBvbmUpLiBDSSBydW5zIHRoZSBzYW1lIGNv\nbW1hbmRzIHBsdXMgYGdvdnVsbmNoZWNrYCBhbmQgQ29kZVFMLgoKIyMgUHVs\nbCByZXF1ZXN0cwoKLSBLZWVwIGEgY2hhbmdlIGZvY3VzZWQ7IHVucmVsYXRl\nZCBjbGVhbnVwcyBnbyBpbiBhIHNlcGFyYXRlIHB1bGwgcmVxdWVzdC4KLSBB\nZGQgb3IgdXBkYXRlIHRlc3RzIGZvciBiZWhhdmlvdXIgeW91IGNoYW5nZS4K\nLSBVcGRhdGUgYENIQU5HRUxPRy5tZGAgdW5kZXIgKipVbnJlbGVhc2VkKiog\nZm9yIGFueXRoaW5nIGEgdXNlciB3b3VsZCBub3RpY2UuCi0gRG8gbm90IGNv\nbW1pdCBjcmVkZW50aWFscywgdG9rZW5zIG9yIGN1c3RvbWVyIGRhdGEsIGV2\nZW4gYXMgdGVzdCBmaXh0dXJlcy4gVXNlCiAgb2J2aW91c2x5IGZha2UgdmFs\ndWVzLgotIENvbW1pdCBtZXNzYWdlczogYSBzaG9ydCBpbXBlcmF0aXZlIHN1\nbW1hcnkgbGluZSwgdGhlbiBhIGJvZHkgZXhwbGFpbmluZyB3aHkKICB3aGVu\nIHRoZSByZWFzb24gaXMgbm90IG9idmlvdXMuCgojIyBSZXBvcnRpbmcgYnVn\ncyBhbmQgYXNraW5nIHF1ZXN0aW9ucwoKVXNlIHRoZSBpc3N1ZSB0ZW1wbGF0\nZXMuIEZvciBzZWN1cml0eSBwcm9ibGVtcywgZm9sbG93IFtTRUNVUklUWS5t\nZF0oU0VDVVJJVFkubWQpCmluc3RlYWQgb2Ygb3BlbmluZyBhIHB1YmxpYyBp\nc3N1ZS4KCiMjIExpY2VuY2UKCkJ5IGNvbnRyaWJ1dGluZyB5b3UgYWdyZWUg\ndGhhdCB5b3VyIGNvbnRyaWJ1dGlvbiBpcyBsaWNlbnNlZCB1bmRlciB0aGUK\ncmVwb3NpdG9yeSdzIGxpY2VuY2UgKHNlZSBgTElDRU5TRWApLgo=\n",
+    "encoding": "base64",
+    "_links": {
+      "self": "https://api.github.com/repos/dogukanturhal/hexx-pep-core/contents/CONTRIBUTING.md?ref=main",
+      "git": "https://api.github.com/repos/dogukanturhal/hexx-pep-core/git/blobs/91cfc3a2f89b6586121cd4ff144463d1171569c9",
+      "html": "https://github.com/dogukanturhal/hexx-pep-core/blob/main/CONTRIBUTING.md"
+    }
+  }
+}
