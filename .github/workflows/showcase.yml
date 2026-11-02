@@ -1,0 +1,57 @@
+# Records a real VIABLE example for the README and the landing page.
+# Uses this repository's own GITHUB_TOKEN: no personal token, nothing stored.
+# Pushes a branch; open the PR from the link in the run summary so CI runs on it.
+name: Record a VIABLE example
+
+on: workflow_dispatch # no inputs on purpose: the form remembers stale values
+
+permissions:
+  contents: write # push the branch; reading public repositories needs nothing more
+
+concurrency:
+  group: showcase
+  cancel-in-progress: false
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22.18"
+      - name: Find a VIABLE issue and record it
+        id: rec
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+          node test/record-showcase.ts | tee "$RUNNER_TEMP/rec.log"
+          grep '^PICKED=' "$RUNNER_TEMP/rec.log" >> "$GITHUB_OUTPUT"
+      - name: Regenerate the docs from the recording, offline
+        env:
+          GITHUB_TOKEN: ""
+          GH_TOKEN: ""
+        run: |
+          npm run check:docs -- --fix
+          npm test
+          npm run check:docs
+          npm run demo
+          git diff --exit-code docs/demo.svg
+          npm run build:web
+      - name: Push a branch
+        env:
+          PICKED: ${{ steps.rec.outputs.PICKED }}
+        run: |
+          branch="showcase/viable-$(date -u +%F)-$GITHUB_RUN_ID"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add test/showcase README.md
+          git commit -m "Record a VIABLE example: $PICKED"
+          git push origin "$branch"
+          {
+            echo "### Recorded $PICKED as VIABLE"
+            echo ""
+            echo "[Open the pull request]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/compare/main...$branch?expand=1)"
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -11,7 +11,7 @@ import { fileURLToPath } from "node:url";
 import { analyze } from "./analyze.ts";
 import { api, configure, hasToken, requestCount } from "./github.ts";
 import { parseRef, parseRefs, parseRepo } from "./refs.ts";
-import { formatDetail, formatLine, formatSummary } from "./report.ts";
+import { formatDetail, formatLine, formatMarkdown, formatSummary } from "./report.ts";
 import { CHECK_ORDER, refToString } from "./types.ts";
 import type { CheckId, GhIssue, IssueRef, IssueReport } from "./types.ts";
 
@@ -51,6 +51,7 @@ OPTIONS
   --skip <check>        Skip a filter (repeatable). One of:
                         ${CHECK_ORDER.join(", ")}
   --json                Machine-readable output
+  --markdown            Markdown report (for job summaries, issue bodies); not with --json
   --quiet               One line per issue, no detail
   --viable-only         Print only issues that survive every filter
   -h, --help            This text
@@ -74,6 +75,7 @@ type Options = {
   hacktoberfest: boolean;
   skip: CheckId[];
   json: boolean;
+  markdown: boolean;
   quiet: boolean;
   viableOnly: boolean;
   help: boolean;
@@ -93,6 +95,7 @@ export function parseArgs(argv: string[]): Options {
     hacktoberfest: false,
     skip: [],
     json: false,
+    markdown: false,
     quiet: false,
     viableOnly: false,
     help: false,
@@ -151,6 +154,9 @@ export function parseArgs(argv: string[]): Options {
       case "--json":
         opts.json = true;
         break;
+      case "--markdown":
+        opts.markdown = true;
+        break;
       case "--quiet":
         opts.quiet = true;
         break;
@@ -166,6 +172,7 @@ export function parseArgs(argv: string[]): Options {
     }
   }
 
+  if (opts.json && opts.markdown) throw new Error("--json and --markdown are alternatives; pick one");
   return opts;
 }
 
@@ -242,7 +249,7 @@ export function refFromSearchHit(hit: { number: number; repository_url: string }
   return match ? { owner: match[1], repo: match[2], number: hit.number } : null;
 }
 
-async function findIssues(query: string, limit: number): Promise<IssueRef[]> {
+export async function findIssues(query: string, limit: number): Promise<IssueRef[]> {
   const q = buildFindQuery(query);
   const perPage = Math.min(limit, 100);
   const refs: IssueRef[] = [];
@@ -383,7 +390,7 @@ async function main(argv: string[]): Promise<number> {
     );
   }
 
-  const progress = targets.length > 1 && shouldShowProgress(process.env, process.stderr.isTTY === true, opts.json);
+  const progress = targets.length > 1 && shouldShowProgress(process.env, process.stderr.isTTY === true, opts.json || opts.markdown);
   const clearProgress = () => {
     if (progress) process.stderr.write("\r\x1b[K");
   };
@@ -398,7 +405,7 @@ async function main(argv: string[]): Promise<number> {
     reports.push(report);
     clearProgress();
 
-    if (opts.json) continue;
+    if (opts.json || opts.markdown) continue;
     if (opts.viableOnly && report.verdict !== "viable") continue;
     // A search is a scan: one line per result as it comes in, and the full
     // detail only for the ones worth reading, once the scan is over.
@@ -406,7 +413,7 @@ async function main(argv: string[]): Promise<number> {
     process.stdout.write(scanView ? `${formatLine(report)}\n` : formatDetail(report));
   }
 
-  if (opts.find !== null && !opts.json && !opts.quiet) {
+  if (opts.find !== null && !opts.json && !opts.markdown && !opts.quiet) {
     const viable = reports.filter((r) => r.verdict === "viable");
     for (const report of viable) process.stdout.write(formatDetail(report));
     if (viable.length === 0 && reports.some((r) => r.verdict === "reservations")) {
@@ -416,6 +423,11 @@ async function main(argv: string[]): Promise<number> {
 
   if (opts.json) {
     process.stdout.write(`${JSON.stringify(reports, null, 2)}\n`);
+  } else if (opts.markdown) {
+    const heading = opts.repo ? `claimable: ${opts.repo}` : opts.find ? `claimable: search \`${opts.find.replace(/`/g, "")}\`` : "claimable";
+    process.stdout.write(
+      `${formatMarkdown(reports, { heading, rows: opts.viableOnly ? (r) => r.verdict === "viable" : undefined })}\n`,
+    );
   } else if (reports.length > 1) {
     process.stdout.write(formatSummary(reports));
     if (process.env.CLAIMABLE_DEBUG) {

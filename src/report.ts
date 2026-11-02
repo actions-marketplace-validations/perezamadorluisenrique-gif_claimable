@@ -125,11 +125,86 @@ export function formatDetail(report: IssueReport, opts: { showOk?: boolean } = {
   return lines.join("\n");
 }
 
+export type VerdictCounts = { total: number; viable: number; caution: number; discard: number };
+
+export function countVerdicts(reports: IssueReport[]): VerdictCounts {
+  const count = (v: IssueReport["verdict"]) => reports.filter((r) => r.verdict === v).length;
+  return { total: reports.length, viable: count("viable"), caution: count("reservations"), discard: count("discard") };
+}
+
 export function formatSummary(reports: IssueReport[]): string {
-  const viable = reports.filter((r) => r.verdict === "viable").length;
-  const caution = reports.filter((r) => r.verdict === "reservations").length;
-  const discard = reports.filter((r) => r.verdict === "discard").length;
+  const { viable, caution, discard } = countVerdicts(reports);
   return dim(
     `\n${reports.length} checked — ${green(`${viable} viable`)}, ${yellow(`${caution} caution`)}, ${red(`${discard} discard`)}\n`,
   );
+}
+
+/**
+ * Text written by strangers (issue titles, comment-derived reasons) goes into a
+ * Markdown table that may be pasted into an issue: neutralise anything that
+ * breaks the table, injects HTML, or pings people.
+ */
+export function mdInline(text: string, max = 300): string {
+  let t = text.replace(/\r?\n|\r/g, " ").trim();
+  if (t.length > max) t = `${t.slice(0, max - 1)}…`;
+  return t
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\\/g, "\\\\")
+    .replace(/\|/g, "\\|")
+    .replace(/`/g, "\\`")
+    .replace(/(^|[^\w`])@(?=[\w-])/g, "$1@\u200b");
+}
+
+export type MarkdownOptions = {
+  heading?: string;
+  /** Which reports get a collapsible detail block. Default: everything not discarded. */
+  details?: "all" | "not-discard" | "none";
+  rows?: (r: IssueReport) => boolean;
+  footer?: string;
+};
+
+const MD_WORD: Record<IssueReport["verdict"], string> = { viable: "VIABLE", reservations: "CAUTION", discard: "DISCARD" };
+const MD_ORDER: IssueReport["verdict"][] = ["viable", "reservations", "discard"];
+const MAX_DETAILS = 50;
+
+function mdLink(url: string): string {
+  return /^https?:\/\/\S+$/.test(url) ? `<${url.replace(/>/g, "%3E")}>` : mdInline(url);
+}
+
+/** The same report as Markdown: for a job summary, an issue body, a PR comment. */
+export function formatMarkdown(reports: IssueReport[], opts: MarkdownOptions = {}): string {
+  const c = countVerdicts(reports);
+  const out: string[] = [];
+  out.push(`## ${opts.heading ?? "claimable"}`, "");
+  if (reports.length === 0) {
+    out.push("No issues checked.", "");
+    return out.join("\n");
+  }
+  out.push(`**${c.total} checked: ${c.viable} viable, ${c.caution} caution, ${c.discard} discard**`, "");
+
+  const sorted = MD_ORDER.flatMap((v) => reports.filter((r) => r.verdict === v)).filter((r) => !opts.rows || opts.rows(r));
+  out.push("| Verdict | Issue | Why |", "|---|---|---|");
+  for (const r of sorted) {
+    out.push(`| **${MD_WORD[r.verdict]}** | [${mdInline(refToString(r.ref))}](${r.url}) ${mdInline(r.title, 120)} | ${mdInline(r.reason)} |`);
+  }
+  out.push("");
+
+  const mode = opts.details ?? "not-discard";
+  const detailed = mode === "none" ? [] : sorted.filter((r) => mode === "all" || r.verdict !== "discard");
+  for (const r of detailed.slice(0, MAX_DETAILS)) {
+    out.push(`<details><summary><b>${MD_WORD[r.verdict]}</b> ${mdInline(refToString(r.ref))}</summary>`, "");
+    for (const f of r.findings.filter((x) => x.severity !== "ok" || r.verdict === "viable")) {
+      out.push(`- **${CHECK_LABEL[f.check]}**: ${mdInline(f.message)}`);
+      for (const e of f.evidence ?? []) out.push(`  - ${mdLink(e)}`);
+    }
+    for (const s of r.skipped.filter((x) => !x.why.startsWith("not run"))) {
+      out.push(`- Could not check ${CHECK_LABEL[s.check]}: ${mdInline(s.why)}`);
+    }
+    out.push("", "</details>", "");
+  }
+  if (detailed.length > MAX_DETAILS) out.push(`_${detailed.length - MAX_DETAILS} more not expanded._`, "");
+  if (opts.footer) out.push(`<sub>${mdInline(opts.footer)}</sub>`, "");
+  return out.join("\n");
 }

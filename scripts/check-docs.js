@@ -37,8 +37,8 @@ if (!tests || failed) {
 const { figures, summary } = evalFigures();
 
 /** The README's example, replayed on the date its day counts were taken. */
-function example(ref, date) {
-  const out = run(["src/cli.ts", ref], { CLAIMABLE_CASSETTE: "replay", CLAIMABLE_NOW: `${date}T12:00:00Z` });
+function example(ref, date, extraEnv = {}) {
+  const out = run(["src/cli.ts", ref], { CLAIMABLE_CASSETTE: "replay", CLAIMABLE_NOW: `${date}T12:00:00Z`, ...extraEnv });
   return `$ claimable ${ref}\n${out.replace(/\n+$/, "")}`;
 }
 
@@ -112,6 +112,17 @@ const checks = [
     pattern: /(<!-- example: (\S+) (\d{4}-\d{2}-\d{2}) -->\n```\n)([\s\S]*?)(\n```)/,
     want: (m) => `${m[1]}${example(m[2], m[3])}${m[5]}`,
   },
+  {
+    file: "README.md",
+    what: "viable example output",
+    optional: true, // absent until the "Record a VIABLE example" workflow has run once
+    pattern: /(<!-- example-viable: (\S+) (\d{4}-\d{2}-\d{2}) -->\n```\n)([\s\S]*?)(\n```)/,
+    want: (m) => {
+      const out = example(m[2], m[3], { CLAIMABLE_CASSETTE_DIR: "test/showcase/fixtures" });
+      if (!/^\$ claimable \S+\nVIABLE /.test(out)) throw new Error(`the VIABLE example ${m[2]} no longer replays as VIABLE`);
+      return `${m[1]}${out}${m[5]}`;
+    },
+  },
 ];
 
 let drift = 0;
@@ -119,6 +130,7 @@ const files = new Map();
 for (const check of checks) {
   const text = files.get(check.file) ?? readFileSync(check.file, "utf8");
   const match = text.match(check.pattern);
+  if (!match && check.optional) continue;
   if (!match) {
     console.error(`${check.file}: could not find the ${check.what} — was the wording changed? Update scripts/check-docs.js with it.`);
     drift++;
