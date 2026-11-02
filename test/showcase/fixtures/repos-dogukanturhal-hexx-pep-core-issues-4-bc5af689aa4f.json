@@ -1,0 +1,102 @@
+{
+  "path": "/repos/dogukanturhal/hexx-pep-core/issues/4",
+  "recordedFor": "/repos/dogukanturhal/hexx-pep-core/issues/4",
+  "status": 200,
+  "body": {
+    "url": "https://api.github.com/repos/dogukanturhal/hexx-pep-core/issues/4",
+    "repository_url": "https://api.github.com/repos/dogukanturhal/hexx-pep-core",
+    "labels_url": "https://api.github.com/repos/dogukanturhal/hexx-pep-core/issues/4/labels{/name}",
+    "comments_url": "https://api.github.com/repos/dogukanturhal/hexx-pep-core/issues/4/comments",
+    "events_url": "https://api.github.com/repos/dogukanturhal/hexx-pep-core/issues/4/events",
+    "html_url": "https://github.com/dogukanturhal/hexx-pep-core/issues/4",
+    "id": 6170036034,
+    "node_id": "I_kwDOUfNv3s8AAAABb8NHQg",
+    "number": 4,
+    "title": "Add runnable Example functions for pkg.go.dev",
+    "user": {
+      "login": "dogukanturhal",
+      "id": 34031147,
+      "node_id": "MDQ6VXNlcjM0MDMxMTQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34031147?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/dogukanturhal",
+      "html_url": "https://github.com/dogukanturhal",
+      "followers_url": "https://api.github.com/users/dogukanturhal/followers",
+      "following_url": "https://api.github.com/users/dogukanturhal/following{/other_user}",
+      "gists_url": "https://api.github.com/users/dogukanturhal/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/dogukanturhal/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/dogukanturhal/subscriptions",
+      "organizations_url": "https://api.github.com/users/dogukanturhal/orgs",
+      "repos_url": "https://api.github.com/users/dogukanturhal/repos",
+      "events_url": "https://api.github.com/users/dogukanturhal/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/dogukanturhal/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "id": 12241445134,
+        "node_id": "LA_kwDOUfNv3s8AAAAC2aWhDg",
+        "url": "https://api.github.com/repos/dogukanturhal/hexx-pep-core/labels/documentation",
+        "name": "documentation",
+        "color": "0075ca",
+        "default": true,
+        "description": "Improvements or additions to documentation",
+        "archived_at": null,
+        "archived_by": null
+      },
+      {
+        "id": 12241445224,
+        "node_id": "LA_kwDOUfNv3s8AAAAC2aWhaA",
+        "url": "https://api.github.com/repos/dogukanturhal/hexx-pep-core/labels/good%20first%20issue",
+        "name": "good first issue",
+        "color": "7057ff",
+        "default": true,
+        "description": "Good for newcomers",
+        "archived_at": null,
+        "archived_by": null
+      }
+    ],
+    "state": "open",
+    "locked": false,
+    "assignees": [],
+    "milestone": null,
+    "comments": 0,
+    "created_at": "2026-11-02T20:04:57Z",
+    "updated_at": "2026-11-02T20:04:57Z",
+    "closed_at": null,
+    "assignee": null,
+    "author_association": "OWNER",
+    "active_lock_reason": null,
+    "sub_issues_summary": {
+      "total": 0,
+      "completed": 0,
+      "percent_completed": 0
+    },
+    "issue_dependencies_summary": {
+      "blocked_by": 0,
+      "total_blocked_by": 0,
+      "blocking": 0,
+      "total_blocking": 0
+    },
+    "body": "The repository has no `Example` functions, so the pkg.go.dev pages show signatures without usage. Examples are compiled and run by `go test`, so they also act as tests.\n\n## What to add\n\nOne `Example...` function per package, in `example_test.go` (package `<name>_test`), with an `// Output:` comment so it is verified:\n\n- `pkg/chain`: write a few events to a `JSONLChain` and print the `seq`/`prev_hash` linkage (print only stable values, for example the sequence numbers and whether `prev_hash` of event 2 equals the hash of line 1).\n- `pkg/govdecision`: `GenerateEd25519`, sign a decision, verify it, then show verification failing after the message is altered.\n- `pkg/spool`: `Open` a file spool in `t.TempDir()`-style temp dir (use `os.MkdirTemp` in the example), `Enqueue`, then `Reconcile` into a `SinkFunc`.\n- `pkg/resilient`: a breaker or backoff usage with a deterministic clock (see `clock.go`).\n- `pkg/identity`, `pkg/cryptoprofile`: a short example each.\n\nYou do not need to cover every package in one PR. Keep each example under about 25 lines and deterministic (no wall-clock or random values in the output).\n\n## Acceptance\n\n- `go test -race ./...` passes; `go vet ./...` clean.\n- Standard library only (the module has no third-party dependencies; keep it that way).\n- Commits signed off (`git commit -s`); see CONTRIBUTING.md.\n\nEstimated size: S.\n",
+    "closed_by": null,
+    "reactions": {
+      "url": "https://api.github.com/repos/dogukanturhal/hexx-pep-core/issues/4/reactions",
+      "total_count": 0,
+      "+1": 0,
+      "-1": 0,
+      "laugh": 0,
+      "hooray": 0,
+      "confused": 0,
+      "heart": 0,
+      "rocket": 0,
+      "eyes": 0
+    },
+    "timeline_url": "https://api.github.com/repos/dogukanturhal/hexx-pep-core/issues/4/timeline",
+    "performed_via_github_app": null,
+    "state_reason": null,
+    "pinned_comment": null
+  }
+}

@@ -46,6 +46,38 @@ DISCARD  ohcnetwork/create-care-mfe-plug#4  .gitignore is not created when a new
   Not run (already ruled out): existing PR, blocked / umbrella, claimants, prerequisites, environment, claim protocol — use --thorough to run them anyway
 ```
 
+<!-- viable-example:start -->
+And one that cleared every filter on 2026-11-02. It may have been claimed since, which is the point: run it again before you start.
+
+<!-- example-viable: dogukanturhal/hexx-pep-core#4 2026-11-02 -->
+```
+$ claimable dogukanturhal/hexx-pep-core#4
+
+VIABLE   dogukanturhal/hexx-pep-core#4  Add runnable Example functions for pkg.go.dev
+         https://github.com/dogukanturhal/hexx-pep-core/issues/4
+
+  Why: no blockers found — but read the thread before you start
+
+  repo alive
+    · median time from PR opened to merged: 0 days (3/3 of recent PRs merged)
+      https://github.com/dogukanturhal/hexx-pep-core/pulls?q=is%3Apr+is%3Amerged
+  existing PR
+    ✓ no pull request references this issue
+  blocked / umbrella
+    ✓ no blocking labels (documentation, good first issue)
+  claimants
+    ✓ nobody has commented
+  prerequisites
+    · 1 path named in the issue does not exist on `hexx-pep-core`'s default branch — that is unlisted work: example_test.go
+      https://github.com/dogukanturhal/hexx-pep-core/issues/4
+  environment
+    ✓ no heavy setup requirements found in CONTRIBUTING.md, README.md
+  claim protocol
+    · contributions require a signed agreement: "DCO" — a one-time step, but it must be done before review
+      https://github.com/dogukanturhal/hexx-pep-core/blob/HEAD/README.md
+```
+<!-- viable-example:end -->
+
 ---
 
 ## The seven filters
