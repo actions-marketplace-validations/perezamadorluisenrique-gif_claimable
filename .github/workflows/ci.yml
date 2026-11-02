@@ -76,3 +76,31 @@ jobs:
           out=$(/tmp/compat/node_modules/.bin/claimable frappe/lms#2711 --thorough --hacktoberfest || true)
           echo "$out"
           echo "$out" | grep -q 'PR #2727 by @ajzal-byte is already open'
+
+  action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Synthetic issue list over the recorded fixtures
+        run: |
+          mkdir -p "$RUNNER_TEMP/cassettes"
+          cp test/fixtures/*.json "$RUNNER_TEMP/cassettes/"
+          node -e '
+            const crypto = require("crypto"), fs = require("fs");
+            const path = "/repos/frappe/lms/issues?state=open&per_page=30&page=1&labels=good+first+issue";
+            const hash = crypto.createHash("sha256").update(path).digest("hex").slice(0, 12);
+            const slug = path.replace(/^\//, "").replace(/[^a-zA-Z0-9]+/g, "-").slice(0, 80);
+            fs.writeFileSync(process.env.RUNNER_TEMP + "/cassettes/" + slug + "-" + hash + ".json",
+              JSON.stringify({ path, status: 200, body: [{ number: 2711 }] }));
+          '
+      - id: audit
+        uses: ./
+        with:
+          repo: frappe/lms
+          limit: "1"
+          token: ""
+        env:
+          CLAIMABLE_CASSETTE: replay
+          CLAIMABLE_CASSETTE_DIR: ${{ runner.temp }}/cassettes
+          CLAIMABLE_NOW: "2026-09-15T12:00:00Z"
+      - run: test "${{ steps.audit.outputs.discard }}" = "1" && test "${{ steps.audit.outputs.total }}" = "1"

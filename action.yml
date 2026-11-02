@@ -1,0 +1,83 @@
+name: "claimable: are your good first issues really free?"
+description: "Audit a repository's good-first-issue list: open PRs, claims in the thread, blocked labels, dead repos."
+author: "Luis Enrique Perez Amador"
+branding:
+  icon: check-circle
+  color: green
+
+inputs:
+  repo:
+    description: "owner/repo to audit"
+    default: ${{ github.repository }}
+  label:
+    description: "Only issues with this label; empty means all open issues"
+    default: "good first issue"
+  limit:
+    description: "How many issues to check (1-100)"
+    default: "20"
+  token:
+    description: "Token for the GitHub API"
+    default: ${{ github.token }}
+  skip:
+    description: "Filters to skip, comma or space separated"
+    default: ""
+  thorough:
+    description: "Run every filter even after one rules an issue out"
+    default: "false"
+  fail-on:
+    description: "never, no-viable, any-discard or any-not-viable"
+    default: "never"
+
+outputs:
+  total:
+    description: "Issues checked"
+    value: ${{ steps.run.outputs.total }}
+  viable:
+    description: "Issues that cleared every filter"
+    value: ${{ steps.run.outputs.viable }}
+  caution:
+    description: "Issues with reservations"
+    value: ${{ steps.run.outputs.caution }}
+  discard:
+    description: "Issues ruled out"
+    value: ${{ steps.run.outputs.discard }}
+  viable-issues:
+    description: "JSON array of viable issue URLs"
+    value: ${{ steps.run.outputs.viable-issues }}
+  discard-issues:
+    description: "JSON array of discarded issue URLs"
+    value: ${{ steps.run.outputs.discard-issues }}
+  report-json:
+    description: "Path to the full JSON report"
+    value: ${{ steps.run.outputs.report-json }}
+  markdown:
+    description: "Path to the Markdown report"
+    value: ${{ steps.run.outputs.markdown }}
+
+runs:
+  using: composite
+  steps:
+    - id: node
+      shell: bash
+      run: |
+        if node -e 'const [a,b]=process.versions.node.split(".").map(Number);process.exit(a>=24||(a===23&&b>=6)||(a===22&&b>=18)?0:1)' 2>/dev/null; then
+          echo "ok=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "ok=false" >> "$GITHUB_OUTPUT"
+        fi
+    - if: steps.node.outputs.ok != 'true'
+      uses: actions/setup-node@v5
+      with:
+        node-version: "22.18"
+    - id: run
+      shell: bash
+      env:
+        INPUT_REPO: ${{ inputs.repo }}
+        INPUT_LABEL: ${{ inputs.label }}
+        INPUT_LIMIT: ${{ inputs.limit }}
+        INPUT_TOKEN: ${{ inputs.token }}
+        INPUT_SKIP: ${{ inputs.skip }}
+        INPUT_THOROUGH: ${{ inputs.thorough }}
+        INPUT_FAIL_ON: ${{ inputs.fail-on }}
+        NO_COLOR: "1"
+      run: node "$GITHUB_ACTION_PATH/action/main.ts"

@@ -53,6 +53,8 @@ verdict to `reservations`: an unrunnable check is never a silent pass. `hacktobe
 opt-in and deliberately outside `CHECK_ORDER`. Adding a filter means touching `CheckId` and
 `CHECK_ORDER` in `types.ts`, `CHECKS` in `analyze.ts`, and the README table.
 
+**Action.** `action.yml` (composite) runs `action/main.ts`, which calls `listRepoIssues` + `analyze` and writes the job summary via `formatMarkdown()` (also the CLI `--markdown`). `test/action.test.ts` guards `action.yml` against drift. `test/record-showcase.ts` + `.github/workflows/showcase.yml` record a VIABLE example into `test/showcase/` (not `test/fixtures`) with the repo's own token.
+
 **GitHub access.** All API calls go through `api()`/`apiOptional()` in `src/github.ts`, reached via
 the accessors in `src/fetchers.ts`. The client keeps module-level state: an in-process memo (so
 several filters sharing a request cost one fetch), the resolved token (`GITHUB_TOKEN`/`GH_TOKEN`,

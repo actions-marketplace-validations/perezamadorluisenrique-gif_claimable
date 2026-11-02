@@ -168,6 +168,7 @@ gh issue list -R oppia/oppia -l "good first issue" --json url -q '.[].url' | cla
 | `--hacktoberfest` | Also check whether a PR here would count for [Hacktoberfest](https://hacktoberfest.com/participation/) |
 | `--skip <check>` | Skip a filter (repeatable) |
 | `--json` | Machine-readable output |
+| `--markdown` | Markdown report for job summaries and issue bodies (not with `--json`) |
 | `--quiet` | One line per issue |
 | `--viable-only` | Print only issues that survive every filter |
 
@@ -209,6 +210,19 @@ off anywhere, `FORCE_COLOR=1` (or `CLICOLOR_FORCE=1`) keeps it through a pipe, f
 
 ---
 
+## In CI: audit your good first issues
+
+Maintainers can run claimable on a schedule and see, in the job summary, which of their "good first issue" issues are really free:
+
+```yaml
+- uses: perezamadorluisenrique-gif/claimable@v0
+  with:
+    label: good first issue
+    fail-on: never   # or any-discard, to fail when one is already taken
+```
+
+Inputs, outputs and a full workflow are in [docs/action.md](docs/action.md). The same report is available locally with `--markdown`.
+
 ## What it does not do
 
 Stated plainly, because a triage tool that hides its blind spots is worse than none:
@@ -235,7 +249,7 @@ you. Development runs the
 `src/*.ts` files directly — no build step.
 
 ```bash
-npm test          # 151 tests, offline, deterministic
+npm test          # 176 tests, offline, deterministic
 npm run compare   # tool verdicts next to the hand verdicts, side by side
 npm run demo      # regenerate the README demo from a real run
 npm run check:docs # fail if a number in these docs no longer matches the code
