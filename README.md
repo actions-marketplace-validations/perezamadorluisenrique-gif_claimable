@@ -255,6 +255,20 @@ Maintainers can run claimable on a schedule and see, in the job summary, which o
 
 Inputs, outputs and a full workflow are in [docs/action.md](docs/action.md). The same report is available locally with `--markdown`.
 
+## How it compares
+
+[claimcheck](https://www.npmjs.com/package/@reneturcios/claimcheck) (npm, v0.1.4) answers a
+different question. It scans one repository's open, unassigned issues for claim comments and
+ranks the stale ones by age, so a maintainer can find claims that went quiet. `claimable`
+answers the question a contributor has about one issue before starting: is it free right now?
+It runs seven filters, including whether a pull request is already open, whether the repo
+merges anything, and what the project's claim protocol asks for first, and it returns one
+verdict with a link to each piece of evidence.
+
+Use claimcheck to audit a backlog and claimable to decide on the issue in front of you. The
+two can be run together. This comparison is based on claimcheck's npm listing as of
+2026-11-03; if that tool changes, this section may be out of date.
+
 ## What it does not do
 
 Stated plainly, because a triage tool that hides its blind spots is worse than none:
