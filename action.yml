@@ -1,5 +1,5 @@
-name: "claimable: are your good first issues really free?"
-description: "Audit a repository's good-first-issue list: open PRs, claims in the thread, blocked labels, dead repos."
+name: "Claimable good first issue audit"
+description: "Find which good first issues are really free: checks open PRs, claims, blocked labels and dead repos."
 author: "Luis Enrique Perez Amador"
 branding:
   icon: check-circle

@@ -1,6 +1,6 @@
 import { strict as assert } from "node:assert";
 import { spawnSync } from "node:child_process";
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { after, describe, it } from "node:test";
@@ -103,5 +103,16 @@ describe("action.yml and its docs", () => {
       assert.ok(yml.includes(`${env}: \${{ inputs.${n} }}`), `${env} not passed in action.yml`);
       assert.ok(docs.includes(`\`${n}\``), `${n} not in docs/action.md`);
     }
+  });
+});
+
+describe("action.yml Marketplace metadata", () => {
+  const yml = readFileSync(resolve(ROOT, "action.yml"), "utf8");
+  it("has name, description, author and branding", () => {
+    for (const k of ["name", "description", "author"]) assert.match(yml, new RegExp(`^${k}: ".+"`, "m"));
+    assert.match(yml, /^branding:\n {2}icon: [a-z-]+\n {2}color: (white|yellow|blue|green|orange|red|purple|gray-dark)$/m);
+  });
+  it("keeps the action metadata file at the root only", () => {
+    assert.ok(!existsSync(resolve(ROOT, "action.yaml")));
   });
 });

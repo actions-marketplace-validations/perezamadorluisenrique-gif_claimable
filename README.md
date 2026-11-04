@@ -247,10 +247,22 @@ off anywhere, `FORCE_COLOR=1` (or `CLICOLOR_FORCE=1`) keeps it through a pipe, f
 Maintainers can run claimable on a schedule and see, in the job summary, which of their "good first issue" issues are really free:
 
 ```yaml
-- uses: perezamadorluisenrique-gif/claimable@v0
-  with:
-    label: good first issue
-    fail-on: never   # or any-discard, to fail when one is already taken
+name: Audit good first issues
+on:
+  schedule: [{ cron: "0 6 * * 1" }]
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: perezamadorluisenrique-gif/claimable@v0
+        with:
+          label: good first issue
+          fail-on: never   # or any-discard, to fail when one is already taken
 ```
 
 Inputs, outputs and a full workflow are in [docs/action.md](docs/action.md). The same report is available locally with `--markdown`.
@@ -295,7 +307,7 @@ you. Development runs the
 `src/*.ts` files directly — no build step.
 
 ```bash
-npm test          # 176 tests, offline, deterministic
+npm test          # 178 tests, offline, deterministic
 npm run compare   # tool verdicts next to the hand verdicts, side by side
 npm run demo      # regenerate the README demo from a real run
 npm run check:docs # fail if a number in these docs no longer matches the code
