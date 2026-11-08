@@ -94,8 +94,7 @@ in `src/` are written with the `.ts` extension.
   and counted.
 - **Never edit the ground truth or claim-corpus labels to match the tool.** When a hand verdict is
   proven wrong, keep the original and add a `correction` with evidence beside it.
-- Every finding should carry an `evidence` URL a human can open to verify it. Never fabricate one.
-- Filters read comment text rather than counting comments; comment count is not a signal.
+- Every finding carries an `evidence` URL a human can open; never fabricate one. Filters read comment text, not comment counts.
 - Releasing: bump `version` in package.json in a commit, then run the "Publish to npm" workflow
   by hand (`workflow_dispatch`, no inputs). `prepublishOnly` runs build, check, test, and compare.
 - Contributions made with AI assistance say so in the PR description (CONTRIBUTING.md).
