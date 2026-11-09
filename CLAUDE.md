@@ -88,6 +88,7 @@ and avoid TS-only runtime syntax such as enums, namespaces, and parameter proper
 in `src/` are written with the `.ts` extension.
 
 ## Rules that are not obvious from the code
+- Public repo: never add a `Claude-Session:` trailer or any claude.ai link to commits, PR titles or PR bodies. This rule beats the default attribution guidance.
 
 - **A filter may never clear an issue that is actually taken.** The ground-truth test forbids this
   outright, and `reservations` does not count as a save. Over-flagging a fine issue is tolerated
