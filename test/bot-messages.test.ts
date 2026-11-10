@@ -49,6 +49,9 @@ describe("renderComment", () => {
     assert.ok(!text.includes("<img"), text);
     assert.ok(!/\n.*next line/.test(text), "a label cannot start a new line");
     assert.ok(!text.includes("@everyone"), "no ping through a label");
+    const md = renderComment({ kind: "blocked", requester: "bob", label: "x** [click](https://evil.example) **y\u202e" }, M);
+    assert.ok(!md.includes("](http"), md);
+    assert.ok(!md.includes("\u202e"));
     const login = renderComment({ kind: "held", requester: "bob", holder: "x`<script>", since: null }, M);
     assert.ok(!login.includes("<script>"));
     const pinged = renderComment({ kind: "pull-open", requester: "b@d", pull: 1, author: "@team" }, M);
@@ -71,6 +74,12 @@ describe("markers", () => {
     ];
     for (const b of bad) assert.equal(parseMarker(b), null, String(b));
   });
+  it("is the marker of a bot only when it is the first line", () => {
+    const quoted = `Someone wrote:\n> ${renderMarker(M)}\nthanks`;
+    assert.equal(parseMarker(quoted), null);
+    assert.equal(parseMarker(`> ${renderMarker(M)}`), null);
+    assert.deepEqual(parseMarker(`${renderMarker(M)}\nhello`), M);
+  });
   it("writes only what is valid, whatever it is given", () => {
     const text = renderMarker({ claimant: "a --> <script>", since: "nope", nudgedAt: "2026-09-10T09:00:00Z" });
     assert.ok(!text.slice(5).includes("-->") || text.endsWith(" -->"));
@@ -80,7 +89,7 @@ describe("markers", () => {
 
 describe("readState", () => {
   const issue: BotIssue = {
-    number: 1, state: "open", locked: false, html_url: "u", title: "t", labels: ["claimed"],
+    number: 1, state: "open", locked: false, html_url: "https://github.com/acme/widgets/issues/1", title: "t", labels: ["claimed"],
     assignees: [{ login: "alice" }], updated_at: "2026-09-01T00:00:00Z",
   };
   const botBody = `${renderMarker(M)}\nx`;
@@ -113,8 +122,15 @@ describe("readState", () => {
     const pr = readState(issue, [{ event: "cross-referenced", created_at: "2026-09-08T00:00:00Z", source: { issue: { number: 9, html_url: "p", state: "open", title: "t", pull_request: { merged_at: null, html_url: "p" }, user: { login: "alice" } } } }], []);
     assert.equal(pr.lastActivity, "2026-09-08T00:00:00Z");
   });
+  it("counts only pull requests of this repository", () => {
+    const ref = (html: string) => ({ event: "cross-referenced", created_at: "2026-09-01T00:00:00Z", source: { issue: { number: 1, html_url: html, state: "open", title: "t", pull_request: { merged_at: null, html_url: html }, user: { login: "mallory" } } } });
+    const mine = { ...issue, html_url: "https://github.com/acme/widgets/issues/1" };
+    assert.equal(readState(mine, [ref("https://github.com/mallory/junk/pull/1")], []).openPulls.length, 0);
+    assert.equal(readState(mine, [ref("https://github.com/acme/widgets/pull/1")], []).openPulls.length, 1);
+    assert.equal(readState(mine, [ref("https://github.com/ACME/Widgets/pull/1")], []).openPulls.length, 1);
+  });
   it("forgets a pull request that was closed later", () => {
-    const open = { event: "cross-referenced", created_at: "2026-09-01T00:00:00Z", source: { issue: { number: 9, html_url: "p", state: "open", title: "t", pull_request: { merged_at: null, html_url: "p" } } } };
+    const open = { event: "cross-referenced", created_at: "2026-09-01T00:00:00Z", source: { issue: { number: 9, html_url: "https://github.com/acme/widgets/pull/9", state: "open", title: "t", pull_request: { merged_at: null, html_url: "https://github.com/acme/widgets/pull/9" } } } };
     const closed = { ...open, created_at: "2026-09-02T00:00:00Z", source: { issue: { ...open.source.issue, state: "closed" } } };
     assert.equal(readState(issue, [open], []).openPulls.length, 1);
     assert.equal(readState(issue, [open, closed], []).openPulls.length, 0);

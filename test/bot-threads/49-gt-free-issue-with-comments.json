@@ -1,0 +1,83 @@
+{
+  "name": "gt-free-issue-with-comments",
+  "source": "ground truth: openfoodfacts/openfoodfacts-explorer#1660 (viable, two comments, no assignee)",
+  "now": "2026-09-25T12:00:00Z",
+  "issue": {
+    "number": 1660,
+    "state": "open",
+    "locked": false,
+    "html_url": "https://github.com/openfoodfacts/openfoodfacts-explorer/issues/1660",
+    "title": "Compare mode: Improve compare mode icon",
+    "labels": [
+      "good first issue",
+      "Compare mode"
+    ],
+    "assignees": [],
+    "updated_at": "2026-09-08T18:39:30Z"
+  },
+  "timeline": [],
+  "comments": [
+    {
+      "id": 5552381433,
+      "user": {
+        "login": "pinankshah8-Aa",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "Hi! I’d like to work on this issue.\n\nI reviewed the current Compare entry points in `src/lib/ui/CompareFloatingButton.svelte` and `src/routes/products/[barcode]/ProductHeader.svelte`. Both currently use `@iconify-svelte/mdi/compare` at `h-5 w-5`.\n\nMy proposal is to replace that icon consistently in both places with `@iconify-svelte/mdi/swap-horizontal`. The two opposing horizontal arrows communicate comparing two items side-by-side more directly than the current split-style compare glyph, while staying within the project’s existing MDI/Iconify dependency. I would keep the existing Compare text, `title`, and `aria-label` behavior unchanged, and verify the icon at the current mobile and desktop sizes.\n\nIf this direction looks good, could I be assigned #1660 before I start the implementation?\n\n**AI usage disclosure:** I’m using ChatGPT (GPT-5.6 Sol) as a primary coding assistant and Google Antigravity CLI with Gemini 3.1 Pro as a read-only second reviewer. I will review and test all changes myself and take responsibility for the submitted code.\n",
+      "created_at": "2026-09-05T14:12:14Z"
+    },
+    {
+      "id": 5590052054,
+      "user": {
+        "login": "Yash990-bit",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "Hi! I’d like to work on this issue as well. I noticed that someone has already expressed interest, so I wanted to check whether the issue is currently assigned or still available.\n\nIf it’s still available, I’d be happy to work on the proposed icon update.",
+      "created_at": "2026-09-08T18:39:30Z"
+    },
+    {
+      "id": 9000047,
+      "user": {
+        "login": "newcomer",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "/claim",
+      "created_at": "2026-09-25T11:59:00Z"
+    }
+  ],
+  "event": {
+    "kind": "comment",
+    "commentId": 9000047
+  },
+  "requesterClaims": [],
+  "config": {},
+  "expected": [
+    {
+      "type": "assign",
+      "login": "newcomer"
+    },
+    {
+      "type": "label",
+      "name": "claimed"
+    },
+    {
+      "type": "comment",
+      "mode": "create",
+      "reply": {
+        "kind": "claimed",
+        "claimant": "newcomer",
+        "since": "2026-09-25",
+        "nudgeOn": "2026-10-02",
+        "releaseOn": "2026-10-09"
+      },
+      "marker": {
+        "claimant": "newcomer",
+        "since": "2026-09-25T12:00:00Z",
+        "nudgedAt": null
+      }
+    }
+  ]
+}

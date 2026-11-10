@@ -87,6 +87,8 @@ export type GhIssue = {
   title: string;
   body: string | null;
   state: "open" | "closed";
+  /** Conversation locked; absent from older recorded fixtures. */
+  locked?: boolean;
   html_url: string;
   labels: (GhLabel | string)[];
   assignees: GhUser[];

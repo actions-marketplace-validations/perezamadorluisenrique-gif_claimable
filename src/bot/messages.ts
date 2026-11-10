@@ -12,7 +12,12 @@ import { mdInline } from "../report.ts";
 import { renderMarker } from "./state.ts";
 import type { Marker, Reply } from "./types.ts";
 
-const who = (login: string) => `**${mdInline(login, 60)}**`;
+/** Outside text as plain text: Markdown syntax and invisible or direction-changing characters made inert. */
+export function mdText(text: string, max = 60): string {
+  const clean = text.replace(/\p{Cf}/gu, "");
+  return mdInline(clean, max).replace(/[*_\[\]()!#~]/g, "\\$&");
+}
+const who = (login: string) => `**${mdText(login)}**`;
 const to = (login: string) => `@${login.replace(/[^A-Za-z0-9-]/g, "")}`;
 const from = (date: string | null) => (date ? ` since ${date}` : "");
 const HOW = "Comment `/claim` to reserve an issue, `/unclaim` to release it, `/claim status` to see who holds it.";

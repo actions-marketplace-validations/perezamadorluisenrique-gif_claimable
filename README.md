@@ -307,7 +307,7 @@ you. Development runs the
 `src/*.ts` files directly — no build step.
 
 ```bash
-npm test          # 447 tests, offline, deterministic
+npm test          # 479 tests, offline, deterministic
 npm run compare   # tool verdicts next to the hand verdicts, side by side
 npm run demo      # regenerate the README demo from a real run
 npm run check:docs # fail if a number in these docs no longer matches the code

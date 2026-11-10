@@ -34,7 +34,9 @@ export type State = {
   requesterClaims: number[];
 };
 
-const MARKER = /<!-- claimable-bot:v1 (\{[^\n]*?\}) -->/;
+// Anchored to the start: the bot writes it as the first line, so a marker quoted
+// further down (by a user, or by another bot echoing a user) is not the bot's.
+const MARKER = /^<!-- claimable-bot:v1 (\{[^\n]*?\}) -->(?:\n|$)/;
 const LOGIN = /^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\[bot\])?$/;
 
 function validTime(v: unknown): v is string {
@@ -87,11 +89,16 @@ export function readState(
     .filter((c): c is { commentId: number; marker: Marker; at: number } => c.marker !== null)
     .sort((a, b) => a.at - b.at)[0];
 
+  // Only pull requests of this repository: a pull request elsewhere that merely
+  // mentions the issue is not competition, and its number would link to the
+  // wrong place in the bot's comment.
+  const pullPrefix = `${issue.html_url.replace(/\/issues\/\d+\/?$/, "")}/pull/`.toLowerCase();
   const openPulls = new Map<number, OpenPull>();
   for (const event of timeline) {
     if (event.event !== "cross-referenced" && event.event !== "connected") continue;
     const source = event.source?.issue;
     if (!source?.pull_request) continue;
+    if (!(source.pull_request.html_url || source.html_url || "").toLowerCase().startsWith(pullPrefix)) continue;
     if (source.state === "open") {
       openPulls.set(source.number, {
         number: source.number,

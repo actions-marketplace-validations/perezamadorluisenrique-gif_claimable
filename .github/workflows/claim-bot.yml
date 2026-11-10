@@ -1,0 +1,32 @@
+name: Claim bot
+
+# This repository runs its own bot. While it is being proven, it acts only on
+# issues labelled `bot-sandbox`; the condition is removed when the release ships.
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+
+# One run per issue at a time, so two /claim comments cannot both win.
+concurrency:
+  group: claim-bot-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  claim:
+    # Not for pull requests, not for bots (the bot's own comments), and for now
+    # only on the sandbox issue.
+    if: >-
+      github.event.issue.pull_request == null &&
+      github.event.comment.user.type != 'Bot' &&
+      contains(github.event.issue.labels.*.name, 'bot-sandbox')
+    runs-on: ubuntu-latest
+    steps:
+      # The default branch, never the commenter's code: an issue_comment run
+      # has write access, so it must not execute anything a stranger wrote.
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: ./bot
