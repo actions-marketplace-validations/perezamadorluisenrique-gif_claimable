@@ -37,3 +37,10 @@ One blocker, fixed in the same PR: a pull request from another repository (or an
 Also fixed: the marker is honoured only on the first line of a bot comment (a bot echoing a user's quote could forge it); label text in the comment goes through `mdText` (Markdown syntax and invisible or bidi characters inert); `oneLine` escapes `\r`; the bot re-reads the trigger comment from the API (edited or deleted comments are not acted on); `dry-run` writes only on exactly `false`; "maintainer" for `/unclaim` is checked against the repository permission (triage or more), not the association; `persist-credentials: false` on the checkout.
 
 Documented, not changed: GitHub keeps only the newest waiting run per `concurrency` group, so the middle of three comments in seconds may go unanswered (nobody is wrongly assigned); a hand assignment in the same second as a `/claim` can leave two assignees; `actions/setup-node@v5` is a moving tag as in the audit Action and changes the job's Node when it runs; a same-repo pull request that only mentions the issue counts as competition (the audit does the same).
+
+## B1.4 Version 1 of the bot (2026-11-10)
+
+- Live proof on the sandbox issue ([#33](https://github.com/perezamadorluisenrique-gif/claimable/issues/33), labelled `bot-sandbox`), run by this repository's own workflow after B1.3 merged: `/claim` assigned the issue, added `claimed` and wrote the one comment ("reserved for you as of 2026-11-10 … reminder by 2026-11-17, released by 2026-11-24"); `/claim status` edited that same comment ("Held by … since 2026-11-10"); `/unclaim` unassigned, removed the label and edited the same comment again ("released this issue"). Three commands, one bot comment, no extra noise.
+- `.github/workflows/claim-bot.yml` now runs on every issue of this repository.
+- Package version 0.4.0; the README has the install block and the real comment text.
+- To do on the laptop (queued in `cola-laptop.md`): create the tags `v0.4.0` and `v1` (tags cannot be pushed from the cloud session) so `uses: .../claimable/bot@v1` resolves.

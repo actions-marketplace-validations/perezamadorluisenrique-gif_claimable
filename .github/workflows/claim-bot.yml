@@ -1,7 +1,6 @@
 name: Claim bot
 
-# This repository runs its own bot. While it is being proven, it acts only on
-# issues labelled `bot-sandbox`; the condition is removed when the release ships.
+# This repository runs its own bot. Try it on the issue labelled `bot-sandbox`.
 on:
   issue_comment:
     types: [created]
@@ -16,12 +15,8 @@ concurrency:
 
 jobs:
   claim:
-    # Not for pull requests, not for bots (the bot's own comments), and for now
-    # only on the sandbox issue.
-    if: >-
-      github.event.issue.pull_request == null &&
-      github.event.comment.user.type != 'Bot' &&
-      contains(github.event.issue.labels.*.name, 'bot-sandbox')
+    # Not for pull requests, not for bots (the bot's own comments).
+    if: github.event.issue.pull_request == null && github.event.comment.user.type != 'Bot'
     runs-on: ubuntu-latest
     steps:
       # The default branch, never the commenter's code: an issue_comment run
