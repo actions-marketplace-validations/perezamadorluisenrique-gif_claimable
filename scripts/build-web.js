@@ -99,6 +99,12 @@ for (const ex of examples) {
   mkdirSync(`${SITE}/e/${ex.slug}`, { recursive: true });
   writeFileSync(`${SITE}/e/${ex.slug}/index.html`, html);
 }
+// The free-issues index, from the collector's data (a checkout of the
+// `index-data` branch). Without it the pages still build and say the first
+// checks are pending.
+const { buildFreeSite, FREE_BASE } = await import("../index/site.ts");
+const free = buildFreeSite(SITE, process.env.CLAIMABLE_INDEX_DATA || "index-data");
+for (const rel of free.pages) urls.push(FREE_BASE + (rel ? `${rel}/` : ""));
 cpSync("docs/social-preview.png", `${SITE}/social-preview.png`);
 writeFileSync(`${SITE}/robots.txt`, `User-agent: *\nAllow: /\nSitemap: ${BASE}/sitemap.xml\n`);
 writeFileSync(`${SITE}/sitemap.xml`, `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${u}</loc></url>`).join("\n")}\n</urlset>\n`);
@@ -107,4 +113,5 @@ function refText(r) {
   return `${r.owner}/${r.repo}#${r.number}`;
 }
 
+console.log(`index: ${free.pages.length} pages, ${free.listed} issues listed`);
 console.log(`built ${SITE}/ — ${examples.map((e) => `${e.verdict} ${refText(e.report.ref)}`).join(", ")}`);

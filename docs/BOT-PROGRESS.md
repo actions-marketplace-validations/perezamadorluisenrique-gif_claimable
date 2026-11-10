@@ -87,3 +87,9 @@ Documented, not changed: GitHub keeps only the newest waiting run per `concurren
 
 - `index/build-projects.ts`: 20 languages, 15 each, most stars first, with at least one `good first issue` or `help wanted` issue, pushed in the last 90 days, not archived, not a fork, and not a list, guide or course (name or description). 300 projects in `index/projects.json`.
 - The cloud sandbox reaches search only through `gh api`, so the list was built with `--hits` from saved search results; on a normal machine the script searches by itself (40 search requests, paced under 30 a minute).
+
+## I1.3 Index site (2026-11-10)
+
+- `index/site.ts`, called by `scripts/build-web.js`, writes `site/free/`: English and Spanish home with search and language and label filters (an inline script that only hides rows; everything shows without JavaScript), one page per language and per project, and `free/issues.json`. Each row: "No signs of being taken, checked <date>", link to what was checked, and "Report a mistake" (a prefilled issue here). Only viable issues checked in the last 4 days are listed. No resource from another server.
+- `pages.yml` also runs four times a day and builds from the `index-data` branch. The main page links to the index from its footer.
+- Checked locally with axe-core 4.10.3 in Chromium at 1280 and 390 px, light and dark: no violations, no horizontal scroll.
