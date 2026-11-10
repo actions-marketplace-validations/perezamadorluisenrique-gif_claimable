@@ -267,6 +267,43 @@ jobs:
 
 Inputs, outputs and a full workflow are in [docs/action.md](docs/action.md). The same report is available locally with `--markdown`.
 
+## In CI: let contributors claim an issue with `/claim`
+
+The same repository ships a claim bot. A contributor comments `/claim` on an issue and gets it: the bot assigns it, adds a `claimed` label and leaves **one** short comment that it edits as things change. It never acts on a sentence like "can I take this?", only on an explicit command, and it names the reason when it says no (closed, someone else holds it, a pull request is already open, a blocking label, too many claims).
+
+```yaml
+# .github/workflows/claim-bot.yml
+name: Claim bot
+on:
+  issue_comment:
+    types: [created]
+permissions:
+  issues: write
+concurrency:
+  group: claim-bot-${{ github.event.issue.number }}
+  cancel-in-progress: false
+jobs:
+  claim:
+    if: github.event.issue.pull_request == null && github.event.comment.user.type != 'Bot'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: perezamadorluisenrique-gif/claimable/bot@v1
+        with:
+          dry-run: true   # describe in the job summary, write nothing; remove when it looks right
+```
+
+This is what the bot wrote on this repository's own test issue after `/claim`:
+
+```text
+@perezamadorluisenrique-gif this issue is reserved for you as of 2026-11-10.
+
+If there is no activity here by 2026-11-17 I will leave one reminder, and if there is
+still none by 2026-11-24 the claim is released. A comment, a linked pull request or a
+commit that mentions the issue counts as activity. Comment `/unclaim` to release it yourself.
+```
+
+Commands, behaviour and limits are in [docs/bot.md](docs/bot.md). Free in public repositories; in private ones it only reports what it would do.
+
 ## How it compares
 
 [claimcheck](https://www.npmjs.com/package/@reneturcios/claimcheck) (npm, v0.1.4) answers a
@@ -307,7 +344,7 @@ you. Development runs the
 `src/*.ts` files directly — no build step.
 
 ```bash
-npm test          # 178 tests, offline, deterministic
+npm test          # 479 tests, offline, deterministic
 npm run compare   # tool verdicts next to the hand verdicts, side by side
 npm run demo      # regenerate the README demo from a real run
 npm run check:docs # fail if a number in these docs no longer matches the code

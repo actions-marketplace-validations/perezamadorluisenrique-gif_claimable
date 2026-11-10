@@ -1,0 +1,83 @@
+{
+  "name": "claim-closed-unmerged-pr",
+  "source": "synthetic",
+  "now": "2026-09-15T12:00:00Z",
+  "issue": {
+    "number": 7,
+    "state": "open",
+    "locked": false,
+    "html_url": "https://github.com/acme/widgets/issues/7",
+    "title": "Fix typo in README",
+    "labels": [
+      "good first issue"
+    ],
+    "assignees": [],
+    "updated_at": "2026-09-10T08:00:00Z"
+  },
+  "timeline": [
+    {
+      "event": "cross-referenced",
+      "created_at": "2026-09-12T10:00:00Z",
+      "source": {
+        "issue": {
+          "number": 17,
+          "html_url": "https://github.com/acme/widgets/pull/17",
+          "state": "closed",
+          "title": "Fix 17",
+          "pull_request": {
+            "merged_at": null,
+            "html_url": "https://github.com/acme/widgets/pull/17"
+          },
+          "user": {
+            "login": "carol"
+          },
+          "draft": false
+        }
+      }
+    }
+  ],
+  "comments": [
+    {
+      "id": 9000016,
+      "user": {
+        "login": "bob",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "/claim",
+      "created_at": "2026-09-15T11:59:00Z"
+    }
+  ],
+  "requesterClaims": [],
+  "config": {},
+  "expected": [
+    {
+      "type": "assign",
+      "login": "bob"
+    },
+    {
+      "type": "label",
+      "name": "claimed"
+    },
+    {
+      "type": "comment",
+      "mode": "create",
+      "reply": {
+        "kind": "claimed",
+        "claimant": "bob",
+        "since": "2026-09-15",
+        "nudgeOn": "2026-09-22",
+        "releaseOn": "2026-09-29"
+      },
+      "marker": {
+        "claimant": "bob",
+        "since": "2026-09-15T12:00:00Z",
+        "nudgedAt": null
+      }
+    }
+  ],
+  "event": {
+    "kind": "comment",
+    "commentId": 9000016
+  }
+}

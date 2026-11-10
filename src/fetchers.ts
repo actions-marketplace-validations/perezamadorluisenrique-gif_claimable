@@ -28,6 +28,52 @@ export function getTimeline(ref: IssueRef): Promise<GhTimelineEvent[]> {
   return api<GhTimelineEvent[]>(`/repos/${ref.owner}/${ref.repo}/issues/${ref.number}/timeline?per_page=100`);
 }
 
+/**
+ * Every page of a list, up to `maxPages`. When the last page it was willing to
+ * read is still full, the list is reported as `truncated` instead of passed off
+ * as complete: the bot must not act on the first hundred entries of a longer
+ * thread, because the entry that matters (a rival pull request, its own
+ * comment) may be on a page it never saw.
+ */
+async function allPages<T>(base: string, maxPages = 10): Promise<{ items: T[]; truncated: boolean }> {
+  const items: T[] = [];
+  for (let page = 1; page <= maxPages; page++) {
+    const got = await api<T[]>(page === 1 ? base : `${base}&page=${page}`);
+    items.push(...got);
+    if (got.length < 100) return { items, truncated: false };
+  }
+  return { items, truncated: true };
+}
+
+export function getAllComments(ref: IssueRef): Promise<{ items: GhComment[]; truncated: boolean }> {
+  return allPages<GhComment>(`/repos/${ref.owner}/${ref.repo}/issues/${ref.number}/comments?per_page=100`);
+}
+
+export function getAllTimeline(ref: IssueRef): Promise<{ items: GhTimelineEvent[]; truncated: boolean }> {
+  return allPages<GhTimelineEvent>(`/repos/${ref.owner}/${ref.repo}/issues/${ref.number}/timeline?per_page=100`);
+}
+
+/** Open issues of the repo carrying `label` and assigned to `login`: what a person already holds. */
+export async function getHeldIssues(ref: IssueRef, login: string, label: string): Promise<{ numbers: number[]; truncated: boolean }> {
+  const { items, truncated } = await allPages<GhIssue>(
+    `/repos/${ref.owner}/${ref.repo}/issues?state=open&labels=${encodeURIComponent(label)}&assignee=${encodeURIComponent(login)}&per_page=100`,
+    3,
+  );
+  return { numbers: items.filter((i) => !i.pull_request && i.number !== ref.number).map((i) => i.number), truncated };
+}
+
+/** A person's role on the repository (admin, maintain, write, triage, read, none), or null when it cannot be read. */
+export async function getPermission(ref: IssueRef, login: string): Promise<string | null> {
+  try {
+    const res = await apiOptional<{ role_name?: string; permission?: string }>(
+      `/repos/${ref.owner}/${ref.repo}/collaborators/${encodeURIComponent(login)}/permission`,
+    );
+    return res?.role_name ?? res?.permission ?? null;
+  } catch {
+    return null;
+  }
+}
+
 /** Recently-closed PRs, used to measure whether review actually happens here. */
 export function getRecentPulls(ref: IssueRef): Promise<GhPull[]> {
   return api<GhPull[]>(

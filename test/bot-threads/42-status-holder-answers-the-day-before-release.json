@@ -1,0 +1,91 @@
+{
+  "name": "status-holder-answers-the-day-before-release",
+  "source": "synthetic",
+  "now": "2026-09-14T12:00:00Z",
+  "issue": {
+    "number": 7,
+    "state": "open",
+    "locked": false,
+    "html_url": "https://github.com/acme/widgets/issues/7",
+    "title": "Fix typo in README",
+    "labels": [
+      "good first issue",
+      "claimed"
+    ],
+    "assignees": [
+      {
+        "login": "alice"
+      }
+    ],
+    "updated_at": "2026-09-10T08:00:00Z"
+  },
+  "timeline": [
+    {
+      "event": "assigned",
+      "created_at": "2026-09-01T09:00:00Z",
+      "actor": {
+        "login": "github-actions[bot]"
+      },
+      "assignee": {
+        "login": "alice"
+      }
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "user": {
+        "login": "alice",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "/claim",
+      "created_at": "2026-09-01T09:00:00Z"
+    },
+    {
+      "id": 2,
+      "user": {
+        "login": "github-actions[bot]",
+        "type": "Bot"
+      },
+      "author_association": "NONE",
+      "body": "<!-- claimable-bot:v1 {\"claimant\":\"alice\",\"since\":\"2026-09-01T09:00:00Z\",\"nudgedAt\":\"2026-09-08T09:00:00Z\"} -->\nNudged.",
+      "created_at": "2026-09-08T09:00:00Z"
+    },
+    {
+      "id": 3,
+      "user": {
+        "login": "alice",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "/claim status",
+      "created_at": "2026-09-14T11:59:00Z"
+    }
+  ],
+  "requesterClaims": [],
+  "config": {},
+  "event": {
+    "kind": "comment",
+    "commentId": 3
+  },
+  "expected": [
+    {
+      "type": "comment",
+      "mode": "edit",
+      "commentId": 2,
+      "reply": {
+        "kind": "status",
+        "holder": "alice",
+        "since": "2026-09-01",
+        "nudgeOn": "2026-09-21",
+        "releaseOn": "2026-09-28"
+      },
+      "marker": {
+        "claimant": "alice",
+        "since": "2026-09-01T09:00:00Z",
+        "nudgedAt": null
+      }
+    }
+  ]
+}

@@ -288,6 +288,55 @@ export async function api<T>(path: string): Promise<T> {
   }
 }
 
+/**
+ * Write to the API (POST, PATCH, DELETE). The one place that does.
+ *
+ * Never memoised, never recorded, and refused outright while replaying: a test
+ * run that reaches this function has a bug, and must not be able to write to a
+ * real repository by accident. 5xx is retried a few times; 403, 404 and 422 are
+ * the caller's to interpret (no access, gone, nothing to change).
+ */
+export async function send<T = unknown>(method: "POST" | "PATCH" | "DELETE", path: string, body?: unknown, attempt = 0): Promise<T> {
+  if (state.cassetteMode === "replay") {
+    throw httpError(0, path, `${method} ${path} refused: writes are disabled while replaying cassettes`);
+  }
+  const token = resolveToken();
+  if (!token) throw httpError(401, path, `${method} ${path} needs a token`);
+  state.requests += 1;
+  const res = await fetch(`${apiBase()}${path}`, {
+    method,
+    headers: {
+      accept: "application/vnd.github+json",
+      "x-github-api-version": "2022-11-28",
+      "user-agent": UA,
+      authorization: `Bearer ${token}`,
+      ...(body === undefined ? {} : { "content-type": "application/json" }),
+    },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  if (res.status >= 500 && attempt < 3) {
+    await sleep(500 * 2 ** attempt);
+    return send<T>(method, path, body, attempt + 1);
+  }
+  if (!res.ok) {
+    let detail = "";
+    try {
+      const parsed = (await res.json()) as { message?: string };
+      detail = parsed.message ? `: ${parsed.message}` : "";
+    } catch {
+      /* not JSON; the status is enough */
+    }
+    throw httpError(res.status, path, `${method} ${path} → ${res.status}${detail}`);
+  }
+  state.memo.clear();
+  if (res.status === 204) return undefined as T;
+  try {
+    return (await res.json()) as T;
+  } catch {
+    return undefined as T;
+  }
+}
+
 /** Like `api`, but a 404 means "absent", not "broken". */
 export async function apiOptional<T>(path: string): Promise<T | null> {
   try {

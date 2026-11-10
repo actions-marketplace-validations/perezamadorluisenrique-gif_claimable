@@ -20,7 +20,7 @@ import { getIssue } from "../fetchers.ts";
 import type { Finding, GhLabel, IssueRef } from "../types.ts";
 
 /** Labels that mean stop. Matched case-insensitively against the whole name. */
-const BLOCKING_LABEL = /(^|\b)(on[ -]?hold|blocked|do[ -]not[ -]work|needs[ -:]?(design|spec|discussion|decision)|status[ -:]\s*blocked|awaiting[ -]decision|wontfix|invalid|duplicate)(\b|$)/i;
+export const BLOCKING_LABEL = /(^|\b)(on[ -]?hold|blocked|do[ -]not[ -]work|needs[ -:]?(design|spec|discussion|decision)|status[ -:]\s*blocked|awaiting[ -]decision|wontfix|invalid|duplicate)(\b|$)/i;
 
 /** Labels that mean "claiming is gated on something", not "stop". */
 const CAUTION_LABEL = /(^|\b)(needs[ -:]?triage|discussion|proposal|rfc|question|stale)(\b|$)/i;

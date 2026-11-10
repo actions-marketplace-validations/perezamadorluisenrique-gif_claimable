@@ -1,0 +1,68 @@
+{
+  "name": "claim-assigned-to-other",
+  "source": "synthetic",
+  "now": "2026-09-15T12:00:00Z",
+  "issue": {
+    "number": 7,
+    "state": "open",
+    "locked": false,
+    "html_url": "https://github.com/acme/widgets/issues/7",
+    "title": "Fix typo in README",
+    "labels": [
+      "good first issue"
+    ],
+    "assignees": [
+      {
+        "login": "carol"
+      }
+    ],
+    "updated_at": "2026-09-10T08:00:00Z"
+  },
+  "timeline": [
+    {
+      "event": "assigned",
+      "created_at": "2026-09-01T09:00:00Z",
+      "actor": {
+        "login": "maint"
+      },
+      "assignee": {
+        "login": "carol"
+      }
+    }
+  ],
+  "comments": [
+    {
+      "id": 9000005,
+      "user": {
+        "login": "bob",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "/claim",
+      "created_at": "2026-09-15T11:59:00Z"
+    }
+  ],
+  "requesterClaims": [],
+  "config": {},
+  "expected": [
+    {
+      "type": "comment",
+      "mode": "create",
+      "reply": {
+        "kind": "held",
+        "requester": "bob",
+        "holder": "carol",
+        "since": "2026-09-01"
+      },
+      "marker": {
+        "claimant": null,
+        "since": null,
+        "nudgedAt": null
+      }
+    }
+  ],
+  "event": {
+    "kind": "comment",
+    "commentId": 9000005
+  }
+}

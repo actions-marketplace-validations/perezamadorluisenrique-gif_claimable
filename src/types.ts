@@ -87,6 +87,8 @@ export type GhIssue = {
   title: string;
   body: string | null;
   state: "open" | "closed";
+  /** Conversation locked; absent from older recorded fixtures. */
+  locked?: boolean;
   html_url: string;
   labels: (GhLabel | string)[];
   assignees: GhUser[];
@@ -132,6 +134,10 @@ export type GhPull = {
 export type GhTimelineEvent = {
   event: string;
   created_at?: string;
+  /** Who did it (assigned, referenced, ...). */
+  actor?: { login: string } | null;
+  /** For `assigned` / `unassigned`. */
+  assignee?: { login: string } | null;
   source?: {
     issue?: {
       number: number;
@@ -140,6 +146,7 @@ export type GhTimelineEvent = {
       title: string;
       pull_request?: { merged_at: string | null; html_url: string };
       user?: GhUser;
+      draft?: boolean;
     };
   };
 };

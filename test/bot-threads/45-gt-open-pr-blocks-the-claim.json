@@ -1,0 +1,127 @@
+{
+  "name": "gt-open-pr-blocks-the-claim",
+  "source": "ground truth: ohcnetwork/care_fe#16609 (PR #16610 already open)",
+  "now": "2026-09-25T12:00:00Z",
+  "issue": {
+    "number": 16609,
+    "state": "open",
+    "locked": false,
+    "html_url": "https://github.com/ohcnetwork/care_fe/issues/16609",
+    "title": "Cannot click the arrow icon of medication request's frequency dropdown",
+    "labels": [
+      "good first issue"
+    ],
+    "assignees": [],
+    "updated_at": "2026-08-19T08:04:49Z"
+  },
+  "timeline": [
+    {
+      "event": "cross-referenced",
+      "created_at": "2026-07-29T17:56:19Z",
+      "actor": {
+        "login": "mojidev7"
+      },
+      "source": {
+        "issue": {
+          "number": 16610,
+          "html_url": "https://github.com/ohcnetwork/care_fe/pull/16610",
+          "state": "open",
+          "title": "fix: allow clicking the dropdown caret icon in Autocomplete",
+          "pull_request": {
+            "merged_at": null,
+            "html_url": "https://github.com/ohcnetwork/care_fe/pull/16610"
+          },
+          "user": {
+            "login": "mojidev7"
+          },
+          "draft": false
+        }
+      }
+    }
+  ],
+  "comments": [
+    {
+      "id": 5121309716,
+      "user": {
+        "login": "snehasnair2002",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "Also the border on the right of the input is not rounded when a value is selected.",
+      "created_at": "2026-07-29T17:28:33Z"
+    },
+    {
+      "id": 5139383087,
+      "user": {
+        "login": "aflaha01",
+        "type": "User"
+      },
+      "author_association": "CONTRIBUTOR",
+      "body": "Hi! I'm interested in contributing and would like to work on this issue. Could I please be assigned?\nThanks!",
+      "created_at": "2026-07-31T04:49:23Z"
+    },
+    {
+      "id": 5168798787,
+      "user": {
+        "login": "sarvesh-official",
+        "type": "User"
+      },
+      "author_association": "CONTRIBUTOR",
+      "body": "Hi @rithviknishad @Jacobjeevan @snehasnair2002 , I'd like to work on this issue.\n\nThe frequency dropdown uses the `Autocomplete` component in `src/components/ui/autocomplete.tsx`. The `CaretSortIcon` (arrow icon) is rendered as a decorative element with `pointer-events` not explicitly set, so clicks on it don't propagate to the `PopoverTrigger` button that opens the dropdown.\n\nIn other dropdowns in the app (e.g. `Select`), the trigger wraps the entire clickable area including the icon. Here, the `CaretSortIcon` sits outside the trigger's click area.\n\nProposed fix: Add `pointer-events-none` to the `CaretSortIcon` so clicks pass through to the underlying trigger button, matching the pattern used in other dropdown components.\n\nETA: 1 day after assignment",
+      "created_at": "2026-08-03T16:05:28Z"
+    },
+    {
+      "id": 5306017526,
+      "user": {
+        "login": "najmunneesa",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "hi, i'am a new contributor and I'd like to work on this issue. can I take it and work on a fix?\n",
+      "created_at": "2026-08-16T05:59:10Z"
+    },
+    {
+      "id": 5318023851,
+      "user": {
+        "login": "ShoneShaji",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "Hi, I would like to work on this issue. Could you please assign it to me?\n",
+      "created_at": "2026-08-17T17:04:36Z"
+    },
+    {
+      "id": 9000043,
+      "user": {
+        "login": "newcomer",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "/claim",
+      "created_at": "2026-09-25T11:59:00Z"
+    }
+  ],
+  "event": {
+    "kind": "comment",
+    "commentId": 9000043
+  },
+  "requesterClaims": [],
+  "config": {},
+  "expected": [
+    {
+      "type": "comment",
+      "mode": "create",
+      "reply": {
+        "kind": "pull-open",
+        "requester": "newcomer",
+        "pull": 16610,
+        "author": "mojidev7"
+      },
+      "marker": {
+        "claimant": null,
+        "since": null,
+        "nudgedAt": null
+      }
+    }
+  ]
+}
