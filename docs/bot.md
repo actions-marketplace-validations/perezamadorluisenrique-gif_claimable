@@ -97,7 +97,11 @@ It names the reason and does not assign: the issue is closed, someone else holds
 | `config` | `.github/claimable.yml` | Path of the settings file (see Settings). Read from the default branch |
 | `dry-run` | `false` | Anything but `false` only describes the actions in the job summary |
 
-Private repositories run in report-only mode for now: the bot says what it would do and does nothing.
+
+
+## Private repositories: report-only mode
+
+In a private repository the bot runs in report-only mode. It reads the issue and, for every command and every daily visit, writes into the job summary what it *would* do (the assignment, the label, the exact comment) and changes nothing. The first line of the summary says so. Use it to see how the bot would behave on your issues; `dry-run: true` gives the same view in a public repository. In both, the summary shows the comment word for word, so you can judge the tone before it speaks in public.
 
 ## Notes
 

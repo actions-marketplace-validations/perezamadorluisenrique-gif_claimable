@@ -264,7 +264,7 @@ describe("bot end to end, offline", () => {
     try {
       const run = await handle("issue_comment", payload("/claim", { repository: { full_name: "acme/widgets", private: true } }), { token: null, dryRun: false }, { sender });
       assert.ok(run.outcomes.every((o) => o.status === "planned"));
-      assert.match(run.summary, /Private repository/);
+      assert.match(run.summary, /Report-only mode: this repository is private/);
     } finally {
       stop();
     }

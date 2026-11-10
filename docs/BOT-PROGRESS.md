@@ -59,3 +59,9 @@ Documented, not changed: GitHub keeps only the newest waiting run per `concurren
 - Read from the default branch through `getFile` (never from a checkout). A missing file is the defaults; a file that exists but cannot be read stops the bot for that run, because acting on defaults could break a rule the project set.
 - `hint-on-natural-claims`: only when the project asks, only if the bot has no comment on the issue yet (so once), and only where a `/claim` would work (open, unlocked, nobody holds it, no blocking label, an allowed label present). It is a pointer to the command, never an assignment. Reply kind `hint`.
 - Bank: 71 threads (6 new: four hint cases, one custom claimed label). `test/bot-config.test.ts` covers the parser, hostile input, the path rule and the file read end to end offline.
+
+## B2.3 Report-only mode (2026-11-10)
+
+- `chooseMode` in `bot/main.ts`: `live`, `dry-run` (the input) or `report-only` (private repository, which wins over the input). Report-only writes nothing and puts one line at the top of the summary, "Report-only mode: this repository is private, so the bot describes what it would do and writes nothing.", with no price, plan or licence word anywhere (a test greps the line, the docs and the code around it). The old warning line is gone; the daily visit now reads the repository's visibility from the API.
+- Deviation from the plan, on purpose: there is no `license` input yet. An input that does nothing misleads (same reason `config` waited for B2.2). It arrives with R1 in the Pro thread, which is switched off.
+- `test/bot-report-only.test.ts`: `applyActions` never calls the sender for any of the 8 action kinds when dry; a sender that throws is passed to the whole bot on a private repository, for a `/claim` and for the daily visit, with `dry-run: false`; only `src/bot/apply.ts` may import or call `send`; the wording test above.

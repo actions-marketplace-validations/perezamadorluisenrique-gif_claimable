@@ -30,6 +30,21 @@ import type { GhTimelineEvent, IssueRef } from "../src/types.ts";
 
 type Env = Record<string, string | undefined>;
 
+/**
+ * How a run behaves. `live` writes; `dry-run` (asked for with the input) and
+ * `report-only` (a private repository, where acting is not part of the free
+ * bot) describe what the bot would do and write nothing. The two differ only
+ * in the sentence at the top of the summary.
+ */
+export type Mode = "live" | "dry-run" | "report-only";
+
+export function chooseMode(dryRunInput: boolean, isPrivate: boolean): Mode {
+  if (isPrivate) return "report-only";
+  return dryRunInput ? "dry-run" : "live";
+}
+
+export const REPORT_ONLY_NOTE = "_Report-only mode: this repository is private, so the bot describes what it would do and writes nothing._";
+
 export type BotInputs = {
   token: string | null;
   /** Path of the configuration file inside the repository; null means the default. */
@@ -124,11 +139,7 @@ export async function handle(eventName: string, payload: Payload, inputs: BotInp
   const warnings: string[] = [...loaded.warnings];
 
   // A private repository is report-only for now: acting there is the paid part.
-  let dryRun = inputs.dryRun;
-  if (payload.repository?.private === true && !dryRun) {
-    dryRun = true;
-    warnings.push("Private repository: the bot only reports what it would do here.");
-  }
+  const mode = chooseMode(inputs.dryRun, payload.repository?.private === true);
 
   const [issue, comments, timeline] = await Promise.all([getIssue(ref), getAllComments(ref), getAllTimeline(ref)]);
   const all: BotComment[] = (comments.items as RawComment[]).map(toBotComment);
@@ -173,8 +184,8 @@ export async function handle(eventName: string, payload: Payload, inputs: BotInp
     }
   }
 
-  const outcomes = await applyActions(actions, ref, { dryRun, sender: deps.sender, messages: config.messages });
-  return { summary: formatSummary(title, dryRun, outcomes, warnings, undefined, config.messages), actions, outcomes, warnings };
+  const outcomes = await applyActions(actions, ref, { dryRun: mode !== "live", sender: deps.sender, messages: config.messages });
+  return { summary: formatSummary(title, mode, outcomes, warnings, undefined, config.messages), actions, outcomes, warnings };
 }
 
 /** The most issues one daily visit looks at; the rest wait for tomorrow. */
@@ -187,15 +198,11 @@ export async function handleTick(repoFullName: string, inputs: BotInputs, deps: 
   const base: IssueRef = { owner: repo.owner, repo: repo.repo, number: 0 };
   const title = `${base.owner}/${base.repo}`;
   const loaded = await loadConfig(base, inputs.config, deps.config);
-  if (loaded.failed) return { summary: formatSummary(title, true, [], loaded.warnings), actions: [], outcomes: [], warnings: loaded.warnings };
+  if (loaded.failed) return { summary: formatSummary(title, "dry-run", [], loaded.warnings), actions: [], outcomes: [], warnings: loaded.warnings };
   const config = loaded.config;
   const warnings: string[] = [...loaded.warnings];
 
-  let dryRun = inputs.dryRun;
-  if (!dryRun && (await getRepo(base)).private === true) {
-    dryRun = true;
-    warnings.push("Private repository: the bot only reports what it would do here.");
-  }
+  const mode = chooseMode(inputs.dryRun, (await getRepo(base)).private === true);
 
   const listed = await getClaimedIssues(base, config.claimedLabel);
   if (listed.truncated) warnings.push("More claimed issues than one visit reads; the oldest are looked at first.");
@@ -225,24 +232,25 @@ export async function handleTick(repoFullName: string, inputs: BotInputs, deps: 
     const todo = decide({ kind: "tick" }, state, config, now()).filter((a) => a.type !== "none");
     if (todo.length === 0) continue;
     actions.push(...todo);
-    const done = await applyActions(todo, ref, { dryRun, sender: deps.sender, messages: config.messages });
+    const done = await applyActions(todo, ref, { dryRun: mode !== "live", sender: deps.sender, messages: config.messages });
     outcomes.push(...done.map((o) => ({ ...o, note: `#${number}: ${o.note}` })));
   }
-  const summary = formatSummary(title, dryRun, outcomes, warnings, `Visited ${looked} claimed issue${looked === 1 ? "" : "s"}; ${outcomes.length === 0 ? "none needed a reminder or a release" : "see below"}.`, config.messages);
+  const summary = formatSummary(title, mode, outcomes, warnings, `Visited ${looked} claimed issue${looked === 1 ? "" : "s"}; ${outcomes.length === 0 ? "none needed a reminder or a release" : "see below"}.`, config.messages);
   return { summary, actions, outcomes, warnings };
 }
 
-export function formatSummary(title: string, dryRun: boolean, outcomes: Outcome[], warnings: string[], intro?: string, messages: BotConfig["messages"] = {}): string {
+export function formatSummary(title: string, mode: Mode, outcomes: Outcome[], warnings: string[], intro?: string, messages: BotConfig["messages"] = {}): string {
   const out = [`## Claimable bot: ${mdInline(title)}`, ""];
   if (intro) out.push(intro, "");
-  if (dryRun) out.push("_Dry run: nothing was written._", "");
+  if (mode === "report-only") out.push(REPORT_ONLY_NOTE, "");
+  else if (mode === "dry-run") out.push("_Dry run: nothing was written._", "");
   for (const w of warnings) out.push(`> ${mdInline(w)}`, "");
   for (const o of outcomes) {
     const mark = { done: "done", planned: "planned", skipped: "skipped", failed: "FAILED" }[o.status];
     out.push(`- **${mark}**: ${o.note}`);
   }
   for (const o of outcomes) {
-    if (dryRun && o.action.type === "comment") {
+    if (mode !== "live" && o.action.type === "comment") {
       out.push("", "The comment would read:", "", "````markdown", renderComment(o.action.reply, o.action.marker, messages).trimEnd(), "````");
     }
   }
