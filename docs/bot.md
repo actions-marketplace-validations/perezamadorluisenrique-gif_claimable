@@ -103,6 +103,36 @@ It names the reason and does not assign: the issue is closed, someone else holds
 
 In a private repository the bot runs in report-only mode. It reads the issue and, for every command and every daily visit, writes into the job summary what it *would* do (the assignment, the label, the exact comment) and changes nothing. The first line of the summary says so. Use it to see how the bot would behave on your issues; `dry-run: true` gives the same view in a public repository. In both, the summary shows the comment word for word, so you can judge the tone before it speaks in public.
 
+## From a home-made `/take` to the bot
+
+Many projects already run a small workflow that assigns whoever comments `take` or `/take`. Moving to the bot keeps what contributors type and adds what such scripts usually lack.
+
+1. Keep your workflow for now and install the bot next to it with `dry-run: true`. Read a week of job summaries.
+2. Contributors can keep writing `.take`; `/claim`, `/assign me` and `.take` all work. A plain `take` or `/take` is not a command (a bare word is too easy to write by accident); say so in your CONTRIBUTING file.
+3. Remove your old workflow and the `dry-run` line on the same day, so a comment is never handled twice.
+4. Issues already assigned by hand keep their assignee and are never released. Only claims made through the bot get reminders. To bring an old assignment under the bot, ask the assignee to comment `/unclaim` and then `/claim`.
+5. Put your rules in `.github/claimable.yml` (see Settings) instead of in the script: the reminder and release days, the claim limit, which labels can be claimed.
+
+## Questions
+
+**Does it assign someone who writes "can I work on this?"** No. It acts only on a command. With `hint-on-natural-claims: true` it answers such a sentence once, with how to claim.
+
+**What counts as activity?** A comment by the holder, a pull request of theirs linked to the issue (open, draft or closed), or a commit of theirs that mentions the issue. Comments by the bot do not count.
+
+**Will it release an issue with an open pull request?** Never. An open pull request of the holder stops both the reminder and the release.
+
+**Can a maintainer take an issue away?** Yes: `/unclaim` from anyone with triage access or more. Assigning by hand also works, and the bot leaves that assignment alone.
+
+**Does it spam?** It keeps one comment per issue and edits it. The reminder is that same comment, edited once. The reminder mentions the holder once; nothing else in it pings anyone.
+
+**What if two people comment `/claim` at once?** The workflow runs one comment at a time per issue; the first one gets the issue and the second is told who holds it.
+
+**Does it work on a fork or on pull requests?** Pull requests are ignored. The workflow runs in the repository that owns the issue, with that repository's token, and never checks out anyone's code.
+
+**What does it cost?** Nothing: it uses your own Actions minutes (a few seconds per comment and one short run a day), no server of ours, no secrets of ours. A private repository gets report-only mode.
+
+**How do I stop it?** Delete the workflow file. The labels and comments it left stay as ordinary issue data; nothing else is stored anywhere.
+
 ## Notes
 
 - Comments are read from the event file and the API; the text of a comment never reaches a shell, a path or a command.
