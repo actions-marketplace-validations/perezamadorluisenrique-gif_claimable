@@ -1,0 +1,54 @@
+{
+  "name": "hint-is-not-repeated",
+  "source": "synthetic",
+  "now": "2026-09-15T12:00:00Z",
+  "issue": {
+    "number": 7,
+    "state": "open",
+    "locked": false,
+    "html_url": "https://github.com/acme/widgets/issues/7",
+    "title": "Fix typo in README",
+    "labels": [
+      "good first issue"
+    ],
+    "assignees": [],
+    "updated_at": "2026-09-10T08:00:00Z"
+  },
+  "timeline": [],
+  "comments": [
+    {
+      "id": 77,
+      "user": {
+        "login": "github-actions[bot]",
+        "type": "Bot"
+      },
+      "author_association": "NONE",
+      "body": "<!-- claimable-bot:v1 {\"claimant\":null,\"since\":null,\"nudgedAt\":null} -->\nHi.",
+      "created_at": "2026-09-01T09:00:00Z"
+    },
+    {
+      "id": 9000032,
+      "user": {
+        "login": "alice",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "Can I work on this? I'd love to take it.",
+      "created_at": "2026-09-15T11:59:00Z"
+    }
+  ],
+  "requesterClaims": [],
+  "config": {
+    "hintOnNaturalClaims": true
+  },
+  "expected": [
+    {
+      "type": "none",
+      "reason": "no command"
+    }
+  ],
+  "event": {
+    "kind": "comment",
+    "commentId": 9000032
+  }
+}

@@ -15,13 +15,14 @@ import { appendFileSync, readFileSync, realpathSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 import { applyActions } from "../src/bot/apply.ts";
+import { configPath, readConfig } from "../src/bot/config.ts";
 import type { Outcome, Sender } from "../src/bot/apply.ts";
 import { decide } from "../src/bot/decide.ts";
 import { renderComment } from "../src/bot/messages.ts";
 import { readState } from "../src/bot/state.ts";
 import { DEFAULT_CONFIG } from "../src/bot/types.ts";
 import type { Action, BotComment, BotConfig, BotIssue } from "../src/bot/types.ts";
-import { getAllComments, getAllTimeline, getClaimedIssues, getHeldIssues, getIssue, getPermission, getRepo, now } from "../src/fetchers.ts";
+import { getAllComments, getAllTimeline, getClaimedIssues, getFile, getHeldIssues, getIssue, getPermission, getRepo, now } from "../src/fetchers.ts";
 import { configure } from "../src/github.ts";
 import { parseRepo } from "../src/refs.ts";
 import { mdInline } from "../src/report.ts";
@@ -31,13 +32,15 @@ type Env = Record<string, string | undefined>;
 
 export type BotInputs = {
   token: string | null;
+  /** Path of the configuration file inside the repository; null means the default. */
+  config?: string | null;
   /** Anything but an explicit "false" keeps the bot from writing. */
   dryRun: boolean;
 };
 
 export function readInputs(env: Env): BotInputs {
   // Exactly "false" writes; anything else, a missing value included, only describes.
-  return { token: (env.INPUT_TOKEN ?? "").trim() || null, dryRun: (env.INPUT_DRY_RUN ?? "true") !== "false" };
+  return { token: (env.INPUT_TOKEN ?? "").trim() || null, config: (env.INPUT_CONFIG ?? "").trim() || null, dryRun: (env.INPUT_DRY_RUN ?? "true") !== "false" };
 }
 
 /** The slice of a GitHub `issue_comment` event the bot reads. */
@@ -60,6 +63,25 @@ export type Deps = {
   sender?: Sender;
   config?: Partial<BotConfig>;
 };
+
+/**
+ * The project's configuration, read from the default branch. A missing file is
+ * the defaults. A file that exists but cannot be read (the API failed) stops
+ * the bot for this run: acting on defaults could break a stricter rule the
+ * project set.
+ */
+async function loadConfig(ref: IssueRef, input: string | null | undefined, override: Partial<BotConfig> | undefined): Promise<{ config: BotConfig; warnings: string[]; failed: boolean }> {
+  const where = configPath(input ?? undefined);
+  const warnings = where.warning ? [where.warning] : [];
+  let source: string | null;
+  try {
+    source = await getFile(ref, where.path);
+  } catch {
+    return { config: { ...DEFAULT_CONFIG, ...override }, warnings: [...warnings, "The configuration file could not be read, so the bot does not act in this run."], failed: true };
+  }
+  const read = readConfig(source);
+  return { config: { ...read.config, ...override }, warnings: [...warnings, ...read.warnings], failed: false };
+}
 
 function nothing(summary: string): Run {
   return { summary: `## Claimable bot\n\n${summary}\n`, actions: [], outcomes: [], warnings: [] };
@@ -97,8 +119,9 @@ export async function handle(eventName: string, payload: Payload, inputs: BotInp
 
   const ref: IssueRef = { owner: ref0.owner, repo: ref0.repo, number };
   const title = `${ref.owner}/${ref.repo}#${ref.number}`;
-  const config: BotConfig = { ...DEFAULT_CONFIG, ...deps.config };
-  const warnings: string[] = [];
+  const loaded = await loadConfig(ref, inputs.config, deps.config);
+  const config = loaded.config;
+  const warnings: string[] = [...loaded.warnings];
 
   // A private repository is report-only for now: acting there is the paid part.
   let dryRun = inputs.dryRun;
@@ -114,7 +137,9 @@ export async function handle(eventName: string, payload: Payload, inputs: BotInp
   // The comment is read again from the API, never taken from the event: if it
   // was edited or deleted before this run started, the bot acts on what is there now.
   const trigger = all.find((c) => c.id === payload.comment?.id);
-  if (comments.truncated || timeline.truncated) {
+  if (loaded.failed) {
+    actions = [{ type: "none", reason: "the configuration could not be read, so the bot does not act" }];
+  } else if (comments.truncated || timeline.truncated) {
     actions = [{ type: "none", reason: "the thread is too long to read in full, so the bot does not act" }];
   } else if (!trigger) {
     actions = [{ type: "none", reason: "the comment is gone" }];
@@ -148,8 +173,8 @@ export async function handle(eventName: string, payload: Payload, inputs: BotInp
     }
   }
 
-  const outcomes = await applyActions(actions, ref, { dryRun, sender: deps.sender });
-  return { summary: formatSummary(title, dryRun, outcomes, warnings), actions, outcomes, warnings };
+  const outcomes = await applyActions(actions, ref, { dryRun, sender: deps.sender, messages: config.messages });
+  return { summary: formatSummary(title, dryRun, outcomes, warnings, undefined, config.messages), actions, outcomes, warnings };
 }
 
 /** The most issues one daily visit looks at; the rest wait for tomorrow. */
@@ -161,8 +186,10 @@ export async function handleTick(repoFullName: string, inputs: BotInputs, deps: 
   if (!repo) return nothing("The daily visit needs the repository (GITHUB_REPOSITORY).");
   const base: IssueRef = { owner: repo.owner, repo: repo.repo, number: 0 };
   const title = `${base.owner}/${base.repo}`;
-  const config: BotConfig = { ...DEFAULT_CONFIG, ...deps.config };
-  const warnings: string[] = [];
+  const loaded = await loadConfig(base, inputs.config, deps.config);
+  if (loaded.failed) return { summary: formatSummary(title, true, [], loaded.warnings), actions: [], outcomes: [], warnings: loaded.warnings };
+  const config = loaded.config;
+  const warnings: string[] = [...loaded.warnings];
 
   let dryRun = inputs.dryRun;
   if (!dryRun && (await getRepo(base)).private === true) {
@@ -198,14 +225,14 @@ export async function handleTick(repoFullName: string, inputs: BotInputs, deps: 
     const todo = decide({ kind: "tick" }, state, config, now()).filter((a) => a.type !== "none");
     if (todo.length === 0) continue;
     actions.push(...todo);
-    const done = await applyActions(todo, ref, { dryRun, sender: deps.sender });
+    const done = await applyActions(todo, ref, { dryRun, sender: deps.sender, messages: config.messages });
     outcomes.push(...done.map((o) => ({ ...o, note: `#${number}: ${o.note}` })));
   }
-  const summary = formatSummary(title, dryRun, outcomes, warnings, `Visited ${looked} claimed issue${looked === 1 ? "" : "s"}; ${outcomes.length === 0 ? "none needed a reminder or a release" : "see below"}.`);
+  const summary = formatSummary(title, dryRun, outcomes, warnings, `Visited ${looked} claimed issue${looked === 1 ? "" : "s"}; ${outcomes.length === 0 ? "none needed a reminder or a release" : "see below"}.`, config.messages);
   return { summary, actions, outcomes, warnings };
 }
 
-export function formatSummary(title: string, dryRun: boolean, outcomes: Outcome[], warnings: string[], intro?: string): string {
+export function formatSummary(title: string, dryRun: boolean, outcomes: Outcome[], warnings: string[], intro?: string, messages: BotConfig["messages"] = {}): string {
   const out = [`## Claimable bot: ${mdInline(title)}`, ""];
   if (intro) out.push(intro, "");
   if (dryRun) out.push("_Dry run: nothing was written._", "");
@@ -216,7 +243,7 @@ export function formatSummary(title: string, dryRun: boolean, outcomes: Outcome[
   }
   for (const o of outcomes) {
     if (dryRun && o.action.type === "comment") {
-      out.push("", "The comment would read:", "", "````markdown", renderComment(o.action.reply, o.action.marker).trimEnd(), "````");
+      out.push("", "The comment would read:", "", "````markdown", renderComment(o.action.reply, o.action.marker, messages).trimEnd(), "````");
     }
   }
   return `${out.join("\n")}\n`;

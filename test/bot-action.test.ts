@@ -14,6 +14,11 @@ const ROOT = resolve(import.meta.dirname, "..");
 const dir = mkdtempSync(join(tmpdir(), "claimable-bot-"));
 after(() => rmSync(dir, { recursive: true, force: true }));
 
+/** A recorded 404, as `CLAIMABLE_CASSETTE=record` writes it. */
+function put404(path: string) {
+  writeFileSync(cassettePath(path), JSON.stringify({ path, status: 404, body: null, error: `GET ${path} → 404: Not Found` }));
+}
+
 // ── action.yml, the code and the docs say the same thing ──────────────────
 describe("bot/action.yml and its docs", () => {
   const yml = readFileSync(join(ROOT, "bot/action.yml"), "utf8");
@@ -41,7 +46,7 @@ describe("bot/action.yml and its docs", () => {
 describe("the bot cannot be driven by a comment", () => {
   const files = ["bot/action.yml", ".github/workflows/claim-bot.yml"];
   const docs = readFileSync(join(ROOT, "docs/bot.md"), "utf8");
-  const yamlInDocs = [...docs.matchAll(/```yaml\n([\s\S]*?)```/g)].map((m) => m[1]);
+  const yamlInDocs = [...docs.matchAll(/```yaml\n([\s\S]*?)```/g)].map((m) => m[1]).filter((y) => y.includes("uses:")); // the workflows; the settings sample is not one
 
   /** Lines of every `run:` script in a YAML text. */
   function runScripts(text: string): string[] {
@@ -208,6 +213,7 @@ describe("bot end to end, offline", () => {
     said(5003, "/claim\n$(touch /tmp/pwned) `id` ${{ secrets.X }} ; rm -rf /"),
     said(5004, "/unclaim", "MEMBER", "pat"),
   ]);
+  put404("/repos/acme/widgets/contents/.github/claimable.yml");
   put("/repos/acme/widgets/collaborators/pat/permission", { permission: "read", role_name: "read" });
   put("/repos/acme/widgets/issues/7/timeline?per_page=100", []);
   put("/repos/acme/widgets/issues?state=open&labels=claimed&assignee=alice&per_page=100", []);
@@ -359,6 +365,7 @@ describe("the daily visit, offline", () => {
     put(`/repos/acme/widgets/issues/${n}/timeline?per_page=100`, [{ event: "assigned", created_at: "2026-09-01T09:00:00Z", assignee: { login: who } }]);
   };
   put("/repos/acme/widgets", { full_name: "acme/widgets", private: false, default_branch: "main" });
+  put404("/repos/acme/widgets/contents/.github/claimable.yml");
   put("/repos/acme/widgets/issues?state=open&labels=claimed&per_page=100", [issue(7, "alice"), issue(8, "alice")]);
   thread(7, "alice");
   thread(8, "alice");

@@ -51,6 +51,7 @@ const REPLY_KINDS: Record<Reply["kind"], string[]> = {
   claimed: ["claimant", "since", "nudgeOn", "releaseOn"],
   status: ["holder", "since", "nudgeOn", "releaseOn"],
   released: ["by", "former"],
+  hint: ["requester"],
   nudge: ["holder", "lastOn", "releaseOn"],
   expired: ["former", "lastOn"],
   held: ["requester", "holder", "since"],

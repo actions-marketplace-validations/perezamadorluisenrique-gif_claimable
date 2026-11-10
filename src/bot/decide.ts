@@ -12,6 +12,7 @@
  */
 
 import { BLOCKING_LABEL } from "../checks/blocked-label.ts";
+import { isClaim } from "../checks/claimants.ts";
 import { isBotAuthor, parseCommand } from "./commands.ts";
 import type { State } from "./state.ts";
 import { MAINTAINER_ASSOCIATIONS } from "./types.ts";
@@ -120,6 +121,12 @@ function decideTick(state: State, config: BotConfig, nowMs: number): Action[] {
   ];
 }
 
+/** Whether a /claim could work on this issue as far as its labels go (used to keep the hint honest). */
+function canBeClaimed(state: State, config: BotConfig): boolean {
+  if (state.labels.some((l) => BLOCKING_LABEL.test(l) || config.blockedLabels.some((b) => same(b, l)))) return false;
+  return config.labels.length === 0 || state.labels.some((l) => config.labels.some((w) => same(w, l)));
+}
+
 export function decide(event: DecideEvent, state: State, config: BotConfig, nowMs: number): Action[] {
   if (event.kind === "tick") return decideTick(state, config, nowMs);
 
@@ -131,7 +138,14 @@ export function decide(event: DecideEvent, state: State, config: BotConfig, nowM
   if (state.isPull) return [{ type: "none", reason: "this is a pull request, not an issue" }];
 
   const command = parseCommand(c.body, c.user);
-  if (!command) return [{ type: "none", reason: "no command" }];
+  if (!command) {
+    // Only when the project asks for it, only once (the bot has no comment here yet),
+    // and only where a /claim would work: it is a pointer to the command, never an action.
+    if (config.hintOnNaturalClaims && state.open && !state.locked && !state.holder && !state.bot && canBeClaimed(state, config) && isClaim(c.body)) {
+      return [comment(state, { kind: "hint", requester }, { ...EMPTY_MARKER })];
+    }
+    return [{ type: "none", reason: "no command" }];
+  }
   if (state.locked) return [{ type: "none", reason: "the issue is locked" }];
 
   const holder = state.holder;

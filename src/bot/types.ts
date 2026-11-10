@@ -71,6 +71,8 @@ export type BotConfig = {
   blockedUsers: string[];
   /** The label that marks a claimed issue. */
   claimedLabel: string;
+  /** Words a project replaced in the bot's comment, by reply kind. */
+  messages: Partial<Record<"claimed" | "nudge" | "expired", string>>;
 };
 
 export const DEFAULT_CONFIG: BotConfig = {
@@ -83,6 +85,7 @@ export const DEFAULT_CONFIG: BotConfig = {
   exemptUsers: [],
   blockedUsers: [],
   claimedLabel: "claimed",
+  messages: {},
 };
 
 /** What the single bot comment says. The text itself is rendered in `messages.ts`. */
@@ -90,6 +93,7 @@ export type Reply =
   | { kind: "claimed"; claimant: string; since: string; nudgeOn: string; releaseOn: string }
   | { kind: "status"; holder: string | null; since: string | null; nudgeOn: string | null; releaseOn: string | null }
   | { kind: "released"; by: string; former: string }
+  | { kind: "hint"; requester: string }
   | { kind: "nudge"; holder: string; lastOn: string; releaseOn: string }
   | { kind: "expired"; former: string; lastOn: string }
   | { kind: "held"; requester: string; holder: string; since: string | null }

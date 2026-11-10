@@ -63,6 +63,28 @@ Once a day the `remind` job visits every open issue with the `claimed` label.
 
 It never releases anything while the holder has an open pull request, and it only touches claims it made itself: an issue a maintainer assigned by hand, or reassigned after the claim, is left alone. If the holder answers after the reminder, the clock starts again and the comment goes back to the plain status. The first visit after the `schedule` run is added can take up to a day; run the workflow by hand from the Actions tab to try it earlier. GitHub switches off scheduled workflows in a repository with no commits for 60 days.
 
+## Settings
+
+Everything has a safe default; the file is optional. Put it at `.github/claimable.yml` (or point the `config` input somewhere else). The bot reads it from the **default branch** through the API, so a pull request cannot change the rules it is judged by.
+
+```yaml
+nudge-days: 7                  # days without activity before the one reminder
+release-days: 7                # days after the reminder before the claim is released
+max-claims: 2                  # open claims one person may hold at once
+labels:                        # when set, only issues with one of these labels can be claimed
+  - good first issue
+  - help wanted
+blocked-labels: [on hold, needs design]   # extra labels that stop claims (blocked, on hold... always do)
+exempt-users: [octocat]        # never counted against max-claims
+blocked-users: []              # their commands are ignored
+claimed-label: claimed         # the label that marks a held issue
+hint-on-natural-claims: false  # true: answer "can I take this?" once, with how to /claim
+messages:                      # your own words; {user} {since} {nudge-date} {release-date} {last-date}
+  claimed: "{user} it is yours. If it goes quiet I will remind you on {nudge-date}."
+```
+
+`messages` can replace `claimed`, `nudge` and `expired`. The package has no dependencies, so the file is read by a small parser of its own: top-level `key: value` lines, lists (`- item` lines or `[a, b]`), and the one `messages` map. Anchors, multi-line strings, `{...}` maps, tabs and deeper nesting are reported as errors with the line number. A bad value keeps its default and the problem appears in the job summary, so a typo never switches the bot off. The one exception: if the file exists but GitHub fails to deliver it, the bot does nothing that run rather than act on defaults the project did not choose.
+
 ## When it says no
 
 It names the reason and does not assign: the issue is closed, someone else holds it (or a maintainer assigned it by hand), a pull request by someone else is open against it, it carries a label like `on hold` or `blocked`, or you already hold two claims here.
@@ -72,6 +94,7 @@ It names the reason and does not assign: the issue is closed, someone else holds
 | Input | Default | Meaning |
 |---|---|---|
 | `token` | `github.token` | Token that assigns, labels and comments; needs `issues: write` |
+| `config` | `.github/claimable.yml` | Path of the settings file (see Settings). Read from the default branch |
 | `dry-run` | `false` | Anything but `false` only describes the actions in the job summary |
 
 Private repositories run in report-only mode for now: the bot says what it would do and does nothing.
