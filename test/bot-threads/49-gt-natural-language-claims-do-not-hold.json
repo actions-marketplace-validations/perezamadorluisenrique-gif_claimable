@@ -1,0 +1,209 @@
+{
+  "name": "gt-natural-language-claims-do-not-hold",
+  "source": "ground truth: ohcnetwork/care_fe#16263 (people said they would work on it, nobody holds it; the bot acts on commands only)",
+  "now": "2026-09-25T12:00:00Z",
+  "issue": {
+    "number": 16263,
+    "state": "open",
+    "locked": false,
+    "html_url": "https://github.com/ohcnetwork/care_fe/issues/16263",
+    "title": "Invoice Sheet: Alignment issue on textarea expansion",
+    "labels": [
+      "good first issue",
+      "question",
+      "stale",
+      "needs-triage"
+    ],
+    "assignees": [],
+    "updated_at": "2026-08-17T18:00:37Z"
+  },
+  "timeline": [
+    {
+      "event": "assigned",
+      "created_at": "2026-04-06T08:43:30Z",
+      "actor": {
+        "login": "Jacobjeevan"
+      },
+      "assignee": {
+        "login": "pranavrutagi-egov"
+      }
+    },
+    {
+      "event": "cross-referenced",
+      "created_at": "2026-04-06T09:09:02Z",
+      "actor": {
+        "login": "pranavrutagi-egov"
+      },
+      "source": {
+        "issue": {
+          "number": 16266,
+          "html_url": "https://github.com/ohcnetwork/care_fe/pull/16266",
+          "state": "closed",
+          "title": "Fix: Invoice Sheet UI breaking alignment",
+          "pull_request": {
+            "merged_at": null,
+            "html_url": "https://github.com/ohcnetwork/care_fe/pull/16266"
+          },
+          "user": {
+            "login": "pranavrutagi-egov"
+          },
+          "draft": false
+        }
+      }
+    },
+    {
+      "event": "unassigned",
+      "created_at": "2026-04-24T07:25:10Z",
+      "actor": {
+        "login": "Jacobjeevan"
+      },
+      "assignee": {
+        "login": "pranavrutagi-egov"
+      }
+    },
+    {
+      "event": "referenced",
+      "created_at": "2026-04-25T19:12:02Z",
+      "actor": {
+        "login": "issue-tracker-premansh[bot]"
+      }
+    },
+    {
+      "event": "cross-referenced",
+      "created_at": "2026-05-21T06:49:12Z",
+      "actor": {
+        "login": "sreya-jayan"
+      },
+      "source": {
+        "issue": {
+          "number": 16369,
+          "html_url": "https://github.com/ohcnetwork/care_fe/pull/16369",
+          "state": "closed",
+          "title": "fix: remove -mx-4 class and add items-start to fix alignment issue in…",
+          "pull_request": {
+            "merged_at": null,
+            "html_url": "https://github.com/ohcnetwork/care_fe/pull/16369"
+          },
+          "user": {
+            "login": "sreya-jayan"
+          },
+          "draft": false
+        }
+      }
+    }
+  ],
+  "comments": [
+    {
+      "id": 4190909288,
+      "user": {
+        "login": "pranavrutagi-egov",
+        "type": "User"
+      },
+      "author_association": "CONTRIBUTOR",
+      "body": "Hi @Jacobjeevan @gigincg @nihal467 , kindly assign this issue to me. Here is my approach for fixing the issue:\n\n### Analysis:\n1. Issue lies in the `CreateInvoice.tsx` file\n2. Grid component is being used for alignment\n3. For the misaligned padding, issue is in the file `CreateInvoiceSheet.tsx` due to the use of class `-mx-4`\n\n### Approach to fix:\n1. Use of `items-start` class to align form items, i.e. \"Payment Terms\" and \"Note\" to the top thus not disturbing the alignment on expanding any textarea.\n2. Removal of class `-mx-4`\n \n### Screenshot post fix:\n\n<img width=\"1850\" height=\"1054\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/30262f58-f656-457e-8f1a-558ec7ef7db4\" />",
+      "created_at": "2026-04-06T07:26:18Z"
+    },
+    {
+      "id": 4320108704,
+      "user": {
+        "login": "8sami",
+        "type": "User"
+      },
+      "author_association": "CONTRIBUTOR",
+      "body": "hi @Jacobjeevan can i take over from where the author left off?",
+      "created_at": "2026-04-25T16:52:36Z"
+    },
+    {
+      "id": 4320297445,
+      "user": {
+        "login": "Master-112005",
+        "type": "User"
+      },
+      "author_association": "CONTRIBUTOR",
+      "body": "Hi @Jacobjeevan, I would like to work on this issue.\n\n### solution :\n\nI will fix the invoice sheet alignment issue by updating the layout styles for the Payment Terms and Note fields, ensuring proper alignment when textareas are expanded, and correcting the padding/margin classes causing the misalignment.\n\n### Expected Timeline:\n\nEnd date: Within 1 day of assignment\n\n\n",
+      "created_at": "2026-04-25T18:36:23Z"
+    },
+    {
+      "id": 4411607928,
+      "user": {
+        "login": "Adilrasheed1",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "Hi, I would like to work on this issue.\n\nMy approach:\n- Investigate layout structure of the invoice form\n- Fix alignment when textarea expands using proper flex/grid handling\n\nEstimated time: 1–2 days",
+      "created_at": "2026-05-09T05:36:07Z"
+    },
+    {
+      "id": 4691869881,
+      "user": {
+        "login": "Janetmaria",
+        "type": "User"
+      },
+      "author_association": "CONTRIBUTOR",
+      "body": "@Jacobjeevan  I would like to request assignment for this issue; I will fix the form alignment by replacing the problematic margin classes on the expanded textareas with proper padding or layout flex/grid constraints. \nEnd date : 1 day of assignment.",
+      "created_at": "2026-06-12T13:48:59Z"
+    },
+    {
+      "id": 4726736203,
+      "user": {
+        "login": "ayush-343",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "Hi @Jacobjeevan  can I take over from where the author left off?\n\nEstimated time: 1 day",
+      "created_at": "2026-06-17T06:32:17Z"
+    },
+    {
+      "id": 5318412201,
+      "user": {
+        "login": "ShoneShaji",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "Hi, I am a new contributor and would like to work on this issue. Could you please assign it to me?\n",
+      "created_at": "2026-08-17T18:00:37Z"
+    },
+    {
+      "id": 9000047,
+      "user": {
+        "login": "newcomer",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "/claim",
+      "created_at": "2026-09-25T11:59:00Z"
+    }
+  ],
+  "event": {
+    "kind": "comment",
+    "commentId": 9000047
+  },
+  "requesterClaims": [],
+  "config": {},
+  "expected": [
+    {
+      "type": "assign",
+      "login": "newcomer"
+    },
+    {
+      "type": "label",
+      "name": "claimed"
+    },
+    {
+      "type": "comment",
+      "mode": "create",
+      "reply": {
+        "kind": "claimed",
+        "claimant": "newcomer",
+        "since": "2026-09-25",
+        "nudgeOn": "2026-10-02",
+        "releaseOn": "2026-10-09"
+      },
+      "marker": {
+        "claimant": "newcomer",
+        "since": "2026-09-25T12:00:00Z",
+        "nudgedAt": null
+      }
+    }
+  ]
+}

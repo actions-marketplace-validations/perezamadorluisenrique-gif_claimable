@@ -21,7 +21,7 @@ project has no dependencies.
 ```bash
 git clone https://github.com/perezamadorluisenrique-gif/claimable
 cd claimable
-npm test          # 178 tests, offline, deterministic
+npm test          # 232 tests, offline, deterministic
 npm run compare   # the tool's verdicts next to the hand-triaged ones
 ```
 
@@ -43,6 +43,14 @@ If `claimable` cleared something that was taken, that is the bug this project ex
 prevent and it is the highest-priority report there is. If it ruled out something fine,
 that is worth fixing too, one notch down. Either way, open an issue with the reference and
 what actually turned out to be true; the templates ask for exactly that.
+
+## The claim bot's banks
+
+The claim bot (`src/bot/`, work in progress) is judged on two banks that, like the ground
+truth, are never edited to suit the code: `test/bot-corpus.ts` (comments labelled with the
+command they contain, `null` for everything that only mentions one) and `test/bot-threads/`
+(recorded situations with the exact actions the bot must take). `test/bot-format.test.ts`
+checks their shape. A wrong action in public is the bot's version of clearing a taken issue.
 
 ## Adding a case to the evaluation set
 

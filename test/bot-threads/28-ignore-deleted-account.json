@@ -1,0 +1,39 @@
+{
+  "name": "ignore-deleted-account",
+  "source": "synthetic",
+  "now": "2026-09-15T12:00:00Z",
+  "issue": {
+    "number": 7,
+    "state": "open",
+    "locked": false,
+    "html_url": "https://github.com/acme/widgets/issues/7",
+    "title": "Fix typo in README",
+    "labels": [
+      "good first issue"
+    ],
+    "assignees": [],
+    "updated_at": "2026-09-10T08:00:00Z"
+  },
+  "timeline": [],
+  "comments": [
+    {
+      "id": 9000028,
+      "user": null,
+      "author_association": "NONE",
+      "body": "/claim",
+      "created_at": "2026-09-15T11:59:00Z"
+    }
+  ],
+  "requesterClaims": [],
+  "config": {},
+  "expected": [
+    {
+      "type": "none",
+      "reason": "the author is a deleted account"
+    }
+  ],
+  "event": {
+    "kind": "comment",
+    "commentId": 9000028
+  }
+}

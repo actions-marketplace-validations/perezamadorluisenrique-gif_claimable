@@ -1,0 +1,89 @@
+{
+  "name": "unclaim-by-someone-who-does-not-hold-it",
+  "source": "synthetic",
+  "now": "2026-09-15T12:00:00Z",
+  "issue": {
+    "number": 7,
+    "state": "open",
+    "locked": false,
+    "html_url": "https://github.com/acme/widgets/issues/7",
+    "title": "Fix typo in README",
+    "labels": [
+      "good first issue",
+      "claimed"
+    ],
+    "assignees": [
+      {
+        "login": "alice"
+      }
+    ],
+    "updated_at": "2026-09-10T08:00:00Z"
+  },
+  "timeline": [
+    {
+      "event": "assigned",
+      "created_at": "2026-09-10T09:00:00Z",
+      "actor": {
+        "login": "github-actions[bot]"
+      },
+      "assignee": {
+        "login": "alice"
+      }
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "user": {
+        "login": "alice",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "/claim",
+      "created_at": "2026-09-10T09:00:00Z"
+    },
+    {
+      "id": 2,
+      "user": {
+        "login": "github-actions[bot]",
+        "type": "Bot"
+      },
+      "author_association": "NONE",
+      "body": "<!-- claimable-bot:v1 {\"claimant\":\"alice\",\"since\":\"2026-09-10T09:00:00Z\",\"nudgedAt\":null} -->\nReserved.",
+      "created_at": "2026-09-10T09:00:30Z"
+    },
+    {
+      "id": 9000036,
+      "user": {
+        "login": "bob",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "/unclaim",
+      "created_at": "2026-09-15T11:59:00Z"
+    }
+  ],
+  "requesterClaims": [],
+  "config": {},
+  "expected": [
+    {
+      "type": "comment",
+      "mode": "edit",
+      "commentId": 2,
+      "reply": {
+        "kind": "not-holder",
+        "requester": "bob",
+        "holder": "alice"
+      },
+      "marker": {
+        "claimant": "alice",
+        "since": "2026-09-10T09:00:00Z",
+        "nudgedAt": null
+      }
+    }
+  ],
+  "event": {
+    "kind": "comment",
+    "commentId": 9000036
+  }
+}

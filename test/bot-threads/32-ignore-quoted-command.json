@@ -1,0 +1,42 @@
+{
+  "name": "ignore-quoted-command",
+  "source": "synthetic",
+  "now": "2026-09-15T12:00:00Z",
+  "issue": {
+    "number": 7,
+    "state": "open",
+    "locked": false,
+    "html_url": "https://github.com/acme/widgets/issues/7",
+    "title": "Fix typo in README",
+    "labels": [
+      "good first issue"
+    ],
+    "assignees": [],
+    "updated_at": "2026-09-10T08:00:00Z"
+  },
+  "timeline": [],
+  "comments": [
+    {
+      "id": 9000032,
+      "user": {
+        "login": "alice",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "> /claim\n\nBob, are you still on it?",
+      "created_at": "2026-09-15T11:59:00Z"
+    }
+  ],
+  "requesterClaims": [],
+  "config": {},
+  "expected": [
+    {
+      "type": "none",
+      "reason": "no command"
+    }
+  ],
+  "event": {
+    "kind": "comment",
+    "commentId": 9000032
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "name": "gt-open-pr-in-a-quiet-repo",
+  "source": "ground truth: ohcnetwork/create-care-mfe-plug#4 (PR #6 already open)",
+  "now": "2026-09-25T12:00:00Z",
+  "issue": {
+    "number": 4,
+    "state": "open",
+    "locked": false,
+    "html_url": "https://github.com/ohcnetwork/create-care-mfe-plug/issues/4",
+    "title": ".gitignore is not created when a new plug is created using npx command",
+    "labels": [
+      "good first issue"
+    ],
+    "assignees": [],
+    "updated_at": "2026-07-07T12:46:23Z"
+  },
+  "timeline": [
+    {
+      "event": "cross-referenced",
+      "created_at": "2026-08-25T12:16:28Z",
+      "actor": {
+        "login": "AchrafReyani"
+      },
+      "source": {
+        "issue": {
+          "number": 6,
+          "html_url": "https://github.com/ohcnetwork/create-care-mfe-plug/pull/6",
+          "state": "open",
+          "title": "fix: include .gitignore in scaffolded projects",
+          "pull_request": {
+            "merged_at": null,
+            "html_url": "https://github.com/ohcnetwork/create-care-mfe-plug/pull/6"
+          },
+          "user": {
+            "login": "AchrafReyani"
+          },
+          "draft": false
+        }
+      }
+    }
+  ],
+  "comments": [
+    {
+      "id": 9000043,
+      "user": {
+        "login": "newcomer",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "/claim",
+      "created_at": "2026-09-25T11:59:00Z"
+    }
+  ],
+  "event": {
+    "kind": "comment",
+    "commentId": 9000043
+  },
+  "requesterClaims": [],
+  "config": {},
+  "expected": [
+    {
+      "type": "comment",
+      "mode": "create",
+      "reply": {
+        "kind": "pull-open",
+        "requester": "newcomer",
+        "pull": 6,
+        "author": "AchrafReyani"
+      },
+      "marker": {
+        "claimant": null,
+        "since": null,
+        "nudgedAt": null
+      }
+    }
+  ]
+}
