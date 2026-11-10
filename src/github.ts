@@ -119,6 +119,22 @@ export function primeMemo(path: string, body: unknown): void {
   state.memo.set(path, body);
 }
 
+/**
+ * Requests left in this hour's core bucket, or null when it cannot be read
+ * (replaying, offline). `/rate_limit` itself does not count against the limit.
+ */
+export async function rateRemaining(): Promise<number | null> {
+  if (state.cassetteMode === "replay") return null;
+  try {
+    const { body } = await requestRaw("/rate_limit");
+    state.requests -= 1;
+    const core = (body as { resources?: { core?: { remaining?: number } } }).resources?.core;
+    return typeof core?.remaining === "number" ? core.remaining : null;
+  } catch {
+    return null;
+  }
+}
+
 /** Forget memoised responses (the index does this between projects). */
 export function clearMemo(): void {
   state.memo.clear();
