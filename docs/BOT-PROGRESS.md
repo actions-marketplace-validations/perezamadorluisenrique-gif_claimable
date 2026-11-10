@@ -71,3 +71,10 @@ Documented, not changed: GitHub keeps only the newest waiting run per `concurren
 - `docs/bot.md` now has the guide "From a home-made `/take` to the bot" and a questions section. `package.json` is 0.5.0.
 - What is not proven live and why: reminders and releases need a claim that stays quiet for a week, and the Actions runner cannot be given another date. The unit, thread and offline end-to-end tests cover the rules; the live check is queued for the laptop session in `cola-laptop.md` (comment `/claim` on a `bot-sandbox` issue, look at the `remind` job a week later).
 - The tags `v0.5.0` and `v1` are queued for the laptop too, because tags cannot be pushed from the cloud session. Until `v1` moves, installs that pin `@v1` keep the 0.4.0 bot (no reminders, no settings file).
+
+## I0.1 Index API budget (2026-11-10)
+
+- `index/budget.ts` measures what `analyze()` costs by replaying the evaluation set (`requestLog()` in `src/github.ts` counts memo misses, live or replayed), and simulates 30 days of the rotation. Numbers and sources in `docs/INDEX-BUDGET.md`.
+- The Actions token gives 1,000 REST requests an hour per repository (shared with the claim bot); the index spends at most 800 an hour and runs hourly.
+- Deviation from the plan: 3,000 projects do not fit at worst-case costs; 1,800 do. Thread D's last stage is 1,800. The test pins the capacity, so a cheaper filter or a costlier one shows up as a failing test.
+- `primeMemo()` lets the collector reuse each issue from the listing instead of fetching it again.
