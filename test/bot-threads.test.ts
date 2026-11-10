@@ -20,10 +20,13 @@ const files = readdirSync(DIR).filter((f) => f.endsWith(".json")).sort();
 let agree = 0;
 
 export function runThread(t: BotThread) {
-  const comment = t.comments.find((c) => c.id === (t.event as { commentId: number }).commentId);
-  assert.ok(comment, "trigger comment");
   const state = readState(t.issue, t.timeline, t.comments, t.requesterClaims);
-  return decide({ kind: "comment", comment }, state, { ...DEFAULT_CONFIG, ...t.config }, Date.parse(t.now));
+  const config = { ...DEFAULT_CONFIG, ...t.config };
+  if (t.event.kind === "tick") return decide({ kind: "tick" }, state, config, Date.parse(t.now));
+  const id = t.event.commentId;
+  const comment = t.comments.find((c) => c.id === id);
+  assert.ok(comment, "trigger comment");
+  return decide({ kind: "comment", comment }, state, config, Date.parse(t.now));
 }
 
 describe("bot threads", () => {

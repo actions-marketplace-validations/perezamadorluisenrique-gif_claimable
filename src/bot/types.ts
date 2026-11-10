@@ -90,6 +90,8 @@ export type Reply =
   | { kind: "claimed"; claimant: string; since: string; nudgeOn: string; releaseOn: string }
   | { kind: "status"; holder: string | null; since: string | null; nudgeOn: string | null; releaseOn: string | null }
   | { kind: "released"; by: string; former: string }
+  | { kind: "nudge"; holder: string; lastOn: string; releaseOn: string }
+  | { kind: "expired"; former: string; lastOn: string }
   | { kind: "held"; requester: string; holder: string; since: string | null }
   | { kind: "pull-open"; requester: string; pull: number; author: string }
   | { kind: "quota"; requester: string; limit: number; claims: number[] }

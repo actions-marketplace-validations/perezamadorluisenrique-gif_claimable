@@ -40,6 +40,10 @@ function body(reply: Reply): string {
       return reply.by.toLowerCase() === reply.former.toLowerCase()
         ? `${who(reply.former)} released this issue. ${HOW}`
         : `The claim of ${who(reply.former)} was released by ${who(reply.by)}. ${HOW}`;
+    case "nudge":
+      return `${to(reply.holder)} there has been no activity on this issue since ${reply.lastOn}. This is the one reminder: if there is still none by ${reply.releaseOn} (a comment, a linked pull request, or a commit that mentions the issue) the claim is released so someone else can take it. Comment \`/unclaim\` to release it yourself.`;
+    case "expired":
+      return `The claim of ${who(reply.former)} was released: there was no activity since ${reply.lastOn} and the reminder went unanswered. ${HOW}`;
     case "held":
       return `${to(reply.requester)} this issue is held by ${who(reply.holder)}${from(reply.since)}, so I did not assign it. Comment \`/claim status\` to check on it later.`;
     case "pull-open":

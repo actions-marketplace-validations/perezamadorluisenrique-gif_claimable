@@ -51,6 +51,8 @@ const REPLY_KINDS: Record<Reply["kind"], string[]> = {
   claimed: ["claimant", "since", "nudgeOn", "releaseOn"],
   status: ["holder", "since", "nudgeOn", "releaseOn"],
   released: ["by", "former"],
+  nudge: ["holder", "lastOn", "releaseOn"],
+  expired: ["former", "lastOn"],
   held: ["requester", "holder", "since"],
   "pull-open": ["requester", "pull", "author"],
   quota: ["requester", "limit", "claims"],
@@ -112,8 +114,11 @@ describe("bot thread bank", () => {
         assert.ok(Date.parse(c.created_at) <= Date.parse(t.now), `comment ${c.id} is from the future`);
       }
       assert.equal(new Set(t.comments.map((c) => c.id)).size, t.comments.length, "comment ids are unique");
-      assert.equal(t.event.kind, "comment");
-      assert.ok(t.event.kind === "comment" && t.comments.some((c) => c.id === (t.event as { commentId: number }).commentId), "trigger comment is in the thread");
+      assert.ok(t.event.kind === "comment" || t.event.kind === "tick");
+      if (t.event.kind === "comment") {
+        const id = t.event.commentId;
+        assert.ok(t.comments.some((c) => c.id === id), "trigger comment is in the thread");
+      }
       assert.ok(t.expected.length > 0);
       const botIds = new Set(t.comments.filter((c) => c.user?.type === "Bot").map((c) => c.id));
       t.expected.forEach((a, i) => checkAction(a, botIds, `${file} expected[${i}]`));

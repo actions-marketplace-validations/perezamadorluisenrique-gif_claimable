@@ -14,14 +14,27 @@ name: Claim bot
 on:
   issue_comment:
     types: [created]
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
 permissions:
   issues: write
-concurrency:
-  group: claim-bot-${{ github.event.issue.number }}
-  cancel-in-progress: false
 jobs:
   claim:
-    if: github.event.issue.pull_request == null && github.event.comment.user.type != 'Bot'
+    if: github.event_name == 'issue_comment' && github.event.issue.pull_request == null && github.event.comment.user.type != 'Bot'
+    concurrency:
+      group: claim-bot-${{ github.event.issue.number }}
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: perezamadorluisenrique-gif/claimable/bot@v1
+        with:
+          dry-run: true
+  remind:
+    if: github.event_name != 'issue_comment'
+    concurrency:
+      group: claim-bot-daily
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     steps:
       - uses: perezamadorluisenrique-gif/claimable/bot@v1
@@ -40,6 +53,15 @@ No `actions/checkout` step is needed, and none should be added to run a commente
 | `/claim status` | Says who holds it and the dates |
 
 A command counts only as the first word of a line of your own text. A quote, a code block, inline code or a bot never gives one.
+
+## Reminders and releases
+
+Once a day the `remind` job visits every open issue with the `claimed` label.
+
+1. **Reminder.** If the holder has shown no sign of life for 7 days, the bot edits its comment once and mentions them. A sign of life is a comment of theirs on the issue, a pull request of theirs linked to it (open, draft or closed), or a commit of theirs that mentions it.
+2. **Release.** If there is still none 7 days after the reminder, the bot unassigns the issue, removes the label and says so in the same comment. Anyone can then `/claim` it.
+
+It never releases anything while the holder has an open pull request, and it only touches claims it made itself: an issue a maintainer assigned by hand, or reassigned after the claim, is left alone. If the holder answers after the reminder, the clock starts again and the comment goes back to the plain status. The first visit after the `schedule` run is added can take up to a day; run the workflow by hand from the Actions tab to try it earlier. GitHub switches off scheduled workflows in a repository with no commits for 60 days.
 
 ## When it says no
 

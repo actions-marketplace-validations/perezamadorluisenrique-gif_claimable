@@ -15,6 +15,8 @@ const REPLIES: Reply[] = [
   { kind: "status", holder: "alice", since: null, nudgeOn: null, releaseOn: null },
   { kind: "released", by: "alice", former: "alice" },
   { kind: "released", by: "owner", former: "alice" },
+  { kind: "nudge", holder: "alice", lastOn: "2026-09-10", releaseOn: "2026-09-24" },
+  { kind: "expired", former: "alice", lastOn: "2026-09-10" },
   { kind: "held", requester: "bob", holder: "alice", since: "2026-09-10" },
   { kind: "pull-open", requester: "bob", pull: 12, author: "carol" },
   { kind: "quota", requester: "bob", limit: 2, claims: [3, 8] },

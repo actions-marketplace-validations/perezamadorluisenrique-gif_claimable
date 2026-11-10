@@ -4,7 +4,7 @@ import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSyn
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { after, describe, it } from "node:test";
-import { handle, readInputs } from "../bot/main.ts";
+import { TICK_LIMIT, handle, handleTick, readInputs } from "../bot/main.ts";
 import { applyActions } from "../src/bot/apply.ts";
 import type { Sender } from "../src/bot/apply.ts";
 import type { Action } from "../src/bot/types.ts";
@@ -334,6 +334,104 @@ describe("bot end to end, offline", () => {
     });
     assert.equal(res.status, 0);
     assert.match(res.stdout, /::warning::claimable bot stopped/);
+  });
+});
+
+// ── the daily visit, offline ──────────────────────────────────────────────
+describe("the daily visit, offline", () => {
+  const CASSETTES = join(dir, "tick-cassettes");
+  mkdirSync(CASSETTES);
+  const put = (path: string, body: unknown) => {
+    configure({ cassetteDir: CASSETTES });
+    writeFileSync(cassettePath(path), JSON.stringify({ path, status: 200, body }));
+  };
+  const issue = (n: number, assignee: string) => ({
+    number: n, state: "open", locked: false, html_url: `https://github.com/acme/widgets/issues/${n}`, title: `Issue ${n}`,
+    labels: [{ name: "claimed" }], assignees: [{ login: assignee }], comments: 2, created_at: "2026-09-01T00:00:00Z", updated_at: "2026-09-01T00:00:00Z",
+  });
+  const marker = (n: number) => `<!-- claimable-bot:v1 {"claimant":"alice","since":"2026-09-01T09:00:00Z","nudgedAt":null} -->\nBot text ${n}.`;
+  const thread = (n: number, who: string) => {
+    put(`/repos/acme/widgets/issues/${n}`, issue(n, who));
+    put(`/repos/acme/widgets/issues/${n}/comments?per_page=100`, [
+      { id: n * 10, body: "/claim", created_at: "2026-09-01T09:00:00Z", author_association: "NONE", user: { login: who, type: "User" } },
+      { id: n * 10 + 1, body: marker(n), created_at: "2026-09-01T09:00:00Z", author_association: "NONE", user: { login: "github-actions[bot]", type: "Bot" } },
+    ]);
+    put(`/repos/acme/widgets/issues/${n}/timeline?per_page=100`, [{ event: "assigned", created_at: "2026-09-01T09:00:00Z", assignee: { login: who } }]);
+  };
+  put("/repos/acme/widgets", { full_name: "acme/widgets", private: false, default_branch: "main" });
+  put("/repos/acme/widgets/issues?state=open&labels=claimed&per_page=100", [issue(7, "alice"), issue(8, "alice")]);
+  thread(7, "alice");
+  thread(8, "alice");
+  configure({ cassetteDir: "test/fixtures" });
+
+  const replay = () => configure({ cassetteMode: "replay", cassetteDir: CASSETTES, token: "", viewer: null });
+  const stop = () => configure({ cassetteMode: "off", cassetteDir: "test/fixtures" });
+  const noWrite: Sender = async () => {
+    throw new Error("must not write");
+  };
+
+  it("leaves one reminder per quiet claim, through the sender", async () => {
+    replay();
+    process.env.CLAIMABLE_NOW = "2026-09-08T12:00:00Z";
+    const calls: string[] = [];
+    const sender: Sender = async (method, path, body) => {
+      calls.push(`${method} ${path} ${(body as { body: string }).body.split("\n")[0]}`);
+      return {} as never;
+    };
+    try {
+      const run = await handleTick("acme/widgets", { token: null, dryRun: false }, { sender });
+      assert.equal(calls.length, 2);
+      assert.match(calls[0], /^PATCH \/repos\/acme\/widgets\/issues\/comments\/71 .*"nudgedAt":"2026-09-08T12:00:00Z"/);
+      assert.match(calls[1], /^PATCH \/repos\/acme\/widgets\/issues\/comments\/81/);
+      assert.ok(run.outcomes.every((o) => o.status === "done"));
+      assert.match(run.summary, /Visited 2 claimed issues/);
+    } finally {
+      delete process.env.CLAIMABLE_NOW;
+      stop();
+    }
+  });
+  it("does nothing before the seven days are up", async () => {
+    replay();
+    process.env.CLAIMABLE_NOW = "2026-09-05T12:00:00Z";
+    try {
+      const run = await handleTick("acme/widgets", { token: null, dryRun: false }, { sender: noWrite });
+      assert.deepEqual(run.outcomes, []);
+      assert.match(run.summary, /none needed a reminder or a release/);
+    } finally {
+      delete process.env.CLAIMABLE_NOW;
+      stop();
+    }
+  });
+  it("in dry-run only describes what it would do", async () => {
+    replay();
+    process.env.CLAIMABLE_NOW = "2026-09-08T12:00:00Z";
+    try {
+      const run = await handleTick("acme/widgets", { token: null, dryRun: true }, { sender: noWrite });
+      assert.ok(run.outcomes.length === 2 && run.outcomes.every((o) => o.status === "planned"));
+      assert.match(run.summary, /#7: would edit the bot comment \(nudge\)/);
+    } finally {
+      delete process.env.CLAIMABLE_NOW;
+      stop();
+    }
+  });
+  it("runs as a process on a schedule event and stays green", () => {
+    const event = join(dir, "schedule.json");
+    const summary = join(dir, "tick-summary.md");
+    writeFileSync(event, JSON.stringify({ schedule: "17 6 * * *" }));
+    writeFileSync(summary, "");
+    const res = spawnSync(process.execPath, [join(ROOT, "bot/main.ts")], {
+      encoding: "utf8",
+      env: {
+        ...process.env, CLAIMABLE_CASSETTE: "replay", CLAIMABLE_CASSETTE_DIR: CASSETTES, CLAIMABLE_NOW: "2026-09-08T12:00:00Z",
+        GITHUB_EVENT_NAME: "schedule", GITHUB_EVENT_PATH: event, GITHUB_STEP_SUMMARY: summary, GITHUB_REPOSITORY: "acme/widgets",
+        GITHUB_TOKEN: "", GH_TOKEN: "", INPUT_TOKEN: "", INPUT_DRY_RUN: "true",
+      },
+    });
+    assert.equal(res.status, 0, res.stdout + res.stderr);
+    assert.match(readFileSync(summary, "utf8"), /Visited 2 claimed issues/);
+  });
+  it("looks at no more than a hundred issues a day", () => {
+    assert.equal(TICK_LIMIT, 100);
   });
 });
 

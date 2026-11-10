@@ -44,3 +44,10 @@ Documented, not changed: GitHub keeps only the newest waiting run per `concurren
 - `.github/workflows/claim-bot.yml` now runs on every issue of this repository.
 - Package version 0.4.0; the README has the install block and the real comment text.
 - To do on the laptop (queued in `cola-laptop.md`): create the tags `v0.4.0` and `v1` (tags cannot be pushed from the cloud session) so `uses: .../claimable/bot@v1` resolves.
+
+## B2.1 Reminders and releases (2026-11-10)
+
+- `decide()` now answers the `tick` event (`decideTick` in `src/bot/decide.ts`); `handleTick` in `bot/main.ts` visits every open issue with the `claimed` label (at most 100 a day) on `schedule` and `workflow_dispatch`. New replies `nudge` and `expired`.
+- Rules, all pinned by 15 new threads (the bank has 65, the plan asked for 12 more): reminder after `nudge-days` without a sign of life from the holder (a comment, a linked pull request of theirs open or closed, or a commit that mentions the issue); release `release-days` after the reminder; a sign of life after the reminder starts the clock again and the comment returns to the plain status; **an open pull request of the holder blocks both**; only claims the bot made itself are touched (label, bot comment and marker must all name the current assignee), so a hand assignment or a reassignment is left alone; closed and locked issues are left alone. Dates are compared by day, so a run earlier in the day than the claim does not push a release to the next day.
+- `.github/workflows/claim-bot.yml` and the install block in `docs/bot.md` and the README have a second job, `remind`, with its own `concurrency` group.
+- Not proven live: this repository has no stale claim on a public issue and the rules forbid commenting from here with a footer. To see it on the real thing, someone with the laptop comments `/claim` on the `bot-sandbox` issue and runs the `Claim bot` workflow by hand; Actions cannot fake the date, so the real check is a week later.

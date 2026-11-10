@@ -75,8 +75,53 @@ function statusReply(state: State, config: BotConfig): Reply {
   };
 }
 
+/**
+ * The daily visit to a claimed issue: leave one reminder, later release.
+ *
+ * Every early return is a reason NOT to touch the claim, and they come first
+ * on purpose. Only a claim the bot itself made (label, bot comment and marker
+ * all naming the assignee) is ever released; an issue a maintainer assigned by
+ * hand, or reassigned afterwards, is left alone. A holder who has an open pull
+ * request is never nudged or released, however quiet the issue is.
+ */
+function decideTick(state: State, config: BotConfig, nowMs: number): Action[] {
+  const none = (reason: string): Action[] => [{ type: "none", reason }];
+  if (state.isPull) return none("this is a pull request, not an issue");
+  if (!state.open) return none("the issue is closed");
+  if (state.locked) return none("the issue is locked");
+  const holder = state.holder;
+  if (!holder) return none("nobody holds this issue");
+  if (!state.labels.some((l) => same(l, config.claimedLabel))) return none("assigned by hand, not reserved with the bot");
+  const marker = state.bot?.marker;
+  if (!marker?.claimant || !same(marker.claimant, holder.login)) return none("the bot did not reserve it for the current assignee");
+  if (!state.lastActivity) return none("the holder's activity cannot be dated");
+
+  // A sign of life after the reminder starts the clock again. The comment still
+  // says "reminder", so put it back to the plain status (an edit, no new notice).
+  if (marker.nudgedAt && Date.parse(state.lastActivity) > Date.parse(marker.nudgedAt)) {
+    return [comment(state, statusReply(state, config))];
+  }
+  if (state.openPulls.some((p) => same(p.author, holder.login))) return none("the holder has a pull request open");
+
+  const today = day(nowMs);
+  const lastOn = day(Date.parse(state.lastActivity));
+  const due = deadlines(state.lastActivity, marker.nudgedAt, config)!;
+  if (marker.nudgedAt) {
+    if (today < due.releaseOn) return none(`waiting for the reminder to run out on ${due.releaseOn}`);
+    return [
+      { type: "unassign", login: holder.login },
+      { type: "unlabel", name: config.claimedLabel },
+      comment(state, { kind: "expired", former: holder.login, lastOn }, { ...EMPTY_MARKER }),
+    ];
+  }
+  if (today < due.nudgeOn!) return none(`active enough: the reminder is due ${due.nudgeOn}`);
+  return [
+    comment(state, { kind: "nudge", holder: holder.login, lastOn, releaseOn: day(nowMs + config.releaseDays * DAY) }, { ...marker, nudgedAt: iso(nowMs) }),
+  ];
+}
+
 export function decide(event: DecideEvent, state: State, config: BotConfig, nowMs: number): Action[] {
-  if (event.kind === "tick") return [{ type: "none", reason: "nothing to do on a tick yet" }];
+  if (event.kind === "tick") return decideTick(state, config, nowMs);
 
   const c = event.comment;
   if (!c.user || c.user.login.toLowerCase() === "ghost") return [{ type: "none", reason: "the author is a deleted account" }];

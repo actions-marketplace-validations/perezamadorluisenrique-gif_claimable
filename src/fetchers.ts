@@ -62,6 +62,15 @@ export async function getHeldIssues(ref: IssueRef, login: string, label: string)
   return { numbers: items.filter((i) => !i.pull_request && i.number !== ref.number).map((i) => i.number), truncated };
 }
 
+/** Open issues of the repo carrying `label`, whoever holds them: what the daily visit looks at. */
+export async function getClaimedIssues(ref: IssueRef, label: string): Promise<{ numbers: number[]; truncated: boolean }> {
+  const { items, truncated } = await allPages<GhIssue>(
+    `/repos/${ref.owner}/${ref.repo}/issues?state=open&labels=${encodeURIComponent(label)}&per_page=100`,
+    3,
+  );
+  return { numbers: items.filter((i) => !i.pull_request).map((i) => i.number), truncated };
+}
+
 /** A person's role on the repository (admin, maintain, write, triage, read, none), or null when it cannot be read. */
 export async function getPermission(ref: IssueRef, login: string): Promise<string | null> {
   try {

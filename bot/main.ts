@@ -21,7 +21,7 @@ import { renderComment } from "../src/bot/messages.ts";
 import { readState } from "../src/bot/state.ts";
 import { DEFAULT_CONFIG } from "../src/bot/types.ts";
 import type { Action, BotComment, BotConfig, BotIssue } from "../src/bot/types.ts";
-import { getAllComments, getAllTimeline, getHeldIssues, getIssue, getPermission, now } from "../src/fetchers.ts";
+import { getAllComments, getAllTimeline, getClaimedIssues, getHeldIssues, getIssue, getPermission, getRepo, now } from "../src/fetchers.ts";
 import { configure } from "../src/github.ts";
 import { parseRepo } from "../src/refs.ts";
 import { mdInline } from "../src/report.ts";
@@ -152,8 +152,62 @@ export async function handle(eventName: string, payload: Payload, inputs: BotInp
   return { summary: formatSummary(title, dryRun, outcomes, warnings), actions, outcomes, warnings };
 }
 
-export function formatSummary(title: string, dryRun: boolean, outcomes: Outcome[], warnings: string[]): string {
+/** The most issues one daily visit looks at; the rest wait for tomorrow. */
+export const TICK_LIMIT = 100;
+
+/** The daily visit: for every open issue labelled `claimed`, remind or release if the holder went quiet. */
+export async function handleTick(repoFullName: string, inputs: BotInputs, deps: Deps = {}): Promise<Run> {
+  const repo = parseRepo(repoFullName);
+  if (!repo) return nothing("The daily visit needs the repository (GITHUB_REPOSITORY).");
+  const base: IssueRef = { owner: repo.owner, repo: repo.repo, number: 0 };
+  const title = `${base.owner}/${base.repo}`;
+  const config: BotConfig = { ...DEFAULT_CONFIG, ...deps.config };
+  const warnings: string[] = [];
+
+  let dryRun = inputs.dryRun;
+  if (!dryRun && (await getRepo(base)).private === true) {
+    dryRun = true;
+    warnings.push("Private repository: the bot only reports what it would do here.");
+  }
+
+  const listed = await getClaimedIssues(base, config.claimedLabel);
+  if (listed.truncated) warnings.push("More claimed issues than one visit reads; the oldest are looked at first.");
+  const numbers = [...listed.numbers].sort((a, b) => a - b);
+  if (numbers.length > TICK_LIMIT) warnings.push(`Only the first ${TICK_LIMIT} of ${numbers.length} claimed issues are visited today.`);
+
+  const actions: Action[] = [];
+  const outcomes: Outcome[] = [];
+  let looked = 0;
+  for (const number of numbers.slice(0, TICK_LIMIT)) {
+    looked++;
+    const ref: IssueRef = { ...base, number };
+    const [issue, comments, timeline] = await Promise.all([getIssue(ref), getAllComments(ref), getAllTimeline(ref)]);
+    if (comments.truncated || timeline.truncated) continue; // too long to read in full: not touched
+    const botIssue: BotIssue = {
+      number: issue.number,
+      state: issue.state,
+      locked: issue.locked === true,
+      html_url: issue.html_url,
+      title: issue.title,
+      labels: issue.labels,
+      assignees: issue.assignees ?? [],
+      updated_at: issue.updated_at,
+      ...(issue.pull_request === undefined ? {} : { pull_request: issue.pull_request }),
+    };
+    const state = readState(botIssue, timeline.items as GhTimelineEvent[], (comments.items as RawComment[]).map(toBotComment));
+    const todo = decide({ kind: "tick" }, state, config, now()).filter((a) => a.type !== "none");
+    if (todo.length === 0) continue;
+    actions.push(...todo);
+    const done = await applyActions(todo, ref, { dryRun, sender: deps.sender });
+    outcomes.push(...done.map((o) => ({ ...o, note: `#${number}: ${o.note}` })));
+  }
+  const summary = formatSummary(title, dryRun, outcomes, warnings, `Visited ${looked} claimed issue${looked === 1 ? "" : "s"}; ${outcomes.length === 0 ? "none needed a reminder or a release" : "see below"}.`);
+  return { summary, actions, outcomes, warnings };
+}
+
+export function formatSummary(title: string, dryRun: boolean, outcomes: Outcome[], warnings: string[], intro?: string): string {
   const out = [`## Claimable bot: ${mdInline(title)}`, ""];
+  if (intro) out.push(intro, "");
   if (dryRun) out.push("_Dry run: nothing was written._", "");
   for (const w of warnings) out.push(`> ${mdInline(w)}`, "");
   for (const o of outcomes) {
@@ -178,7 +232,11 @@ export async function run(env: Env): Promise<number> {
       return 0;
     }
     const payload = JSON.parse(readFileSync(path, "utf8")) as Payload;
-    const result = await handle(env.GITHUB_EVENT_NAME ?? "", payload, inputs);
+    const eventName = env.GITHUB_EVENT_NAME ?? "";
+    const result =
+      eventName === "schedule" || eventName === "workflow_dispatch"
+        ? await handleTick(env.GITHUB_REPOSITORY ?? payload.repository?.full_name ?? "", inputs)
+        : await handle(eventName, payload, inputs);
     for (const w of result.warnings) process.stdout.write(`::notice::${oneLine(w)}\n`);
     for (const o of result.outcomes) if (o.status === "failed") process.stdout.write(`::warning::${oneLine(o.note)}\n`);
     if (env.GITHUB_STEP_SUMMARY) appendFileSync(env.GITHUB_STEP_SUMMARY, result.summary);
