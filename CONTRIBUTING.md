@@ -21,7 +21,7 @@ project has no dependencies.
 ```bash
 git clone https://github.com/perezamadorluisenrique-gif/claimable
 cd claimable
-npm test          # 385 tests, offline, deterministic
+npm test          # 447 tests, offline, deterministic
 npm run compare   # the tool's verdicts next to the hand-triaged ones
 ```
 
