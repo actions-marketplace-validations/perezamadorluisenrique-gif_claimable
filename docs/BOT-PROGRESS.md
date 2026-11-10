@@ -78,3 +78,12 @@ Documented, not changed: GitHub keeps only the newest waiting run per `concurren
 - The Actions token gives 1,000 REST requests an hour per repository (shared with the claim bot); the index spends at most 800 an hour and runs hourly.
 - Deviation from the plan: 3,000 projects do not fit at worst-case costs; 1,800 do. Thread D's last stage is 1,800. The test pins the capacity, so a cheaper filter or a costlier one shows up as a failing test.
 - `primeMemo()` lets the collector reuse each issue from the listing instead of fetching it again.
+
+## I1.1 Collector (2026-11-10)
+
+- `index/collect.ts` and `.github/workflows/index.yml` (hourly at :17, `concurrency: index`, data committed to the `index-data` branch). Budget per run is the smaller of 800 and 80 % of what `/rate_limit` says is left. Stored per issue: verdict, reason, evidence URLs, `updatedAt`, `checkedAt`. A viable issue that could not be re-checked on time is dropped from the data rather than shown stale.
+
+## I1.2 Project list (2026-11-10)
+
+- `index/build-projects.ts`: 20 languages, 15 each, most stars first, with at least one `good first issue` or `help wanted` issue, pushed in the last 90 days, not archived, not a fork, and not a list, guide or course (name or description). 300 projects in `index/projects.json`.
+- The cloud sandbox reaches search only through `gh api`, so the list was built with `--hits` from saved search results; on a normal machine the script searches by itself (40 search requests, paced under 30 a minute).

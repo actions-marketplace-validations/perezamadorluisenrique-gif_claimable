@@ -1,1 +1,2102 @@
-[]
+[
+ {
+  "owner": "react",
+  "repo": "react",
+  "language": "JavaScript",
+  "stars": 252479,
+  "description": "The library for web and native user interfaces."
+ },
+ {
+  "owner": "vercel",
+  "repo": "next.js",
+  "language": "JavaScript",
+  "stars": 143452,
+  "description": "The React Framework"
+ },
+ {
+  "owner": "nodejs",
+  "repo": "node",
+  "language": "JavaScript",
+  "stars": 123459,
+  "description": "Node.js JavaScript runtime ✨🐢🚀✨"
+ },
+ {
+  "owner": "addyosmani",
+  "repo": "agent-skills",
+  "language": "JavaScript",
+  "stars": 114962,
+  "description": "Production-grade engineering skills for AI coding agents."
+ },
+ {
+  "owner": "louislam",
+  "repo": "uptime-kuma",
+  "language": "JavaScript",
+  "stars": 93456,
+  "description": "A fancy self-hosted monitoring tool"
+ },
+ {
+  "owner": "anuraghazra",
+  "repo": "github-readme-stats",
+  "language": "JavaScript",
+  "stars": 79841,
+  "description": ":zap: Dynamically generated stats for your github readmes"
+ },
+ {
+  "owner": "juliangarnier",
+  "repo": "anime",
+  "language": "JavaScript",
+  "stars": 74495,
+  "description": "JavaScript animation engine"
+ },
+ {
+  "owner": "expressjs",
+  "repo": "express",
+  "language": "JavaScript",
+  "stars": 69575,
+  "description": "Fast, unopinionated, minimalist web framework for node."
+ },
+ {
+  "owner": "chartjs",
+  "repo": "Chart.js",
+  "language": "JavaScript",
+  "stars": 67789,
+  "description": "Simple HTML5 Charts using the <canvas> tag"
+ },
+ {
+  "owner": "webpack",
+  "repo": "webpack",
+  "language": "JavaScript",
+  "stars": 65998,
+  "description": "A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows for loading parts of the application on demand. Through \"loaders\", modules can be CommonJs, AM"
+ },
+ {
+  "owner": "bilawalsidhu",
+  "repo": "gods-eye-view",
+  "language": "JavaScript",
+  "stars": 64092,
+  "description": "A spy satellite simulator in your browser, except the data is real. Live open source spatial intelligence on a photorealistic 3D globe."
+ },
+ {
+  "owner": "jquery",
+  "repo": "jquery",
+  "language": "JavaScript",
+  "stars": 59858,
+  "description": "jQuery JavaScript Library"
+ },
+ {
+  "owner": "gatsbyjs",
+  "repo": "gatsby",
+  "language": "JavaScript",
+  "stars": 55918,
+  "description": "React-based framework with performance, scalability, and security built in."
+ },
+ {
+  "owner": "poteto",
+  "repo": "hiring-without-whiteboards",
+  "language": "JavaScript",
+  "stars": 53167,
+  "description": "⭐️  Companies that don't have a broken hiring process"
+ },
+ {
+  "owner": "prettier",
+  "repo": "prettier",
+  "language": "JavaScript",
+  "stars": 52411,
+  "description": "Prettier is an opinionated code formatter."
+ },
+ {
+  "owner": "openclaw",
+  "repo": "openclaw",
+  "language": "TypeScript",
+  "stars": 394301,
+  "description": "The AI that really does things. Any OS. Any Platform. The lobster way. 🦞 "
+ },
+ {
+  "owner": "firecrawl",
+  "repo": "firecrawl",
+  "language": "TypeScript",
+  "stars": 200426,
+  "description": "Supercharge your AI agents with data from the web and beyond. Building the library for superintelligence. 🔥"
+ },
+ {
+  "owner": "microsoft",
+  "repo": "vscode",
+  "language": "TypeScript",
+  "stars": 195263,
+  "description": "Visual Studio Code"
+ },
+ {
+  "owner": "excalidraw",
+  "repo": "excalidraw",
+  "language": "TypeScript",
+  "stars": 135445,
+  "description": "Virtual whiteboard for sketching hand-drawn like diagrams"
+ },
+ {
+  "owner": "stablyai",
+  "repo": "orca",
+  "language": "TypeScript",
+  "stars": 121250,
+  "description": "Orca lets you run a fleet of coding agents (e.g. Claude Code, Codex) with your own subscription. Available on desktop, mobile and remote runtime."
+ },
+ {
+  "owner": "immich-app",
+  "repo": "immich",
+  "language": "TypeScript",
+  "stars": 118704,
+  "description": "High performance self-hosted photo and video management solution."
+ },
+ {
+  "owner": "supabase",
+  "repo": "supabase",
+  "language": "TypeScript",
+  "stars": 114746,
+  "description": "The Postgres development platform. Supabase gives you a dedicated Postgres database to build your web, mobile, and AI applications."
+ },
+ {
+  "owner": "google-gemini",
+  "repo": "gemini-cli",
+  "language": "TypeScript",
+  "stars": 108760,
+  "description": "An open-source AI agent that brings the power of Gemini directly into your terminal."
+ },
+ {
+  "owner": "nexu-io",
+  "repo": "open-design",
+  "language": "TypeScript",
+  "stars": 106999,
+  "description": "The 1st Collaborative AI Design Agent Workspace. Local-first and open source. Create motion, prototypes, websites, apps, dashboards, presentations, images, and videos with your team and AI agents. Sha"
+ },
+ {
+  "owner": "ant-design",
+  "repo": "ant-design",
+  "language": "TypeScript",
+  "stars": 100145,
+  "description": "An enterprise-class UI design language and React UI library"
+ },
+ {
+  "owner": "OpenCut-app",
+  "repo": "OpenCut",
+  "language": "TypeScript",
+  "stars": 98025,
+  "description": "The open-source CapCut alternative"
+ },
+ {
+  "owner": "Stirling-Tools",
+  "repo": "Stirling-PDF",
+  "language": "TypeScript",
+  "stars": 96212,
+  "description": "#1 PDF Application on GitHub that lets you edit PDFs on any device anywhere"
+ },
+ {
+  "owner": "puppeteer",
+  "repo": "puppeteer",
+  "language": "TypeScript",
+  "stars": 95817,
+  "description": "JavaScript API for Chrome and Firefox"
+ },
+ {
+  "owner": "OpenHands",
+  "repo": "OpenHands",
+  "language": "TypeScript",
+  "stars": 93136,
+  "description": "🙌 OpenHands: AI-Driven Development"
+ },
+ {
+  "owner": "Egonex-AI",
+  "repo": "Understand-Anything",
+  "language": "TypeScript",
+  "stars": 91857,
+  "description": "Graphs that teach > graphs that impress. Turn any code into an interactive knowledge graph you can explore, search, and ask questions about. Works with Claude Code, Codex, Cursor, Copilot, Gemini CLI,"
+ },
+ {
+  "owner": "TheAlgorithms",
+  "repo": "Python",
+  "language": "Python",
+  "stars": 225990,
+  "description": "All Algorithms implemented in Python"
+ },
+ {
+  "owner": "microsoft",
+  "repo": "markitdown",
+  "language": "Python",
+  "stars": 194766,
+  "description": "Python tool for converting files and office documents to Markdown."
+ },
+ {
+  "owner": "Significant-Gravitas",
+  "repo": "AutoGPT",
+  "language": "Python",
+  "stars": 187983,
+  "description": "AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters."
+ },
+ {
+  "owner": "langgenius",
+  "repo": "dify",
+  "language": "Python",
+  "stars": 160864,
+  "description": "Build Agentic workflows, RAG pipelines, with rich AI model and tool support on one collaborative workspace. Deploy on cloud, VPC, or self-hosted, so teams move from prototype to production without reb"
+ },
+ {
+  "owner": "langchain-ai",
+  "repo": "langchain",
+  "language": "Python",
+  "stars": 149312,
+  "description": "The agent engineering platform."
+ },
+ {
+  "owner": "Comfy-Org",
+  "repo": "ComfyUI",
+  "language": "Python",
+  "stars": 146145,
+  "description": "The most powerful and modular diffusion model GUI, api and backend with a graph/nodes interface. The fastest local inference engine in the world."
+ },
+ {
+  "owner": "Graphify-Labs",
+  "repo": "graphify",
+  "language": "Python",
+  "stars": 145496,
+  "description": "Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. A /graphify skill for Claude Code, Cursor, Codex, and Gemini CLI: local deterministic AST parsing, e"
+ },
+ {
+  "owner": "ytdl-org",
+  "repo": "youtube-dl",
+  "language": "Python",
+  "stars": 141526,
+  "description": "Command-line program to download videos from YouTube.com and other video sites"
+ },
+ {
+  "owner": "sherlock-project",
+  "repo": "sherlock",
+  "language": "Python",
+  "stars": 108643,
+  "description": "Hunt down social media accounts by username across social networks"
+ },
+ {
+  "owner": "pytorch",
+  "repo": "pytorch",
+  "language": "Python",
+  "stars": 105318,
+  "description": "Tensors and Dynamic neural networks in Python with strong GPU acceleration"
+ },
+ {
+  "owner": "vllm-project",
+  "repo": "vllm",
+  "language": "Python",
+  "stars": 96681,
+  "description": "A high-throughput and memory-efficient inference and serving engine for LLMs"
+ },
+ {
+  "owner": "3b1b",
+  "repo": "manim",
+  "language": "Python",
+  "stars": 96323,
+  "description": "Animation engine for explanatory math videos"
+ },
+ {
+  "owner": "odysseus-dev",
+  "repo": "odysseus",
+  "language": "Python",
+  "stars": 95548,
+  "description": "Self-hosted AI workspace. "
+ },
+ {
+  "owner": "home-assistant",
+  "repo": "core",
+  "language": "Python",
+  "stars": 92125,
+  "description": ":house_with_garden: Open source home automation that puts local control and privacy first."
+ },
+ {
+  "owner": "bytedance",
+  "repo": "deer-flow",
+  "language": "Python",
+  "stars": 85219,
+  "description": "An open-source long-horizon SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and message gateway, it handles different levels of ta"
+ },
+ {
+  "owner": "elastic",
+  "repo": "elasticsearch",
+  "language": "Java",
+  "stars": 78551,
+  "description": "Free and Open Source, Distributed, RESTful Search Engine"
+ },
+ {
+  "owner": "termux",
+  "repo": "termux-app",
+  "language": "Java",
+  "stars": 64562,
+  "description": "Termux - a terminal emulator application for Android OS extendible by variety of packages."
+ },
+ {
+  "owner": "dbeaver",
+  "repo": "dbeaver",
+  "language": "Java",
+  "stars": 52386,
+  "description": "Free universal database tool and SQL client"
+ },
+ {
+  "owner": "jeecgboot",
+  "repo": "JeecgBoot",
+  "language": "Java",
+  "stars": 48420,
+  "description": "【AI 时代的业务系统基座】企业级 AI 低代码平台：权限、多租户、工作流、报表、大屏、AI 知识库等通用能力开箱即用，AI 只需生成业务差异部分。AI Skills 一句话生成完整系统——建表、前后端代码、菜单权限、BPM 流程、表单、报表、大屏全自动。内置 AI 应用平台（聊天、知识库、流程编排、MCP），兼容主流大模型。Java + Vue3，支持单体/微服务与信创国产化。"
+ },
+ {
+  "owner": "apache",
+  "repo": "dubbo",
+  "language": "Java",
+  "stars": 41578,
+  "description": "The java implementation of Apache Dubbo. An RPC and microservice framework."
+ },
+ {
+  "owner": "TeamNewPipe",
+  "repo": "NewPipe",
+  "language": "Java",
+  "stars": 40559,
+  "description": "A libre lightweight streaming front-end for Android."
+ },
+ {
+  "owner": "keycloak",
+  "repo": "keycloak",
+  "language": "Java",
+  "stars": 37801,
+  "description": "Open Source Identity and Access Management For Modern Applications and Services"
+ },
+ {
+  "owner": "alibaba",
+  "repo": "arthas",
+  "language": "Java",
+  "stars": 37614,
+  "description": "Alibaba Java Diagnostic Tool Arthas/Alibaba Java诊断利器Arthas"
+ },
+ {
+  "owner": "yuliskov",
+  "repo": "SmartTube",
+  "language": "Java",
+  "stars": 36174,
+  "description": "Browse media content with your own rules on Android TV"
+ },
+ {
+  "owner": "netty",
+  "repo": "netty",
+  "language": "Java",
+  "stars": 35070,
+  "description": "Netty project - an event-driven asynchronous network application framework"
+ },
+ {
+  "owner": "bumptech",
+  "repo": "glide",
+  "language": "Java",
+  "stars": 35013,
+  "description": "An image loading and caching library for Android focused on smooth scrolling"
+ },
+ {
+  "owner": "SeleniumHQ",
+  "repo": "selenium",
+  "language": "Java",
+  "stars": 34582,
+  "description": "A browser automation framework and ecosystem."
+ },
+ {
+  "owner": "alibaba",
+  "repo": "nacos",
+  "language": "Java",
+  "stars": 33512,
+  "description": "an easy-to-use dynamic service discovery, configuration and service management platform for building AI cloud native applications."
+ },
+ {
+  "owner": "conductor-oss",
+  "repo": "conductor",
+  "language": "Java",
+  "stars": 32457,
+  "description": "Conductor is an event driven agentic workflow engine providing durable and highly resilient execution engine for applications and AI Agents"
+ },
+ {
+  "owner": "floci-io",
+  "repo": "floci",
+  "language": "Java",
+  "stars": 31265,
+  "description": "Light, fluffy, and always free - The AWS Local Emulator alternative"
+ },
+ {
+  "owner": "ollama",
+  "repo": "ollama",
+  "language": "Go",
+  "stars": 186553,
+  "description": "Get up and running with Kimi, GLM, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models."
+ },
+ {
+  "owner": "golang",
+  "repo": "go",
+  "language": "Go",
+  "stars": 139828,
+  "description": "The Go programming language"
+ },
+ {
+  "owner": "kubernetes",
+  "repo": "kubernetes",
+  "language": "Go",
+  "stars": 128976,
+  "description": "Production-Grade Container Scheduling and Management"
+ },
+ {
+  "owner": "microsoft",
+  "repo": "TypeScript",
+  "language": "Go",
+  "stars": 111871,
+  "description": "TypeScript is a superset of JavaScript that compiles to clean JavaScript output."
+ },
+ {
+  "owner": "syncthing",
+  "repo": "syncthing",
+  "language": "Go",
+  "stars": 90321,
+  "description": "Open Source Continuous File Synchronization"
+ },
+ {
+  "owner": "netdata",
+  "repo": "netdata",
+  "language": "Go",
+  "stars": 81349,
+  "description": "The fastest path to AI-powered full stack observability, even for lean teams."
+ },
+ {
+  "owner": "caddyserver",
+  "repo": "caddy",
+  "language": "Go",
+  "stars": 78950,
+  "description": "Fast and extensible multi-platform HTTP/1-2-3 web server with automatic HTTPS"
+ },
+ {
+  "owner": "moby",
+  "repo": "moby",
+  "language": "Go",
+  "stars": 72363,
+  "description": "The Moby Project - a collaborative project for the container ecosystem to assemble container-based systems"
+ },
+ {
+  "owner": "prometheus",
+  "repo": "prometheus",
+  "language": "Go",
+  "stars": 67610,
+  "description": "The Prometheus monitoring system and time series database."
+ },
+ {
+  "owner": "rclone",
+  "repo": "rclone",
+  "language": "Go",
+  "stars": 60921,
+  "description": "\"rsync for cloud storage\" - Google Drive, S3, Dropbox, Backblaze B2, One Drive, Swift, Hubic, Wasabi, Google Cloud Storage, Azure Blob, Azure Files, Yandex Files"
+ },
+ {
+  "owner": "multica-ai",
+  "repo": "multica",
+  "language": "Go",
+  "stars": 55562,
+  "description": "Make humans and AI agents work as one team — open-source and self-hostable."
+ },
+ {
+  "owner": "wagoodman",
+  "repo": "dive",
+  "language": "Go",
+  "stars": 54715,
+  "description": "A tool for exploring each layer in a docker image"
+ },
+ {
+  "owner": "etcd-io",
+  "repo": "etcd",
+  "language": "Go",
+  "stars": 52688,
+  "description": "Distributed reliable key-value store for the most critical data of a distributed system"
+ },
+ {
+  "owner": "QuantumNous",
+  "repo": "new-api",
+  "language": "Go",
+  "stars": 51702,
+  "description": "Open-source AI gateway. Self-hosted LLM gateway with OpenAI-, Claude- and Gemini-compatible APIs, model routing, access control, usage tracking and cost accounting."
+ },
+ {
+  "owner": "ethereum",
+  "repo": "go-ethereum",
+  "language": "Go",
+  "stars": 51472,
+  "description": "Go implementation of the Ethereum protocol"
+ },
+ {
+  "owner": "farion1231",
+  "repo": "cc-switch",
+  "language": "Rust",
+  "stars": 153318,
+  "description": "A cross-platform desktop All-in-One assistant for Claude Code, Codex, OpenCode,DeepSeek Harness and more. Only official website: ccswitch.io"
+ },
+ {
+  "owner": "rustdesk",
+  "repo": "rustdesk",
+  "language": "Rust",
+  "stars": 128900,
+  "description": "An open-source remote desktop application designed for self-hosting, as an alternative to TeamViewer."
+ },
+ {
+  "owner": "tauri-apps",
+  "repo": "tauri",
+  "language": "Rust",
+  "stars": 112671,
+  "description": "Build smaller, faster, and more secure desktop and mobile applications with a web frontend."
+ },
+ {
+  "owner": "denoland",
+  "repo": "deno",
+  "language": "Rust",
+  "stars": 108944,
+  "description": "A modern runtime for JavaScript and TypeScript."
+ },
+ {
+  "owner": "oven-sh",
+  "repo": "bun",
+  "language": "Rust",
+  "stars": 96744,
+  "description": "Incredibly fast JavaScript runtime, bundler, test runner, and package manager – all in one"
+ },
+ {
+  "owner": "astral-sh",
+  "repo": "uv",
+  "language": "Rust",
+  "stars": 91851,
+  "description": "An extremely fast Python package and project manager, written in Rust."
+ },
+ {
+  "owner": "rtk-ai",
+  "repo": "rtk",
+  "language": "Rust",
+  "stars": 86093,
+  "description": "CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies"
+ },
+ {
+  "owner": "dani-garcia",
+  "repo": "vaultwarden",
+  "language": "Rust",
+  "stars": 70528,
+  "description": "Unofficial Bitwarden compatible server written in Rust, formerly known as bitwarden_rs"
+ },
+ {
+  "owner": "BurntSushi",
+  "repo": "ripgrep",
+  "language": "Rust",
+  "stars": 69966,
+  "description": "ripgrep recursively searches directories for a regex pattern while respecting your gitignore"
+ },
+ {
+  "owner": "openinterpreter",
+  "repo": "openinterpreter",
+  "language": "Rust",
+  "stars": 68853,
+  "description": "A coding agent for open models like Kimi K3 and GLM 5.3"
+ },
+ {
+  "owner": "alacritty",
+  "repo": "alacritty",
+  "language": "Rust",
+  "stars": 66157,
+  "description": "A cross-platform, OpenGL terminal emulator."
+ },
+ {
+  "owner": "FuelLabs",
+  "repo": "sway",
+  "language": "Rust",
+  "stars": 61344,
+  "description": "🌴 Empowering everyone to build reliable and efficient smart contracts."
+ },
+ {
+  "owner": "sharkdp",
+  "repo": "bat",
+  "language": "Rust",
+  "stars": 61276,
+  "description": "A cat(1) clone with wings."
+ },
+ {
+  "owner": "meilisearch",
+  "repo": "meilisearch",
+  "language": "Rust",
+  "stars": 59832,
+  "description": "A lightning-fast search engine API bringing AI-powered hybrid search to your sites and applications."
+ },
+ {
+  "owner": "FuelLabs",
+  "repo": "fuel-core",
+  "language": "Rust",
+  "stars": 56762,
+  "description": "Rust full node implementation of the Fuel v2 protocol."
+ },
+ {
+  "owner": "ggml-org",
+  "repo": "llama.cpp",
+  "language": "C++",
+  "stars": 133933,
+  "description": "LLM inference in C/C++"
+ },
+ {
+  "owner": "react",
+  "repo": "react-native",
+  "language": "C++",
+  "stars": 126896,
+  "description": "A framework for building native applications using React"
+ },
+ {
+  "owner": "godotengine",
+  "repo": "godot",
+  "language": "C++",
+  "stars": 119939,
+  "description": "Godot Engine – Multi-platform 2D and 3D game engine"
+ },
+ {
+  "owner": "microsoft",
+  "repo": "terminal",
+  "language": "C++",
+  "stars": 105362,
+  "description": "The new Windows Terminal and the original Windows console host, all in the same place!"
+ },
+ {
+  "owner": "tesseract-ocr",
+  "repo": "tesseract",
+  "language": "C++",
+  "stars": 77445,
+  "description": "Tesseract Open Source OCR Engine (main repository)"
+ },
+ {
+  "owner": "ocornut",
+  "repo": "imgui",
+  "language": "C++",
+  "stars": 77045,
+  "description": "Dear ImGui: Bloat-free Graphical User interface for C++ with minimal dependencies"
+ },
+ {
+  "owner": "protocolbuffers",
+  "repo": "protobuf",
+  "language": "C++",
+  "stars": 72162,
+  "description": "Protocol Buffers - Google's data interchange format"
+ },
+ {
+  "owner": "ggml-org",
+  "repo": "whisper.cpp",
+  "language": "C++",
+  "stars": 55071,
+  "description": "Port of OpenAI's Whisper model in C/C++"
+ },
+ {
+  "owner": "ClickHouse",
+  "repo": "ClickHouse",
+  "language": "C++",
+  "stars": 50862,
+  "description": "ClickHouse® is a real-time analytics database management system"
+ },
+ {
+  "owner": "x64dbg",
+  "repo": "x64dbg",
+  "language": "C++",
+  "stars": 50268,
+  "description": "An open-source user mode debugger for Windows. Optimized for reverse engineering and malware analysis."
+ },
+ {
+  "owner": "zen-browser",
+  "repo": "desktop",
+  "language": "C++",
+  "stars": 45712,
+  "description": "Welcome to a calmer internet"
+ },
+ {
+  "owner": "LizardByte",
+  "repo": "Sunshine",
+  "language": "C++",
+  "stars": 43235,
+  "description": "Self-hosted game stream host for Moonlight."
+ },
+ {
+  "owner": "aseprite",
+  "repo": "aseprite",
+  "language": "C++",
+  "stars": 40837,
+  "description": "Animated sprite editor & pixel art tool (Windows, macOS, Linux)"
+ },
+ {
+  "owner": "google",
+  "repo": "googletest",
+  "language": "C++",
+  "stars": 39723,
+  "description": "GoogleTest - Google Testing and Mocking Framework"
+ },
+ {
+  "owner": "google",
+  "repo": "leveldb",
+  "language": "C++",
+  "stars": 39535,
+  "description": "LevelDB is a fast key-value storage library written at Google that provides an ordered mapping from string keys to string values."
+ },
+ {
+  "owner": "jellyfin",
+  "repo": "jellyfin",
+  "language": "C#",
+  "stars": 59189,
+  "description": "The Free Software Media System - Server Backend & API"
+ },
+ {
+  "owner": "files-community",
+  "repo": "Files",
+  "language": "C#",
+  "stars": 46578,
+  "description": "A modern file manager that helps users organize their files and folders."
+ },
+ {
+  "owner": "dotnet",
+  "repo": "aspnetcore",
+  "language": "C#",
+  "stars": 38509,
+  "description": "ASP.NET Core is a cross-platform .NET framework for building modern cloud-based web applications on Windows, Mac, or Linux."
+ },
+ {
+  "owner": "DevToys-app",
+  "repo": "DevToys",
+  "language": "C#",
+  "stars": 32245,
+  "description": "A Swiss Army knife for developers."
+ },
+ {
+  "owner": "microsoft",
+  "repo": "calculator",
+  "language": "C#",
+  "stars": 31091,
+  "description": "Windows Calculator: A simple yet powerful calculator that ships with Windows"
+ },
+ {
+  "owner": "BeyondDimension",
+  "repo": "SteamTools",
+  "language": "C#",
+  "stars": 27488,
+  "description": "🛠「Watt Toolkit」是一个开源跨平台的多功能 Steam 工具箱。"
+ },
+ {
+  "owner": "icsharpcode",
+  "repo": "ILSpy",
+  "language": "C#",
+  "stars": 27032,
+  "description": ".NET Decompiler with support for PDB generation, ReadyToRun, Metadata (&more) - cross-platform!"
+ },
+ {
+  "owner": "QL-Win",
+  "repo": "QuickLook",
+  "language": "C#",
+  "stars": 25719,
+  "description": "Bring macOS “Quick Look” feature to Windows"
+ },
+ {
+  "owner": "dotnet",
+  "repo": "maui",
+  "language": "C#",
+  "stars": 23321,
+  "description": ".NET MAUI is the .NET Multi-platform App UI, a framework for building native device applications spanning mobile, tablet, and desktop."
+ },
+ {
+  "owner": "QuantConnect",
+  "repo": "Lean",
+  "language": "C#",
+  "stars": 22478,
+  "description": "Lean Algorithmic Trading Engine by QuantConnect (Python, C#)"
+ },
+ {
+  "owner": "BCUninstaller",
+  "repo": "Bulk-Crap-Uninstaller",
+  "language": "C#",
+  "stars": 22381,
+  "description": "Remove large amounts of unwanted applications quickly."
+ },
+ {
+  "owner": "dotnet",
+  "repo": "roslyn",
+  "language": "C#",
+  "stars": 20771,
+  "description": "The Roslyn .NET compiler provides C# and Visual Basic languages with rich code analysis APIs."
+ },
+ {
+  "owner": "bitwarden",
+  "repo": "server",
+  "language": "C#",
+  "stars": 20613,
+  "description": "Bitwarden infrastructure/backend (API, database, Docker, etc)."
+ },
+ {
+  "owner": "lively-community",
+  "repo": "lively",
+  "language": "C#",
+  "stars": 20065,
+  "description": "Free and open-source software that allows users to set animated desktop wallpapers and screensavers powered by WinUI 3."
+ },
+ {
+  "owner": "ppy",
+  "repo": "osu",
+  "language": "C#",
+  "stars": 19389,
+  "description": "rhythm is just a *click* away!"
+ },
+ {
+  "owner": "Genymobile",
+  "repo": "scrcpy",
+  "language": "C",
+  "stars": 154501,
+  "description": "Display and control your Android device"
+ },
+ {
+  "owner": "microsoft",
+  "repo": "PowerToys",
+  "language": "C",
+  "stars": 140823,
+  "description": "Microsoft PowerToys is a collection of utilities that supercharge productivity and customization on Windows"
+ },
+ {
+  "owner": "obsproject",
+  "repo": "obs-studio",
+  "language": "C",
+  "stars": 79266,
+  "description": "OBS Studio - Free and open source software for live streaming and screen recording"
+ },
+ {
+  "owner": "JustVugg",
+  "repo": "colibri",
+  "language": "C",
+  "stars": 49684,
+  "description": "A hierarchical inference engine for frontier MoE models: hot experts on the GPU (CUDA, Vulkan), warm ones in RAM, cold ones streamed from NVMe. Written in C, runs on the hardware you already own."
+ },
+ {
+  "owner": "php",
+  "repo": "php-src",
+  "language": "C",
+  "stars": 41771,
+  "description": "The PHP Interpreter"
+ },
+ {
+  "owner": "nothings",
+  "repo": "stb",
+  "language": "C",
+  "stars": 34986,
+  "description": "stb single-file public domain libraries for C/C++"
+ },
+ {
+  "owner": "valinet",
+  "repo": "ExplorerPatcher",
+  "language": "C",
+  "stars": 34269,
+  "description": "This project aims to enhance the working environment on Windows"
+ },
+ {
+  "owner": "nginx",
+  "repo": "nginx",
+  "language": "C",
+  "stars": 32090,
+  "description": "The official NGINX Open Source repository."
+ },
+ {
+  "owner": "openssl",
+  "repo": "openssl",
+  "language": "C",
+  "stars": 31402,
+  "description": "General purpose TLS and crypto library"
+ },
+ {
+  "owner": "xiaojieonly",
+  "repo": "Ehviewer_CN_SXJ",
+  "language": "C",
+  "stars": 28962,
+  "description": "ehviewer，用爱发电，快乐前行"
+ },
+ {
+  "owner": "meta",
+  "repo": "zstd",
+  "language": "C",
+  "stars": 28219,
+  "description": "Zstandard - Fast real-time compression algorithm"
+ },
+ {
+  "owner": "valkey-io",
+  "repo": "valkey",
+  "language": "C",
+  "stars": 27674,
+  "description": "A flexible distributed key-value database that is optimized for caching and other realtime workloads."
+ },
+ {
+  "owner": "libuv",
+  "repo": "libuv",
+  "language": "C",
+  "stars": 27317,
+  "description": "Cross-platform asynchronous I/O"
+ },
+ {
+  "owner": "radareorg",
+  "repo": "radare2",
+  "language": "C",
+  "stars": 25387,
+  "description": "UNIX-like reverse engineering framework and command-line toolset"
+ },
+ {
+  "owner": "fastfetch-cli",
+  "repo": "fastfetch",
+  "language": "C",
+  "stars": 25330,
+  "description": "A maintained, feature-rich and performance oriented, neofetch like system information tool."
+ },
+ {
+  "owner": "danielmiessler",
+  "repo": "SecLists",
+  "language": "PHP",
+  "stars": 74673,
+  "description": "SecLists is the security tester's companion. It's a collection of multiple types of lists used during security assessments, collected in one place. List types include usernames, passwords, URLs, sensi"
+ },
+ {
+  "owner": "nextcloud",
+  "repo": "server",
+  "language": "PHP",
+  "stars": 37464,
+  "description": "☁️ Nextcloud server, a safe home for all your data"
+ },
+ {
+  "owner": "laravel",
+  "repo": "framework",
+  "language": "PHP",
+  "stars": 34997,
+  "description": "Laravel is a web application framework with expressive, elegant syntax."
+ },
+ {
+  "owner": "symfony",
+  "repo": "symfony",
+  "language": "PHP",
+  "stars": 31523,
+  "description": "The Symfony PHP framework"
+ },
+ {
+  "owner": "monicahq",
+  "repo": "monica",
+  "language": "PHP",
+  "stars": 25759,
+  "description": "Personal CRM. Remember everything about your friends, family and business relationships."
+ },
+ {
+  "owner": "PHPMailer",
+  "repo": "PHPMailer",
+  "language": "PHP",
+  "stars": 22341,
+  "description": "The classic email sending library for PHP"
+ },
+ {
+  "owner": "matomo-org",
+  "repo": "matomo",
+  "language": "PHP",
+  "stars": 22020,
+  "description": "Empowering People Ethically 🚀 — Matomo is hiring! Join us → https://matomo.org/jobs Matomo is the leading open-source alternative to Google Analytics, giving you complete control and built-in privacy"
+ },
+ {
+  "owner": "briannesbitt",
+  "repo": "Carbon",
+  "language": "PHP",
+  "stars": 16581,
+  "description": "A simple PHP API extension for DateTime."
+ },
+ {
+  "owner": "FreshRSS",
+  "repo": "FreshRSS",
+  "language": "PHP",
+  "stars": 16551,
+  "description": "A free, self-hostable news aggregator…"
+ },
+ {
+  "owner": "getgrav",
+  "repo": "grav",
+  "language": "PHP",
+  "stars": 15720,
+  "description": "Modern, Crazy Fast, Ridiculously Easy and Amazingly Powerful Flat-File CMS powered by PHP, Markdown, Twig, and Symfony"
+ },
+ {
+  "owner": "yiisoft",
+  "repo": "yii2",
+  "language": "PHP",
+  "stars": 14276,
+  "description": "Yii 2: The Fast, Secure and Professional PHP Framework"
+ },
+ {
+  "owner": "wallabag",
+  "repo": "wallabag",
+  "language": "PHP",
+  "stars": 13057,
+  "description": "wallabag is a self hostable application for saving web pages: Save and classify articles. Read them later. Freely."
+ },
+ {
+  "owner": "ramsey",
+  "repo": "uuid",
+  "language": "PHP",
+  "stars": 12632,
+  "description": ":snowflake: A PHP library for generating universally unique identifiers (UUIDs)."
+ },
+ {
+  "owner": "YOURLS",
+  "repo": "YOURLS",
+  "language": "PHP",
+  "stars": 12303,
+  "description": "🔗 The 𝘥𝘦 𝘧𝘢𝘤𝘵𝘰 standard, self hosted, powerful and customizable, URL shortener in PHP"
+ },
+ {
+  "owner": "slimphp",
+  "repo": "Slim",
+  "language": "PHP",
+  "stars": 12280,
+  "description": "Slim is a PHP micro framework that helps you quickly write simple yet powerful web applications and APIs."
+ },
+ {
+  "owner": "huginn",
+  "repo": "huginn",
+  "language": "Ruby",
+  "stars": 50477,
+  "description": "Create agents that monitor and act on your behalf.  Your agents are standing by!"
+ },
+ {
+  "owner": "fastlane",
+  "repo": "fastlane",
+  "language": "Ruby",
+  "stars": 42377,
+  "description": "🚀 The easiest way to automate building and releasing your iOS and Android apps"
+ },
+ {
+  "owner": "freeCodeCamp",
+  "repo": "devdocs",
+  "language": "Ruby",
+  "stars": 39618,
+  "description": "API Documentation Browser"
+ },
+ {
+  "owner": "chatwoot",
+  "repo": "chatwoot",
+  "language": "Ruby",
+  "stars": 39566,
+  "description": "Open-source live-chat, email support, omni-channel desk. An alternative to Intercom, Zendesk, Salesforce Service Cloud etc. 🔥💬"
+ },
+ {
+  "owner": "Homebrew",
+  "repo": "homebrew-cask",
+  "language": "Ruby",
+  "stars": 22289,
+  "description": "🍻 Default casks (upstream binary packages) for the package manager for everywhere"
+ },
+ {
+  "owner": "Homebrew",
+  "repo": "homebrew-core",
+  "language": "Ruby",
+  "stars": 15661,
+  "description": "🍻 Default and OSS formulae (built-from-source packages) for the package manager for everywhere"
+ },
+ {
+  "owner": "github-linguist",
+  "repo": "linguist",
+  "language": "Ruby",
+  "stars": 13780,
+  "description": "Language Savant. If your repository's language is being reported incorrectly, send us a pull request!"
+ },
+ {
+  "owner": "fluent",
+  "repo": "fluentd",
+  "language": "Ruby",
+  "stars": 13614,
+  "description": "Fluentd: Unified Logging Layer (project under CNCF)"
+ },
+ {
+  "owner": "capistrano",
+  "repo": "capistrano",
+  "language": "Ruby",
+  "stars": 13013,
+  "description": "A deployment automation tool built on Ruby, Rake, and SSH."
+ },
+ {
+  "owner": "ubicloud",
+  "repo": "ubicloud",
+  "language": "Ruby",
+  "stars": 12404,
+  "description": "Open source alternative to AWS. Elastic compute, block storage (non replicated), firewall and load balancer, managed Postgres, K8s, AI inference, and IAM services."
+ },
+ {
+  "owner": "Shopify",
+  "repo": "liquid",
+  "language": "Ruby",
+  "stars": 11924,
+  "description": "Liquid markup language. Safe, customer facing template language for flexible web apps. "
+ },
+ {
+  "owner": "activeadmin",
+  "repo": "activeadmin",
+  "language": "Ruby",
+  "stars": 9712,
+  "description": "The administration framework for Ruby on Rails applications."
+ },
+ {
+  "owner": "resque",
+  "repo": "resque",
+  "language": "Ruby",
+  "stars": 9466,
+  "description": "Resque is a Redis-backed Ruby library for creating background jobs, placing them on multiple queues, and processing them later."
+ },
+ {
+  "owner": "varvet",
+  "repo": "pundit",
+  "language": "Ruby",
+  "stars": 8519,
+  "description": "Minimal authorization through OO design and pure Ruby classes"
+ },
+ {
+  "owner": "thoughtbot",
+  "repo": "factory_bot",
+  "language": "Ruby",
+  "stars": 8166,
+  "description": "A library for setting up Ruby objects as test data."
+ },
+ {
+  "owner": "librepods-org",
+  "repo": "librepods",
+  "language": "Kotlin",
+  "stars": 30696,
+  "description": "AirPods liberated from Apple's ecosystem."
+ },
+ {
+  "owner": "JunkFood02",
+  "repo": "Seal",
+  "language": "Kotlin",
+  "stars": 30530,
+  "description": "🦭 Video/Audio Downloader for Android, based on yt-dlp"
+ },
+ {
+  "owner": "square",
+  "repo": "leakcanary",
+  "language": "Kotlin",
+  "stars": 30006,
+  "description": "A memory leak detection library for Android."
+ },
+ {
+  "owner": "pppscn",
+  "repo": "SmsForwarder",
+  "language": "Kotlin",
+  "stars": 28821,
+  "description": "短信转发器——监控Android手机短信、来电、APP通知，并根据指定规则转发到其他手机：钉钉群自定义机器人、钉钉企业内机器人、企业微信群机器人、飞书机器人、企业微信应用消息、邮箱、bark、webhook、Telegram机器人、Server酱、PushPlus、手机短信等。包括主动控制服务端与客户端，让你轻松远程发短信、查短信、查通话、查话簿、查电量等。（V3.0 新增）PS.这个APK主要是"
+ },
+ {
+  "owner": "android",
+  "repo": "nowinandroid",
+  "language": "Kotlin",
+  "stars": 22068,
+  "description": "A fully functional Android app built entirely with Kotlin and Jetpack Compose"
+ },
+ {
+  "owner": "open-ani",
+  "repo": "animeko",
+  "language": "Kotlin",
+  "stars": 21663,
+  "description": "集找番、追番、看番的一站式弹幕追番平台，云收藏同步 (Bangumi)，离线缓存，BitTorrent，弹幕云过滤。100% Kotlin/Compose Multiplatform"
+ },
+ {
+  "owner": "amir1376",
+  "repo": "ab-download-manager",
+  "language": "Kotlin",
+  "stars": 19174,
+  "description": "A Download Manager that speeds up your downloads"
+ },
+ {
+  "owner": "meta",
+  "repo": "fresco",
+  "language": "Kotlin",
+  "stars": 17159,
+  "description": "An Android library for managing images and the memory they use."
+ },
+ {
+  "owner": "mobile-dev-inc",
+  "repo": "Maestro",
+  "language": "Kotlin",
+  "stars": 16372,
+  "description": "Painless E2E Automation for Mobile and Web"
+ },
+ {
+  "owner": "ktorio",
+  "repo": "ktor",
+  "language": "Kotlin",
+  "stars": 14562,
+  "description": "Framework for quickly creating connected applications in Kotlin with minimal effort"
+ },
+ {
+  "owner": "thunderbird",
+  "repo": "thunderbird-android",
+  "language": "Kotlin",
+  "stars": 14203,
+  "description": "Thunderbird for Android – Open Source Email App for Android (fka K-9 Mail)"
+ },
+ {
+  "owner": "Kotlin",
+  "repo": "kotlinx.coroutines",
+  "language": "Kotlin",
+  "stars": 13822,
+  "description": "Library support for Kotlin coroutines "
+ },
+ {
+  "owner": "shihabal3amri",
+  "repo": "DiPlay",
+  "language": "Kotlin",
+  "stars": 13588,
+  "description": "Independent CarPlay receiver for compatible Android head units. Wired and wireless public preview."
+ },
+ {
+  "owner": "libre-tube",
+  "repo": "LibreTube",
+  "language": "Kotlin",
+  "stars": 12981,
+  "description": "An alternative frontend for YouTube, for Android."
+ },
+ {
+  "owner": "ankidroid",
+  "repo": "Anki-Android",
+  "language": "Kotlin",
+  "stars": 12214,
+  "description": "AnkiDroid: Anki flashcards on Android. Your secret trick to achieve superhuman information retention."
+ },
+ {
+  "owner": "swiftlang",
+  "repo": "swift",
+  "language": "Swift",
+  "stars": 70548,
+  "description": "The Swift Programming Language"
+ },
+ {
+  "owner": "apple",
+  "repo": "container",
+  "language": "Swift",
+  "stars": 51136,
+  "description": "A tool for creating and running Linux containers using lightweight virtual machines on a Mac. It is written in Swift, and optimized for Apple silicon. "
+ },
+ {
+  "owner": "iina",
+  "repo": "iina",
+  "language": "Swift",
+  "stars": 47081,
+  "description": "The modern video player for macOS."
+ },
+ {
+  "owner": "exelban",
+  "repo": "stats",
+  "language": "Swift",
+  "stars": 43290,
+  "description": "macOS system monitor in your menu bar"
+ },
+ {
+  "owner": "utmapp",
+  "repo": "UTM",
+  "language": "Swift",
+  "stars": 36820,
+  "description": "Virtual machines for iOS and macOS"
+ },
+ {
+  "owner": "manaflow-ai",
+  "repo": "cmux",
+  "language": "Swift",
+  "stars": 28751,
+  "description": "Open source Ghostty-based macOS terminal with vertical tabs and notifications for AI coding agents. Built for multitasking, organization, and programmability."
+ },
+ {
+  "owner": "airbnb",
+  "repo": "lottie-ios",
+  "language": "Swift",
+  "stars": 26934,
+  "description": "An iOS library to natively render After Effects vector animations"
+ },
+ {
+  "owner": "vapor",
+  "repo": "vapor",
+  "language": "Swift",
+  "stars": 26242,
+  "description": "💧 A server-side Swift HTTP web framework."
+ },
+ {
+  "owner": "ReactiveX",
+  "repo": "RxSwift",
+  "language": "Swift",
+  "stars": 24627,
+  "description": "Reactive Programming in Swift"
+ },
+ {
+  "owner": "slopus",
+  "repo": "happy",
+  "language": "Swift",
+  "stars": 24569,
+  "description": "Orchestrate Claude, Codex and Grok in one app. Open-source (MIT), reuses the subscriptions you already pay for."
+ },
+ {
+  "owner": "CodeEditApp",
+  "repo": "CodeEdit",
+  "language": "Swift",
+  "stars": 23109,
+  "description": "📝 CodeEdit App for macOS – Elevate your code editing experience. Open source, free forever."
+ },
+ {
+  "owner": "SwiftyJSON",
+  "repo": "SwiftyJSON",
+  "language": "Swift",
+  "stars": 22919,
+  "description": "The better way to deal with JSON data in Swift."
+ },
+ {
+  "owner": "p0deje",
+  "repo": "Maccy",
+  "language": "Swift",
+  "stars": 22274,
+  "description": "Lightweight clipboard manager for macOS"
+ },
+ {
+  "owner": "realm",
+  "repo": "SwiftLint",
+  "language": "Swift",
+  "stars": 19786,
+  "description": "A tool to enforce Swift style and conventions."
+ },
+ {
+  "owner": "ianyh",
+  "repo": "Amethyst",
+  "language": "Swift",
+  "stars": 16322,
+  "description": "Automatic tiling window manager for macOS à la xmonad."
+ },
+ {
+  "owner": "localsend",
+  "repo": "localsend",
+  "language": "Dart",
+  "stars": 98253,
+  "description": "An open-source cross-platform alternative to AirDrop"
+ },
+ {
+  "owner": "AppFlowy-IO",
+  "repo": "AppFlowy",
+  "language": "Dart",
+  "stars": 78645,
+  "description": "Bring projects, wikis, and teams together with AI. AppFlowy is the AI collaborative workspace where you achieve more without losing control of your data. The leading open source Notion alternative."
+ },
+ {
+  "owner": "Predidit",
+  "repo": "Kazumi",
+  "language": "Dart",
+  "stars": 42045,
+  "description": "基于自定义规则的番剧采集APP，支持流媒体在线观看，支持弹幕，支持实时超分辨率。"
+ },
+ {
+  "owner": "ente",
+  "repo": "ente",
+  "language": "Dart",
+  "stars": 30038,
+  "description": "💚 End-to-end encrypted cloud for everything."
+ },
+ {
+  "owner": "ImranR98",
+  "repo": "Obtainium",
+  "language": "Dart",
+  "stars": 21410,
+  "description": "Get Android app updates straight from the source."
+ },
+ {
+  "owner": "Notsfsssf",
+  "repo": "pixez-flutter",
+  "language": "Dart",
+  "stars": 13314,
+  "description": "一个支持免代理直连及查看动图的第三方Pixiv flutter客户端"
+ },
+ {
+  "owner": "felangel",
+  "repo": "bloc",
+  "language": "Dart",
+  "stars": 12488,
+  "description": "A predictable state management library that helps implement the BLoC design pattern"
+ },
+ {
+  "owner": "flame-engine",
+  "repo": "flame",
+  "language": "Dart",
+  "stars": 10812,
+  "description": "A Flutter based game engine."
+ },
+ {
+  "owner": "firebase",
+  "repo": "flutterfire",
+  "language": "Dart",
+  "stars": 9269,
+  "description": "🔥 A collection of Firebase plugins for Flutter apps."
+ },
+ {
+  "owner": "lollipopkit",
+  "repo": "flutter_server_box",
+  "language": "Dart",
+  "stars": 8967,
+  "description": "ServerBox - high performance server toolbox app & server written in Flutter & Rust."
+ },
+ {
+  "owner": "imaNNeo",
+  "repo": "fl_chart",
+  "language": "Dart",
+  "stars": 7593,
+  "description": "FL Chart is a highly customizable Flutter chart library that supports Line Chart, Bar Chart, Pie Chart, Scatter Chart, Radar Chart and Candlestick Chart."
+ },
+ {
+  "owner": "rrousselGit",
+  "repo": "riverpod",
+  "language": "Dart",
+  "stars": 7422,
+  "description": "A reactive caching and data-binding framework.   Riverpod makes working with asynchronous code a breeze."
+ },
+ {
+  "owner": "btwld",
+  "repo": "fvm",
+  "language": "Dart",
+  "stars": 5542,
+  "description": "Flutter Version Management: A simple CLI to manage Flutter SDK versions."
+ },
+ {
+  "owner": "saber-notes",
+  "repo": "saber",
+  "language": "Dart",
+  "stars": 5034,
+  "description": "The cross-platform open-source app built for handwriting"
+ },
+ {
+  "owner": "bepass-org",
+  "repo": "oblivion",
+  "language": "Dart",
+  "stars": 4896,
+  "description": "Unofficial warp client for android"
+ },
+ {
+  "owner": "lichess-org",
+  "repo": "lila",
+  "language": "Scala",
+  "stars": 18964,
+  "description": "♞ lichess.org: the forever free, adless and open source chess server ♞"
+ },
+ {
+  "owner": "akka",
+  "repo": "akka-core",
+  "language": "Scala",
+  "stars": 13283,
+  "description": "A platform to build and run apps that are elastic, agile, and resilient. SDK, libraries, and hosted environments."
+ },
+ {
+  "owner": "playframework",
+  "repo": "playframework",
+  "language": "Scala",
+  "stars": 12622,
+  "description": "The Community Maintained High Velocity Web Framework For Java and Scala."
+ },
+ {
+  "owner": "gitbucket",
+  "repo": "gitbucket",
+  "language": "Scala",
+  "stars": 9420,
+  "description": "A Git platform powered by Scala with easy installation, high extensibility & GitHub API compatibility"
+ },
+ {
+  "owner": "delta-io",
+  "repo": "delta",
+  "language": "Scala",
+  "stars": 9074,
+  "description": "An open-source storage framework that enables building a Lakehouse architecture with compute engines including Spark, PrestoDB, Flink, Trino, and Hive and APIs"
+ },
+ {
+  "owner": "twitter",
+  "repo": "finagle",
+  "language": "Scala",
+  "stars": 8870,
+  "description": "A fault tolerant, protocol-agnostic RPC system"
+ },
+ {
+  "owner": "gatling",
+  "repo": "gatling",
+  "language": "Scala",
+  "stars": 6960,
+  "description": "Modern Load Testing as Code"
+ },
+ {
+  "owner": "apache",
+  "repo": "openwhisk",
+  "language": "Scala",
+  "stars": 6805,
+  "description": "Apache OpenWhisk is an open source serverless cloud platform"
+ },
+ {
+  "owner": "scala",
+  "repo": "scala3",
+  "language": "Scala",
+  "stars": 6336,
+  "description": "The Scala 3 compiler, also known as Dotty."
+ },
+ {
+  "owner": "guardian",
+  "repo": "frontend",
+  "language": "Scala",
+  "stars": 5898,
+  "description": "The Guardian DotCom."
+ },
+ {
+  "owner": "typelevel",
+  "repo": "cats",
+  "language": "Scala",
+  "stars": 5476,
+  "description": "Lightweight, modular, and extensible library for functional programming."
+ },
+ {
+  "owner": "sbt",
+  "repo": "sbt",
+  "language": "Scala",
+  "stars": 4955,
+  "description": "sbt, the interactive build tool"
+ },
+ {
+  "owner": "chipsalliance",
+  "repo": "chisel",
+  "language": "Scala",
+  "stars": 4832,
+  "description": "Chisel: A Modern Hardware Design Language"
+ },
+ {
+  "owner": "scala-native",
+  "repo": "scala-native",
+  "language": "Scala",
+  "stars": 4706,
+  "description": "Your favorite language gets closer to bare metal."
+ },
+ {
+  "owner": "scalaz",
+  "repo": "scalaz",
+  "language": "Scala",
+  "stars": 4670,
+  "description": "Principled Functional Programming in Scala"
+ },
+ {
+  "owner": "tuist",
+  "repo": "tuist",
+  "language": "Elixir",
+  "stars": 5864,
+  "description": "Tuist builds infrastructure for faster, more reliable build and test workflows across developers, CI, and coding agents. Shared cache, tests, and insights that sit alongside your existing CI."
+ },
+ {
+  "owner": "thechangelog",
+  "repo": "changelog.com",
+  "language": "Elixir",
+  "stars": 2774,
+  "description": "Changelog makes world-class developer pods. This is our open source platform."
+ },
+ {
+  "owner": "elixir-broadway",
+  "repo": "broadway",
+  "language": "Elixir",
+  "stars": 2692,
+  "description": "Concurrent and multi-stage data ingestion and data processing with Elixir"
+ },
+ {
+  "owner": "quantum-elixir",
+  "repo": "quantum-core",
+  "language": "Elixir",
+  "stars": 2418,
+  "description": ":watch: Cron-like job scheduler for Elixir"
+ },
+ {
+  "owner": "supabase",
+  "repo": "supavisor",
+  "language": "Elixir",
+  "stars": 2285,
+  "description": "A cloud-native, multi-tenant Postgres connection pooler."
+ },
+ {
+  "owner": "pentacent",
+  "repo": "keila",
+  "language": "Elixir",
+  "stars": 2262,
+  "description": "Open Source Newsletter Tool."
+ },
+ {
+  "owner": "expert-lsp",
+  "repo": "expert",
+  "language": "Elixir",
+  "stars": 2069,
+  "description": "Official Elixir Language Server Protocol implementation"
+ },
+ {
+  "owner": "bitwalker",
+  "repo": "timex",
+  "language": "Elixir",
+  "stars": 1805,
+  "description": "A complete date/time library for Elixir projects."
+ },
+ {
+  "owner": "jeremyjh",
+  "repo": "dialyxir",
+  "language": "Elixir",
+  "stars": 1796,
+  "description": "Mix tasks to simplify use of Dialyzer in Elixir projects."
+ },
+ {
+  "owner": "elixir-lsp",
+  "repo": "elixir-ls",
+  "language": "Elixir",
+  "stars": 1781,
+  "description": "A frontend-independent IDE \"smartness\" server for Elixir. Implements the \"Language Server Protocol\" standard and provides debugger support via the \"Debug Adapter Protocol\""
+ },
+ {
+  "owner": "woutdp",
+  "repo": "live_svelte",
+  "language": "Elixir",
+  "stars": 1661,
+  "description": "Svelte inside Phoenix LiveView with seamless end-to-end reactivity"
+ },
+ {
+  "owner": "semaphoreio",
+  "repo": "semaphore",
+  "language": "Elixir",
+  "stars": 1636,
+  "description": "All-in-one delivery platform for AI-driven development."
+ },
+ {
+  "owner": "swoosh",
+  "repo": "swoosh",
+  "language": "Elixir",
+  "stars": 1530,
+  "description": "Compose, deliver and test your emails easily in Elixir"
+ },
+ {
+  "owner": "bencheeorg",
+  "repo": "benchee",
+  "language": "Elixir",
+  "stars": 1522,
+  "description": "Easy and extensible benchmarking in Elixir providing you with lots of statistics!"
+ },
+ {
+  "owner": "elixir-horde",
+  "repo": "horde",
+  "language": "Elixir",
+  "stars": 1508,
+  "description": "Horde is a distributed Supervisor and Registry backed by Postgres"
+ },
+ {
+  "owner": "jgm",
+  "repo": "pandoc",
+  "language": "Haskell",
+  "stars": 46881,
+  "description": "Universal markup converter"
+ },
+ {
+  "owner": "hadolint",
+  "repo": "hadolint",
+  "language": "Haskell",
+  "stars": 12524,
+  "description": "Dockerfile linter, validate inline bash, written in Haskell"
+ },
+ {
+  "owner": "unisonweb",
+  "repo": "unison",
+  "language": "Haskell",
+  "stars": 6784,
+  "description": "A friendly programming language from the future"
+ },
+ {
+  "owner": "digitallyinduced",
+  "repo": "ihp",
+  "language": "Haskell",
+  "stars": 5378,
+  "description": "🔥 The fastest way to build type safe web apps. IHP is a new batteries-included web framework optimized for longterm productivity and programmer happiness"
+ },
+ {
+  "owner": "commercialhaskell",
+  "repo": "stack",
+  "language": "Haskell",
+  "stars": 4084,
+  "description": "The Haskell Tool Stack"
+ },
+ {
+  "owner": "xmonad",
+  "repo": "xmonad",
+  "language": "Haskell",
+  "stars": 3611,
+  "description": "The core of xmonad, a small but functional ICCCM-compliant tiling window manager"
+ },
+ {
+  "owner": "b3nj5m1n",
+  "repo": "xdg-ninja",
+  "language": "Haskell",
+  "stars": 3409,
+  "description": "A shell script which checks your $HOME for unwanted files and directories."
+ },
+ {
+  "owner": "crytic",
+  "repo": "echidna",
+  "language": "Haskell",
+  "stars": 3193,
+  "description": "Ethereum smart contract fuzzer"
+ },
+ {
+  "owner": "agda",
+  "repo": "agda",
+  "language": "Haskell",
+  "stars": 2969,
+  "description": "Agda is a dependently typed programming language / interactive theorem prover."
+ },
+ {
+  "owner": "diku-dk",
+  "repo": "futhark",
+  "language": "Haskell",
+  "stars": 2821,
+  "description": ":boom::computer::boom: A data-parallel functional programming language"
+ },
+ {
+  "owner": "wireapp",
+  "repo": "wire-server",
+  "language": "Haskell",
+  "stars": 2781,
+  "description": "🇪🇺 Wire back-end services"
+ },
+ {
+  "owner": "nammayatri",
+  "repo": "nammayatri",
+  "language": "Haskell",
+  "stars": 2580,
+  "description": "A Direct-to-Driver open mobility platform powering the next-generation of mobility applications in India."
+ },
+ {
+  "owner": "haskell-servant",
+  "repo": "servant",
+  "language": "Haskell",
+  "stars": 1968,
+  "description": "Servant is a Haskell DSL for describing, serving, querying, mocking, documenting web applications and more!"
+ },
+ {
+  "owner": "lamdu",
+  "repo": "lamdu",
+  "language": "Haskell",
+  "stars": 1895,
+  "description": "lamdu - towards the next generation IDE"
+ },
+ {
+  "owner": "nmattia",
+  "repo": "niv",
+  "language": "Haskell",
+  "stars": 1869,
+  "description": "Easy dependency management for Nix projects"
+ },
+ {
+  "owner": "nvim-telescope",
+  "repo": "telescope.nvim",
+  "language": "Lua",
+  "stars": 19855,
+  "description": "Find, Filter, Preview, Pick. All lua, all the time."
+ },
+ {
+  "owner": "avante-corp",
+  "repo": "avante.nvim",
+  "language": "Lua",
+  "stars": 18188,
+  "description": "Use your Neovim like using Cursor AI IDE!"
+ },
+ {
+  "owner": "apache",
+  "repo": "apisix",
+  "language": "Lua",
+  "stars": 17311,
+  "description": "The Cloud-Native API Gateway and AI Gateway"
+ },
+ {
+  "owner": "hrsh7th",
+  "repo": "nvim-cmp",
+  "language": "Lua",
+  "stars": 9489,
+  "description": "A completion plugin for neovim coded in Lua."
+ },
+ {
+  "owner": "lite-xl",
+  "repo": "lite-xl",
+  "language": "Lua",
+  "stars": 6525,
+  "description": "A lightweight text editor written in Lua"
+ },
+ {
+  "owner": "NeogitOrg",
+  "repo": "neogit",
+  "language": "Lua",
+  "stars": 5672,
+  "description": "An interactive and powerful Git interface for Neovim, inspired by Magit"
+ },
+ {
+  "owner": "nvim-neo-tree",
+  "repo": "neo-tree.nvim",
+  "language": "Lua",
+  "stars": 5648,
+  "description": "Neovim plugin to manage the file system and other tree like structures."
+ },
+ {
+  "owner": "PathOfBuildingCommunity",
+  "repo": "PathOfBuilding",
+  "language": "Lua",
+  "stars": 5481,
+  "description": "Offline build planner for Path of Exile."
+ },
+ {
+  "owner": "CorsixTH",
+  "repo": "CorsixTH",
+  "language": "Lua",
+  "stars": 4710,
+  "description": "Open source clone of Theme Hospital"
+ },
+ {
+  "owner": "LuaLS",
+  "repo": "lua-language-server",
+  "language": "Lua",
+  "stars": 4411,
+  "description": "A language server that offers Lua language support - programmed in Lua"
+ },
+ {
+  "owner": "beyond-all-reason",
+  "repo": "Beyond-All-Reason",
+  "language": "Lua",
+  "stars": 4348,
+  "description": "Main game repository for Beyond All Reason."
+ },
+ {
+  "owner": "zbirenbaum",
+  "repo": "copilot.lua",
+  "language": "Lua",
+  "stars": 4096,
+  "description": "Fully featured & enhanced replacement for copilot.vim complete with API for interacting with Github Copilot"
+ },
+ {
+  "owner": "mason-org",
+  "repo": "mason-lspconfig.nvim",
+  "language": "Lua",
+  "stars": 3957,
+  "description": "Extension to mason.nvim that makes it easier to use lspconfig with mason.nvim."
+ },
+ {
+  "owner": "nvim-orgmode",
+  "repo": "orgmode",
+  "language": "Lua",
+  "stars": 3934,
+  "description": "Orgmode clone written in Lua for Neovim 0.12.0+."
+ },
+ {
+  "owner": "luarocks",
+  "repo": "luarocks",
+  "language": "Lua",
+  "stars": 3756,
+  "description": "LuaRocks is the package manager for the Lua programming language."
+ },
+ {
+  "owner": "JuliaLang",
+  "repo": "julia",
+  "language": "Julia",
+  "stars": 49255,
+  "description": "The Julia Programming Language"
+ },
+ {
+  "owner": "FluxML",
+  "repo": "Flux.jl",
+  "language": "Julia",
+  "stars": 4756,
+  "description": "Relax! Flux is the ML library that doesn't make you tensor"
+ },
+ {
+  "owner": "MakieOrg",
+  "repo": "Makie.jl",
+  "language": "Julia",
+  "stars": 2832,
+  "description": "Interactive data visualizations and plotting in Julia"
+ },
+ {
+  "owner": "jump-dev",
+  "repo": "JuMP.jl",
+  "language": "Julia",
+  "stars": 2490,
+  "description": "Modeling language for Mathematical Optimization (linear, mixed-integer, conic, semidefinite, nonlinear)"
+ },
+ {
+  "owner": "GenieFramework",
+  "repo": "Genie.jl",
+  "language": "Julia",
+  "stars": 2425,
+  "description": "🧞The highly productive Julia web framework"
+ },
+ {
+  "owner": "JuliaPlots",
+  "repo": "Plots.jl",
+  "language": "Julia",
+  "stars": 1959,
+  "description": "Powerful convenience for Julia visualizations and data analysis"
+ },
+ {
+  "owner": "probcomp",
+  "repo": "Gen.jl",
+  "language": "Julia",
+  "stars": 1854,
+  "description": "A general-purpose probabilistic programming system with programmable inference"
+ },
+ {
+  "owner": "FluxML",
+  "repo": "Zygote.jl",
+  "language": "Julia",
+  "stars": 1582,
+  "description": "21st century AD"
+ },
+ {
+  "owner": "JuliaLang",
+  "repo": "PackageCompiler.jl",
+  "language": "Julia",
+  "stars": 1565,
+  "description": "Compile your Julia Package"
+ },
+ {
+  "owner": "JuliaPlots",
+  "repo": "UnicodePlots.jl",
+  "language": "Julia",
+  "stars": 1555,
+  "description": "Unicode-based scientific plotting for working in the terminal"
+ },
+ {
+  "owner": "JuliaSymbolics",
+  "repo": "Symbolics.jl",
+  "language": "Julia",
+  "stars": 1542,
+  "description": "Symbolic programming for the next generation of numerical software"
+ },
+ {
+  "owner": "JuliaPy",
+  "repo": "PyCall.jl",
+  "language": "Julia",
+  "stars": 1515,
+  "description": "Package to call Python functions from the Julia language"
+ },
+ {
+  "owner": "CliMA",
+  "repo": "Oceananigans.jl",
+  "language": "Julia",
+  "stars": 1449,
+  "description": "🌊  Julia software for fast, friendly, flexible, ocean-flavored fluid dynamics on CPUs and GPUs"
+ },
+ {
+  "owner": "JuliaGPU",
+  "repo": "CUDA.jl",
+  "language": "Julia",
+  "stars": 1437,
+  "description": "CUDA programming in Julia."
+ },
+ {
+  "owner": "JuliaPy",
+  "repo": "PythonCall.jl",
+  "language": "Julia",
+  "stars": 1082,
+  "description": "Python and Julia in harmony."
+ },
+ {
+  "owner": "VSCodium",
+  "repo": "vscodium",
+  "language": "Shell",
+  "stars": 34042,
+  "description": "binary releases of VS Code without MS branding/telemetry/licensing"
+ },
+ {
+  "owner": "OthmanAdi",
+  "repo": "planning-with-files",
+  "language": "Shell",
+  "stars": 27987,
+  "description": "Persistent file-based planning for AI coding agents and long-running tasks. Crash-proof markdown plans, session recovery after /clear and compaction, per-turn re-injection against context rot, determi"
+ },
+ {
+  "owner": "zsh-users",
+  "repo": "zsh-syntax-highlighting",
+  "language": "Shell",
+  "stars": 23088,
+  "description": "Fish shell like syntax highlighting for Zsh."
+ },
+ {
+  "owner": "spaceship-prompt",
+  "repo": "spaceship-prompt",
+  "language": "Shell",
+  "stars": 20604,
+  "description": "🚀✨ Minimalistic, powerful and extremely customizable Zsh prompt"
+ },
+ {
+  "owner": "termux",
+  "repo": "termux-packages",
+  "language": "Shell",
+  "stars": 17336,
+  "description": "A package build system for Termux."
+ },
+ {
+  "owner": "winapps-org",
+  "repo": "winapps",
+  "language": "Shell",
+  "stars": 16148,
+  "description": " Run Windows apps such as Microsoft Office/Adobe in Linux (Ubuntu/Fedora) and GNOME/KDE as if they were a part of the native OS, including Nautilus integration. Hard fork of https://github.com/Fmstrat"
+ },
+ {
+  "owner": "Bash-it",
+  "repo": "bash-it",
+  "language": "Shell",
+  "stars": 15301,
+  "description": "A community Bash framework."
+ },
+ {
+  "owner": "itzg",
+  "repo": "docker-minecraft-server",
+  "language": "Shell",
+  "stars": 14529,
+  "description": "Docker image that provides a Minecraft Server for Java Edition that automatically installs/upgrades versions, modloaders, modpacks and more at startup"
+ },
+ {
+  "owner": "pystardust",
+  "repo": "ani-cli",
+  "language": "Shell",
+  "stars": 14111,
+  "description": "A cli tool to browse and play anime"
+ },
+ {
+  "owner": "1N3",
+  "repo": "Sn1per",
+  "language": "Shell",
+  "stars": 11530,
+  "description": "Automated penetration testing & attack surface management platform. Recon, scan, exploit, report - 600+ exploits, 90+ integrations, 10K+ detections."
+ },
+ {
+  "owner": "conda-forge",
+  "repo": "miniforge",
+  "language": "Shell",
+  "stars": 10352,
+  "description": "A conda-forge distribution."
+ },
+ {
+  "owner": "ublue-os",
+  "repo": "bazzite",
+  "language": "Shell",
+  "stars": 9310,
+  "description": "Bazzite makes gaming and everyday use smoother and simpler across desktop PCs, handhelds, tablets, and home theater PCs."
+ },
+ {
+  "owner": "testssl",
+  "repo": "testssl.sh",
+  "language": "Shell",
+  "stars": 9271,
+  "description": "Testing TLS/SSL encryption anywhere on any port "
+ },
+ {
+  "owner": "zsh-users",
+  "repo": "antigen",
+  "language": "Shell",
+  "stars": 8364,
+  "description": "The plugin manager for zsh."
+ },
+ {
+  "owner": "PapirusDevelopmentTeam",
+  "repo": "papirus-icon-theme",
+  "language": "Shell",
+  "stars": 8203,
+  "description": "Pixel perfect icon theme for Linux"
+ }
+]
