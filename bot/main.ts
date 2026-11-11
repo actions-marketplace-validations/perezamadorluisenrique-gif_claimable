@@ -15,13 +15,14 @@ import { appendFileSync, readFileSync, realpathSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 import { applyActions } from "../src/bot/apply.ts";
+import { configPath, readConfig } from "../src/bot/config.ts";
 import type { Outcome, Sender } from "../src/bot/apply.ts";
 import { decide } from "../src/bot/decide.ts";
 import { renderComment } from "../src/bot/messages.ts";
 import { readState } from "../src/bot/state.ts";
 import { DEFAULT_CONFIG } from "../src/bot/types.ts";
 import type { Action, BotComment, BotConfig, BotIssue } from "../src/bot/types.ts";
-import { getAllComments, getAllTimeline, getHeldIssues, getIssue, getPermission, now } from "../src/fetchers.ts";
+import { getAllComments, getAllTimeline, getClaimedIssues, getFile, getHeldIssues, getIssue, getPermission, getRepo, now } from "../src/fetchers.ts";
 import { configure } from "../src/github.ts";
 import { parseRepo } from "../src/refs.ts";
 import { mdInline } from "../src/report.ts";
@@ -29,15 +30,32 @@ import type { GhTimelineEvent, IssueRef } from "../src/types.ts";
 
 type Env = Record<string, string | undefined>;
 
+/**
+ * How a run behaves. `live` writes; `dry-run` (asked for with the input) and
+ * `report-only` (a private repository, where acting is not part of the free
+ * bot) describe what the bot would do and write nothing. The two differ only
+ * in the sentence at the top of the summary.
+ */
+export type Mode = "live" | "dry-run" | "report-only";
+
+export function chooseMode(dryRunInput: boolean, isPrivate: boolean): Mode {
+  if (isPrivate) return "report-only";
+  return dryRunInput ? "dry-run" : "live";
+}
+
+export const REPORT_ONLY_NOTE = "_Report-only mode: this repository is private, so the bot describes what it would do and writes nothing._";
+
 export type BotInputs = {
   token: string | null;
+  /** Path of the configuration file inside the repository; null means the default. */
+  config?: string | null;
   /** Anything but an explicit "false" keeps the bot from writing. */
   dryRun: boolean;
 };
 
 export function readInputs(env: Env): BotInputs {
   // Exactly "false" writes; anything else, a missing value included, only describes.
-  return { token: (env.INPUT_TOKEN ?? "").trim() || null, dryRun: (env.INPUT_DRY_RUN ?? "true") !== "false" };
+  return { token: (env.INPUT_TOKEN ?? "").trim() || null, config: (env.INPUT_CONFIG ?? "").trim() || null, dryRun: (env.INPUT_DRY_RUN ?? "true") !== "false" };
 }
 
 /** The slice of a GitHub `issue_comment` event the bot reads. */
@@ -60,6 +78,25 @@ export type Deps = {
   sender?: Sender;
   config?: Partial<BotConfig>;
 };
+
+/**
+ * The project's configuration, read from the default branch. A missing file is
+ * the defaults. A file that exists but cannot be read (the API failed) stops
+ * the bot for this run: acting on defaults could break a stricter rule the
+ * project set.
+ */
+async function loadConfig(ref: IssueRef, input: string | null | undefined, override: Partial<BotConfig> | undefined): Promise<{ config: BotConfig; warnings: string[]; failed: boolean }> {
+  const where = configPath(input ?? undefined);
+  const warnings = where.warning ? [where.warning] : [];
+  let source: string | null;
+  try {
+    source = await getFile(ref, where.path);
+  } catch {
+    return { config: { ...DEFAULT_CONFIG, ...override }, warnings: [...warnings, "The configuration file could not be read, so the bot does not act in this run."], failed: true };
+  }
+  const read = readConfig(source);
+  return { config: { ...read.config, ...override }, warnings: [...warnings, ...read.warnings], failed: false };
+}
 
 function nothing(summary: string): Run {
   return { summary: `## Claimable bot\n\n${summary}\n`, actions: [], outcomes: [], warnings: [] };
@@ -97,15 +134,12 @@ export async function handle(eventName: string, payload: Payload, inputs: BotInp
 
   const ref: IssueRef = { owner: ref0.owner, repo: ref0.repo, number };
   const title = `${ref.owner}/${ref.repo}#${ref.number}`;
-  const config: BotConfig = { ...DEFAULT_CONFIG, ...deps.config };
-  const warnings: string[] = [];
+  const loaded = await loadConfig(ref, inputs.config, deps.config);
+  const config = loaded.config;
+  const warnings: string[] = [...loaded.warnings];
 
   // A private repository is report-only for now: acting there is the paid part.
-  let dryRun = inputs.dryRun;
-  if (payload.repository?.private === true && !dryRun) {
-    dryRun = true;
-    warnings.push("Private repository: the bot only reports what it would do here.");
-  }
+  const mode = chooseMode(inputs.dryRun, payload.repository?.private === true);
 
   const [issue, comments, timeline] = await Promise.all([getIssue(ref), getAllComments(ref), getAllTimeline(ref)]);
   const all: BotComment[] = (comments.items as RawComment[]).map(toBotComment);
@@ -114,7 +148,9 @@ export async function handle(eventName: string, payload: Payload, inputs: BotInp
   // The comment is read again from the API, never taken from the event: if it
   // was edited or deleted before this run started, the bot acts on what is there now.
   const trigger = all.find((c) => c.id === payload.comment?.id);
-  if (comments.truncated || timeline.truncated) {
+  if (loaded.failed) {
+    actions = [{ type: "none", reason: "the configuration could not be read, so the bot does not act" }];
+  } else if (comments.truncated || timeline.truncated) {
     actions = [{ type: "none", reason: "the thread is too long to read in full, so the bot does not act" }];
   } else if (!trigger) {
     actions = [{ type: "none", reason: "the comment is gone" }];
@@ -148,21 +184,74 @@ export async function handle(eventName: string, payload: Payload, inputs: BotInp
     }
   }
 
-  const outcomes = await applyActions(actions, ref, { dryRun, sender: deps.sender });
-  return { summary: formatSummary(title, dryRun, outcomes, warnings), actions, outcomes, warnings };
+  const outcomes = await applyActions(actions, ref, { dryRun: mode !== "live", sender: deps.sender, messages: config.messages });
+  return { summary: formatSummary(title, mode, outcomes, warnings, undefined, config.messages), actions, outcomes, warnings };
 }
 
-export function formatSummary(title: string, dryRun: boolean, outcomes: Outcome[], warnings: string[]): string {
+/** The most issues one daily visit looks at; the rest wait for tomorrow. */
+export const TICK_LIMIT = 100;
+
+/** The daily visit: for every open issue labelled `claimed`, remind or release if the holder went quiet. */
+export async function handleTick(repoFullName: string, inputs: BotInputs, deps: Deps = {}): Promise<Run> {
+  const repo = parseRepo(repoFullName);
+  if (!repo) return nothing("The daily visit needs the repository (GITHUB_REPOSITORY).");
+  const base: IssueRef = { owner: repo.owner, repo: repo.repo, number: 0 };
+  const title = `${base.owner}/${base.repo}`;
+  const loaded = await loadConfig(base, inputs.config, deps.config);
+  if (loaded.failed) return { summary: formatSummary(title, "dry-run", [], loaded.warnings), actions: [], outcomes: [], warnings: loaded.warnings };
+  const config = loaded.config;
+  const warnings: string[] = [...loaded.warnings];
+
+  const mode = chooseMode(inputs.dryRun, (await getRepo(base)).private === true);
+
+  const listed = await getClaimedIssues(base, config.claimedLabel);
+  if (listed.truncated) warnings.push("More claimed issues than one visit reads; the oldest are looked at first.");
+  const numbers = [...listed.numbers].sort((a, b) => a - b);
+  if (numbers.length > TICK_LIMIT) warnings.push(`Only the first ${TICK_LIMIT} of ${numbers.length} claimed issues are visited today.`);
+
+  const actions: Action[] = [];
+  const outcomes: Outcome[] = [];
+  let looked = 0;
+  for (const number of numbers.slice(0, TICK_LIMIT)) {
+    looked++;
+    const ref: IssueRef = { ...base, number };
+    const [issue, comments, timeline] = await Promise.all([getIssue(ref), getAllComments(ref), getAllTimeline(ref)]);
+    if (comments.truncated || timeline.truncated) continue; // too long to read in full: not touched
+    const botIssue: BotIssue = {
+      number: issue.number,
+      state: issue.state,
+      locked: issue.locked === true,
+      html_url: issue.html_url,
+      title: issue.title,
+      labels: issue.labels,
+      assignees: issue.assignees ?? [],
+      updated_at: issue.updated_at,
+      ...(issue.pull_request === undefined ? {} : { pull_request: issue.pull_request }),
+    };
+    const state = readState(botIssue, timeline.items as GhTimelineEvent[], (comments.items as RawComment[]).map(toBotComment));
+    const todo = decide({ kind: "tick" }, state, config, now()).filter((a) => a.type !== "none");
+    if (todo.length === 0) continue;
+    actions.push(...todo);
+    const done = await applyActions(todo, ref, { dryRun: mode !== "live", sender: deps.sender, messages: config.messages });
+    outcomes.push(...done.map((o) => ({ ...o, note: `#${number}: ${o.note}` })));
+  }
+  const summary = formatSummary(title, mode, outcomes, warnings, `Visited ${looked} claimed issue${looked === 1 ? "" : "s"}; ${outcomes.length === 0 ? "none needed a reminder or a release" : "see below"}.`, config.messages);
+  return { summary, actions, outcomes, warnings };
+}
+
+export function formatSummary(title: string, mode: Mode, outcomes: Outcome[], warnings: string[], intro?: string, messages: BotConfig["messages"] = {}): string {
   const out = [`## Claimable bot: ${mdInline(title)}`, ""];
-  if (dryRun) out.push("_Dry run: nothing was written._", "");
+  if (intro) out.push(intro, "");
+  if (mode === "report-only") out.push(REPORT_ONLY_NOTE, "");
+  else if (mode === "dry-run") out.push("_Dry run: nothing was written._", "");
   for (const w of warnings) out.push(`> ${mdInline(w)}`, "");
   for (const o of outcomes) {
     const mark = { done: "done", planned: "planned", skipped: "skipped", failed: "FAILED" }[o.status];
     out.push(`- **${mark}**: ${o.note}`);
   }
   for (const o of outcomes) {
-    if (dryRun && o.action.type === "comment") {
-      out.push("", "The comment would read:", "", "````markdown", renderComment(o.action.reply, o.action.marker).trimEnd(), "````");
+    if (mode !== "live" && o.action.type === "comment") {
+      out.push("", "The comment would read:", "", "````markdown", renderComment(o.action.reply, o.action.marker, messages).trimEnd(), "````");
     }
   }
   return `${out.join("\n")}\n`;
@@ -178,7 +267,11 @@ export async function run(env: Env): Promise<number> {
       return 0;
     }
     const payload = JSON.parse(readFileSync(path, "utf8")) as Payload;
-    const result = await handle(env.GITHUB_EVENT_NAME ?? "", payload, inputs);
+    const eventName = env.GITHUB_EVENT_NAME ?? "";
+    const result =
+      eventName === "schedule" || eventName === "workflow_dispatch"
+        ? await handleTick(env.GITHUB_REPOSITORY ?? payload.repository?.full_name ?? "", inputs)
+        : await handle(eventName, payload, inputs);
     for (const w of result.warnings) process.stdout.write(`::notice::${oneLine(w)}\n`);
     for (const o of result.outcomes) if (o.status === "failed") process.stdout.write(`::warning::${oneLine(o.note)}\n`);
     if (env.GITHUB_STEP_SUMMARY) appendFileSync(env.GITHUB_STEP_SUMMARY, result.summary);

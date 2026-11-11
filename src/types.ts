@@ -115,6 +115,7 @@ export type GhRepo = {
   disabled: boolean;
   open_issues_count: number;
   default_branch: string;
+  private?: boolean;
   topics?: string[];
 };
 

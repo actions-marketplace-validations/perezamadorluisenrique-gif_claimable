@@ -1,0 +1,52 @@
+# The free-issues index: every hour, visit the projects that are due and
+# analyse what changed, within 80 % of what is left of the hour's API limit
+# (docs/INDEX-BUDGET.md). Results are committed to the `index-data` branch;
+# that commit also keeps the schedule alive (GitHub disables cron after 60
+# days without commits).
+
+name: Index
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: read
+
+concurrency:
+  group: index
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22.18"
+      - name: Check out the data branch (created empty the first time)
+        run: |
+          if git ls-remote --exit-code --heads origin index-data >/dev/null; then
+            git fetch --depth 1 origin index-data
+            git worktree add index-data origin/index-data
+            git -C index-data checkout -B index-data
+          else
+            git worktree add --orphan -b index-data index-data
+          fi
+      - name: Collect
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node index/collect.ts --data index-data --projects index/projects.json
+      - name: Commit the data
+        working-directory: index-data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && exit 0
+          git commit -qm "Index data $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push origin index-data

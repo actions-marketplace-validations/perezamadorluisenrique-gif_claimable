@@ -34,6 +34,8 @@ type ClientState = {
   /** In-process memo, so repeated checks on one repo cost one request. */
   memo: Map<string, unknown>;
   requests: number;
+  /** Every path a caller asked for that the memo did not answer (live or replayed). */
+  log: string[];
 };
 
 const state: ClientState = {
@@ -45,6 +47,7 @@ const state: ClientState = {
   cassetteDir: process.env.CLAIMABLE_CASSETTE_DIR || "test/fixtures",
   memo: new Map(),
   requests: 0,
+  log: [],
 };
 
 export function configure(
@@ -92,6 +95,49 @@ export function webBase(): string {
 
 export function requestCount(): number {
   return state.requests;
+}
+
+/**
+ * The paths that cost a request since the last `resetRequestLog()`, counted the
+ * same way live and replayed (memo hits are free in both). The index budget is
+ * measured with it.
+ */
+export function requestLog(): string[] {
+  return [...state.log];
+}
+
+export function resetRequestLog(): void {
+  state.log = [];
+}
+
+/**
+ * Seed the memo with a body already in hand, so a later `api(path)` costs
+ * nothing. The index lists a project's open issues in one request and primes
+ * each `/issues/<n>` from that list instead of fetching every issue again.
+ */
+export function primeMemo(path: string, body: unknown): void {
+  state.memo.set(path, body);
+}
+
+/**
+ * Requests left in this hour's core bucket, or null when it cannot be read
+ * (replaying, offline). `/rate_limit` itself does not count against the limit.
+ */
+export async function rateRemaining(): Promise<number | null> {
+  if (state.cassetteMode === "replay") return null;
+  try {
+    const { body } = await requestRaw("/rate_limit");
+    state.requests -= 1;
+    const core = (body as { resources?: { core?: { remaining?: number } } }).resources?.core;
+    return typeof core?.remaining === "number" ? core.remaining : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Forget memoised responses (the index does this between projects). */
+export function clearMemo(): void {
+  state.memo.clear();
 }
 
 /**
@@ -253,6 +299,7 @@ async function requestRaw(path: string, attempt = 0): Promise<{ body: unknown; h
 /** GET a path, honouring the cassette and the in-process memo. */
 export async function api<T>(path: string): Promise<T> {
   if (state.memo.has(path)) return state.memo.get(path) as T;
+  state.log.push(path);
 
   if (state.cassetteMode === "replay") {
     const file = cassettePath(path);

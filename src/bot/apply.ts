@@ -14,6 +14,7 @@
 import { HttpError, send } from "../github.ts";
 import { mdInline } from "../report.ts";
 import { renderComment } from "./messages.ts";
+import type { Messages } from "./messages.ts";
 import type { Action } from "./types.ts";
 
 export type Sender = <T = unknown>(method: "POST" | "PATCH" | "DELETE", path: string, body?: unknown) => Promise<T>;
@@ -59,7 +60,7 @@ function why(err: unknown): string {
 export async function applyActions(
   actions: Action[],
   ctx: ApplyContext,
-  opts: { dryRun: boolean; sender?: Sender },
+  opts: { dryRun: boolean; sender?: Sender; messages?: Messages },
 ): Promise<Outcome[]> {
   const call = opts.sender ?? (send as Sender);
   const base = `/repos/${ctx.owner}/${ctx.repo}`;
@@ -113,7 +114,7 @@ export async function applyActions(
           }
           break;
         case "comment": {
-          const text = renderComment(action.reply, action.marker);
+          const text = renderComment(action.reply, action.marker, opts.messages);
           if (action.mode === "edit" && action.commentId) await call("PATCH", `${base}/issues/comments/${action.commentId}`, { body: text });
           else await call("POST", `${issue}/comments`, { body: text });
           break;

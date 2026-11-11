@@ -1,0 +1,106 @@
+{
+  "name": "tick-open-pr-of-someone-else-does-not-protect",
+  "source": "synthetic",
+  "now": "2026-09-15T12:00:00Z",
+  "issue": {
+    "number": 7,
+    "state": "open",
+    "locked": false,
+    "html_url": "https://github.com/acme/widgets/issues/7",
+    "title": "Fix typo in README",
+    "labels": [
+      "good first issue",
+      "claimed"
+    ],
+    "assignees": [
+      {
+        "login": "alice"
+      }
+    ],
+    "updated_at": "2026-09-01T09:00:00Z"
+  },
+  "timeline": [
+    {
+      "event": "assigned",
+      "created_at": "2026-09-01T09:00:00Z",
+      "actor": {
+        "login": "github-actions[bot]"
+      },
+      "assignee": {
+        "login": "alice"
+      }
+    },
+    {
+      "event": "cross-referenced",
+      "created_at": "2026-09-05T10:00:00Z",
+      "source": {
+        "issue": {
+          "number": 16,
+          "html_url": "https://github.com/acme/widgets/pull/16",
+          "state": "open",
+          "title": "Fix 16",
+          "pull_request": {
+            "merged_at": null,
+            "html_url": "https://github.com/acme/widgets/pull/16"
+          },
+          "user": {
+            "login": "bob"
+          },
+          "draft": false
+        }
+      }
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "user": {
+        "login": "alice",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "/claim",
+      "created_at": "2026-09-01T09:00:00Z"
+    },
+    {
+      "id": 2,
+      "user": {
+        "login": "github-actions[bot]",
+        "type": "Bot"
+      },
+      "author_association": "NONE",
+      "body": "<!-- claimable-bot:v1 {\"claimant\":\"alice\",\"since\":\"2026-09-01T09:00:00Z\",\"nudgedAt\":\"2026-09-08T09:00:00Z\"} -->\nBot text.",
+      "created_at": "2026-09-01T09:00:00Z"
+    }
+  ],
+  "requesterClaims": [],
+  "config": {},
+  "event": {
+    "kind": "tick"
+  },
+  "expected": [
+    {
+      "type": "unassign",
+      "login": "alice"
+    },
+    {
+      "type": "unlabel",
+      "name": "claimed"
+    },
+    {
+      "type": "comment",
+      "mode": "edit",
+      "commentId": 2,
+      "reply": {
+        "kind": "expired",
+        "former": "alice",
+        "lastOn": "2026-09-01"
+      },
+      "marker": {
+        "claimant": null,
+        "since": null,
+        "nudgedAt": null
+      }
+    }
+  ]
+}

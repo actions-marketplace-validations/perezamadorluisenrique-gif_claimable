@@ -277,19 +277,32 @@ name: Claim bot
 on:
   issue_comment:
     types: [created]
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
 permissions:
   issues: write
-concurrency:
-  group: claim-bot-${{ github.event.issue.number }}
-  cancel-in-progress: false
 jobs:
   claim:
-    if: github.event.issue.pull_request == null && github.event.comment.user.type != 'Bot'
+    if: github.event_name == 'issue_comment' && github.event.issue.pull_request == null && github.event.comment.user.type != 'Bot'
+    concurrency:
+      group: claim-bot-${{ github.event.issue.number }}
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     steps:
       - uses: perezamadorluisenrique-gif/claimable/bot@v1
         with:
           dry-run: true   # describe in the job summary, write nothing; remove when it looks right
+  remind:
+    if: github.event_name != 'issue_comment'
+    concurrency:
+      group: claim-bot-daily
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: perezamadorluisenrique-gif/claimable/bot@v1
+        with:
+          dry-run: true
 ```
 
 This is what the bot wrote on this repository's own test issue after `/claim`:
@@ -302,7 +315,7 @@ still none by 2026-11-24 the claim is released. A comment, a linked pull request
 commit that mentions the issue counts as activity. Comment `/unclaim` to release it yourself.
 ```
 
-Commands, behaviour and limits are in [docs/bot.md](docs/bot.md). Free in public repositories; in private ones it only reports what it would do.
+Once a day it also leaves one reminder for a holder who went quiet and releases the claim if the reminder goes unanswered. Commands, behaviour and limits are in [docs/bot.md](docs/bot.md). Free in public repositories; in private ones it only reports what it would do.
 
 ## How it compares
 
@@ -344,7 +357,7 @@ you. Development runs the
 `src/*.ts` files directly — no build step.
 
 ```bash
-npm test          # 479 tests, offline, deterministic
+npm test          # 570 tests, offline, deterministic
 npm run compare   # tool verdicts next to the hand verdicts, side by side
 npm run demo      # regenerate the README demo from a real run
 npm run check:docs # fail if a number in these docs no longer matches the code

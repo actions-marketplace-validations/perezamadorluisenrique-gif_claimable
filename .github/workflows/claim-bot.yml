@@ -4,23 +4,38 @@ name: Claim bot
 on:
   issue_comment:
     types: [created]
+  # Once a day: remind whoever went quiet, release what stays quiet.
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
 
 permissions:
   issues: write
 
-# One run per issue at a time, so two /claim comments cannot both win.
-concurrency:
-  group: claim-bot-${{ github.event.issue.number }}
-  cancel-in-progress: false
-
 jobs:
   claim:
     # Not for pull requests, not for bots (the bot's own comments).
-    if: github.event.issue.pull_request == null && github.event.comment.user.type != 'Bot'
+    if: github.event_name == 'issue_comment' && github.event.issue.pull_request == null && github.event.comment.user.type != 'Bot'
+    # One run per issue at a time, so two /claim comments cannot both win.
+    concurrency:
+      group: claim-bot-${{ github.event.issue.number }}
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     steps:
       # The default branch, never the commenter's code: an issue_comment run
       # has write access, so it must not execute anything a stranger wrote.
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: ./bot
+
+  remind:
+    if: github.event_name != 'issue_comment'
+    concurrency:
+      group: claim-bot-daily
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v5
         with:
           persist-credentials: false

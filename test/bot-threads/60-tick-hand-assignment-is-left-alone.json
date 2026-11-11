@@ -1,0 +1,56 @@
+{
+  "name": "tick-hand-assignment-is-left-alone",
+  "source": "synthetic",
+  "now": "2026-09-30T12:00:00Z",
+  "issue": {
+    "number": 7,
+    "state": "open",
+    "locked": false,
+    "html_url": "https://github.com/acme/widgets/issues/7",
+    "title": "Fix typo in README",
+    "labels": [
+      "good first issue"
+    ],
+    "assignees": [
+      {
+        "login": "alice"
+      }
+    ],
+    "updated_at": "2026-09-01T09:00:00Z"
+  },
+  "timeline": [
+    {
+      "event": "assigned",
+      "created_at": "2026-09-01T09:00:00Z",
+      "actor": {
+        "login": "github-actions[bot]"
+      },
+      "assignee": {
+        "login": "alice"
+      }
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "user": {
+        "login": "alice",
+        "type": "User"
+      },
+      "author_association": "NONE",
+      "body": "/claim",
+      "created_at": "2026-09-01T09:00:00Z"
+    }
+  ],
+  "requesterClaims": [],
+  "config": {},
+  "event": {
+    "kind": "tick"
+  },
+  "expected": [
+    {
+      "type": "none",
+      "reason": "assigned by hand, not reserved with the bot"
+    }
+  ]
+}
