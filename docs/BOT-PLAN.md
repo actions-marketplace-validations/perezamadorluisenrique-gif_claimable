@@ -48,7 +48,7 @@ Claimable 0.3.0 está en npm y en el Marketplace como Action de auditoría (`act
 | Informe semanal para el equipo (issues parados, tiempo medio hasta el PR, por persona) | **Pro** | Gestión |
 | Reglas por equipo (quién puede reservar qué etiquetas, cupos por equipo) | **Pro** | Empresas |
 
-Precio de referencia, apagado: 8 USD al mes por organización. Mientras Pro esté apagado no hay forma de comprarlo ni se menciona: en un repositorio privado el bot trabaja en modo informe y lo dice en una línea, sin hablar de precios. La clave se comprobará con `license-online.ts` (de `obsidian-dev/tools/pro-license/`) como entrada `license` de la Action.
+Precio de referencia, apagado: 8 USD al mes por organización. Mientras Pro esté apagado no hay forma de comprarlo ni se menciona: en un repositorio privado el bot trabaja en modo informe y lo dice en una línea, sin hablar de precios. La clave se comprobará con `license-online.ts` (de `obsidian-dev/tools/pro-license/`) como entrada `license` de la Action. **El código Pro no va en este repositorio público** (regla de Enrique, 2026-11-11): vive en privado (obsidian-dev) y este repo solo deja el punto de enganche, como hace Book Studio con `src/edition.ts`.
 
 Otras decisiones cerradas:
 
@@ -227,6 +227,8 @@ Arquitectura del bot. Todo lo que decide es puro y no toca la red:
 - **L3** Borradores, para que los envíe Enrique si quiere, de un mensaje corto a 10 proyectos que hoy usan un flujo casero de `/take`. No se envía nada desde aquí. Decisión con OK: ficha propia del bot en el Marketplace (exige repositorio nuevo).
 
 ### HILO F: Pro (apagado)
+
+Todo lo de este hilo se construye en privado; aquí solo stubs con la misma forma que no hacen nada.
 
 - **R1 (Sonnet, medio)** Entrada `license`, comprobación con `license-online.ts` en modo de prueba; con clave válida, el bot actúa en repositorios privados.
 - **R2 (Sonnet, medio)** Informe semanal en el resumen del trabajo y como issue fijado; reglas por equipo en `claimable.yml`.
